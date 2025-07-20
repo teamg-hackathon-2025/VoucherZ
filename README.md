@@ -9,6 +9,8 @@
      ```bash
      docker compose -f docker-compose.dev.yml up --build
      ```
+3. Webアプリにブラウザからアクセス。
+    [http://127.0.0.1:8000/account/](http://127.0.0.1:8000/account/)
 
 ### デバックツール
 1. Django Debug Toolbar
