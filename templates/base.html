@@ -30,7 +30,8 @@
   </head>
   <body>
     <!-- sidebar or mobile-header -->
-    {% include 'util/sidebar.html'%} {% include 'util/mobile-header.html'%}
+    <!-- sidebarやmobile-headerができたら、コメントアウトを外す -->
+    {% comment %} {% include 'util/sidebar.html'%} {% include 'util/mobile-header.html'%} {% endcomment %}
     <!-- main -->
     {% block body %}{% endblock %}
     <!-- JavaScript -->
