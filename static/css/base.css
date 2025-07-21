@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+body {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-main-text-primary);
+  background-color: var(--color-main-background-primary);
+  box-sizing: border-box;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.sidebar {
+  width: 222px;
+  min-height: 100vh;
+  background-color: var(--color-sidebar-background-overlay);
+}
+
+.header {
+  display: flex;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  background-color: var(--color-sidebar-background-overlay);
+  width: inherit;
+  height: 100px;
+}
+
+/* ログイン後のmainタグ内 */
+.main-container {
+  width: calc(100% - 222px);
+  min-height: 100vh;
+}
+
+/* ログイン前のmainタグ内 */
+.main {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ========================================================== */
+/* レスポンシブ */
+
+@media screen and (max-width: 767px) {
+  .main-container {
+    width: 100%;
+  }
+}
