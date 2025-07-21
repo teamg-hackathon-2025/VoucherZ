@@ -1,12 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.views import View
 
 
+app_name = "account"
 
-# Create your views here.
-
-def index(request):
+class TopPageView(View):
+    def get(self, request):
         return render(request, 'account/index.html')
 
 
+
+
+
+    
