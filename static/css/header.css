@@ -1,7 +1,7 @@
 /* 共通部分 */
 
-/* ログイン後 */
 
+/* ログイン後 */
 .is-authenticated .header {
   display: flex;
   position: fixed;
@@ -14,3 +14,4 @@
 }
 
 /* ログイン前 */
+.is-guest .header {}
