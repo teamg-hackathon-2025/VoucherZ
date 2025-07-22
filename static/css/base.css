@@ -5,6 +5,7 @@ body {
   font-weight: 500;
   font-size: 16px;
   line-height: 1.6;
+  letter-spacing: 0.05em;
   color: var(--color-main-text-primary);
   background-color: var(--color-main-background-primary);
   box-sizing: border-box;
