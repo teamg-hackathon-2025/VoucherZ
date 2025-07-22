@@ -4,9 +4,7 @@
     <h1 class="title">VoucherZ</h1>
     <div class="account">
       <img class="image" src="{% static '/img/icon.png' %}" alt="">
-      <!-- ログイン機能作成後、切り替える -->
-      <!-- <p class="name">{{ user_name }}</p> -->
-      <p class="name">佐藤</p>
+      <p class="name">{{ user_name }}</p>
     </div>
     <nav class="nav">
       <a href="{% url 'coupon:coupon_verify_manual'}" class="button">クーポンを認証</a>
