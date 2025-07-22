@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+body {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  color: var(--color-main-text-primary);
+  background-color: var(--color-main-background-primary);
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.main {
+  min-height: 100vh;
+}
+
+/* ログイン後 */
+.is-authenticated .main {
+  width: calc(100% - 222px);
+}
+
+.is-authenticated .layout {
+  display: flex;
+}
+
+/* ログイン前 */
+.is-guest .main {
+  width: 100%;
+}
+
+/* ========================================================== */
+/* レスポンシブ */
+
+@media screen and (max-width: 767px) {
+  .is-authenticated .main {
+    width: 100%;
+  }
+}

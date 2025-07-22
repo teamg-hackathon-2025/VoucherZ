@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta
+      name="description"
+      content="こちらはクーポンアプリです"
+    />
+    <!-- タイトル -->
+    {% block title %}{% endblock %}
+
+    <!--　ファビコン　-->
+    <link rel="icon" href="{% static '/img/favicon.ico' %}">
+
+    <!-- リセットCSS & 共通スタイル -->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+    <link href="{% static 'css/color.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/header.css' %}" rel="stylesheet">
+
+    <!-- ページ固有のCSSを追加できる -->
+    {% block extra_css %}{% endblock %}
+    
+    <!-- フォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  </head>
+  <body class="is-guest">
+    <!-- header -->
+    <header class="header"></header>
+    <!-- main -->
+    <main class="main">
+      {% block body %}{% endblock %}
+    </main>
+    <!-- JavaScript -->
+    {% block script %}{% endblock %}
+  </body>
+</html>
