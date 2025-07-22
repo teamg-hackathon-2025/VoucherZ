@@ -44,17 +44,6 @@ button {
   width: calc(100% - 222px);
 }
 
-.is-authenticated .header {
-  display: flex;
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  right: 0;
-  background-color: var(--color-sidebar-background-overlay);
-  width: inherit;
-  height: 68px;
-}
-
 /* ログイン前 */
 .is-guest .main {
   width: 100%;

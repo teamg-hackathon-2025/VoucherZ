@@ -1,0 +1,16 @@
+/* 共通部分 */
+
+/* ログイン後 */
+
+.is-authenticated .header {
+  display: flex;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  background-color: var(--color-sidebar-background-overlay);
+  width: inherit;
+  height: 68px;
+}
+
+/* ログイン前 */
