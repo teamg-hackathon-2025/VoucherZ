@@ -5,6 +5,7 @@ body {
   font-weight: 500;
   font-size: 16px;
   line-height: 1.6;
+  letter-spacing: 0.05em;
   color: var(--color-main-text-primary);
   background-color: var(--color-main-background-primary);
   box-sizing: border-box;
@@ -34,34 +35,25 @@ button {
   background-color: var(--color-sidebar-background-overlay);
 }
 
-.header {
-  display: flex;
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  right: 0;
-  background-color: var(--color-sidebar-background-overlay);
-  width: inherit;
-  height: 100px;
-}
-
-/* ログイン後のmainタグ内 */
-.main-container {
-  width: calc(100% - 222px);
-  min-height: 100vh;
-}
-
-/* ログイン前のmainタグ内 */
 .main {
-  width: 100%;
   min-height: 100vh;
+}
+
+/* ログイン後 */
+.is-authenticated .main {
+  width: calc(100% - 222px);
+}
+
+/* ログイン前 */
+.is-guest .main {
+  width: 100%;
 }
 
 /* ========================================================== */
 /* レスポンシブ */
 
 @media screen and (max-width: 767px) {
-  .main-container {
+  .is-authenticated .main {
     width: 100%;
   }
 }
