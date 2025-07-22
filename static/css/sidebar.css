@@ -1,7 +1,7 @@
 .sidebar {
   width: 222px;
   min-height: 100vh;
-  padding: 20px 10px 53px;
+  padding: 20px 10px 47px;
   background-color: var(--color-layout-background-overlay);
 }
 
@@ -46,14 +46,15 @@
 }
 
 .sidebar .nav-links {
-  margin: 1px 0 0 7px;
+  margin: 7px 0 0 7px;
   display: flex;
   flex-direction: column;
 }
 
 .sidebar .nav-links .link {
   color: var(--color-layout-text-primary);
-  margin-top: 32px;
+  margin-top: 18px;
+  padding: 7px 0;
 }
 
 .sidebar .nav-links .link.is-disabled {
