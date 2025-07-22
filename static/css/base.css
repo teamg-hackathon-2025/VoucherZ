@@ -35,7 +35,16 @@ button {
   background-color: var(--color-sidebar-background-overlay);
 }
 
-.header {
+.main {
+  min-height: 100vh;
+}
+
+/* ログイン後 */
+.is-authenticated .main {
+  width: calc(100% - 222px);
+}
+
+.is-authenticated .header {
   display: flex;
   position: fixed;
   z-index: 9999;
@@ -43,26 +52,19 @@ button {
   right: 0;
   background-color: var(--color-sidebar-background-overlay);
   width: inherit;
-  height: 100px;
+  height: 68px;
 }
 
-/* ログイン後のmainタグ内 */
-.main-container {
-  width: calc(100% - 222px);
-  min-height: 100vh;
-}
-
-/* ログイン前のmainタグ内 */
-.main {
+/* ログイン前 */
+.is-guest .main {
   width: 100%;
-  min-height: 100vh;
 }
 
 /* ========================================================== */
 /* レスポンシブ */
 
 @media screen and (max-width: 767px) {
-  .main-container {
+  .is-authenticated .main {
     width: 100%;
   }
 }
