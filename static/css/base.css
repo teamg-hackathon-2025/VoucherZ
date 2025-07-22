@@ -29,12 +29,6 @@ button {
   cursor: pointer;
 }
 
-.sidebar {
-  width: 222px;
-  min-height: 100vh;
-  background-color: var(--color-sidebar-background-overlay);
-}
-
 .main {
   min-height: 100vh;
 }
