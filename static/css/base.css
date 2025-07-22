@@ -9,7 +9,6 @@ body {
   color: var(--color-main-text-primary);
   background-color: var(--color-main-background-primary);
   box-sizing: border-box;
-  width: 100vw;
   min-height: 100vh;
 }
 
@@ -36,6 +35,10 @@ button {
 /* ログイン後 */
 .is-authenticated .main {
   width: calc(100% - 222px);
+}
+
+.is-authenticated .layout {
+  display: flex;
 }
 
 /* ログイン前 */
