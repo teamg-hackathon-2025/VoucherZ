@@ -1,0 +1,70 @@
+.sidebar {
+  width: 222px;
+  min-height: 100vh;
+  padding: 20px 10px 23px;
+  background-color: var(--color-layout-background-overlay);
+}
+
+.sidebar .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar .title {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: var(--color-layout-text-primary);
+}
+
+.sidebar .account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 41px;
+}
+
+.sidebar .account .image {
+  object-fit: cover;
+}
+
+.sidebar .account .name {
+  color: var(--color-layout-text-primary);
+  padding-top: 11px;
+}
+
+.sidebar .nav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 76px;
+}
+
+.sidebar .nav .button-primary {
+  border: 2px solid var(--color-button-primary-border);
+  padding: 5px 24px;
+}
+
+.sidebar .nav-links {
+  margin: 1px 0 0 7px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .nav-links .link {
+  color: var(--color-layout-text-primary);
+  margin-top: 30px;
+  padding: 7px 0;
+}
+
+.sidebar .nav-links .link.is-disabled {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ========================================================== */
+/* レスポンシブ */
+@media screen and (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+}

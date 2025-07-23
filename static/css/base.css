@@ -32,6 +32,20 @@ button {
   min-height: 100vh;
 }
 
+.button-primary {
+  font-weight: 700;
+  color: var(--color-button-primary-text);
+  background-color: var(--color-button-primary-background);
+  border-radius: 10px;
+}
+
+.button-secondary {
+  color: var(--color-button-secondary-text);
+  background-color: var(--color-button-secondary-background);
+  border: 2px solid var(--color-button-secondary-border);
+  border-radius: 10px;
+}
+
 /* ログイン後 */
 .is-authenticated .main {
   width: calc(100% - 222px);
