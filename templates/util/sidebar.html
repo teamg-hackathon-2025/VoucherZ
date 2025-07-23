@@ -1,13 +1,13 @@
 {% load static %}
 <div class="sidebar">
-  <div class="sidebar-container">
+  <div class="container">
     <h1 class="title">VoucherZ</h1>
     <div class="account">
       <img class="image" src="{% static '/img/icon.png' %}" alt="">
       <p class="name">{{ user_name }}</p>
     </div>
     <nav class="nav">
-      <a href="{% url 'coupon:coupon_verify_manual'}" class="button">クーポンを認証</a>
+      <a href="{% url 'coupon:coupon_verify_manual'}" class="button-primary">クーポンを認証</a>
       <div class="nav-links">
         <a href="{% url 'coupon:coupon_list'}" class="link">ホーム</a>
         <a href="javascript:void(0)" class="link is-disabled" aria-disabled="true">アカウント情報</a>
