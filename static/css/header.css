@@ -1,10 +1,5 @@
 /* 共通部分 */
-.header .logo {
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  color: var(--color-layout-text-primary);
-}
+
 
 /* ログイン後 */
 .is-authenticated .header {

@@ -11,13 +11,6 @@
   align-items: center;
 }
 
-.sidebar .logo {
-  font-size: 36px;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  color: var(--color-layout-text-primary);
-}
-
 .sidebar .account {
   display: flex;
   flex-direction: column;
