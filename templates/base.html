@@ -19,6 +19,7 @@
     <link href="{% static 'css/color.css' %}" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/header.css' %}" rel="stylesheet">
 
     <!-- ページ固有のCSSを追加できる -->
     {% block extra_css %}{% endblock %}
@@ -31,15 +32,17 @@
   <body class="is-authenticated">
     <div class="layout">
       <!-- sidebar or mobile-header -->
-      <!-- sidebarやmobile-headerができたら、コメントアウトを外す -->
-      {% comment %} {% include 'util/sidebar.html'%} {% include 'util/mobile-header.html'%} {% endcomment %}
-      {% include 'util/sidebar.html' %}
+      {% include 'util/sidebar.html'%} {% include 'util/mobile-header.html'%}
       <!-- main -->
       <main class="main">
         {% block body %}{% endblock %}
       </main>
     </div>
     <!-- JavaScript -->
+    <script
+      src="{% static 'js/mobile-header.js' %}"
+      type="text/javascript"
+    ></script>
     {% block script %}{% endblock %}
   </body>
 </html>
