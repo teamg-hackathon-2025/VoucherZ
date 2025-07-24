@@ -46,16 +46,18 @@ if DEBUG:
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'account',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account',
     'coupon',
     'debug_toolbar',
     'django_extensions',
 ]
+
+AUTH_USER_MODEL = 'account.CustomUser'
 
 MIDDLEWARE = [ 
     'debug_toolbar.middleware.DebugToolbarMiddleware',
