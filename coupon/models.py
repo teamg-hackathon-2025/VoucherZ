@@ -1,9 +1,13 @@
 from django.db import models
-from account.model import Store
 
 
 class Coupon(models.Model):
-    store_id = models.ForeignKey(Store, on_delete=models.CASCADE)
+    store = models.ForeignKey(
+        'account.Store',
+        on_delete=models.CASCADE,
+        related_name='coupons',
+        db_column='store_id',
+    )
     title = models.CharField(max_length=255)
     discount = models.CharField(max_length=255)
     product_name = models.CharField(max_length=255, null=True, blank=True)
@@ -21,6 +25,8 @@ class Coupon(models.Model):
         verbose_name = "Coupon"
         verbose_name_plural = "Coupons"
 
+    def __str__(self):
+        return f"{self.title} ({self.store_id.store_name})"
 
 class CouponCode(models.Model):
     coupon_id = models.ForeignKey(Coupon, on_delete=models.CASCADE)
@@ -39,3 +45,6 @@ class CouponCode(models.Model):
                 name='unique_store_couponcode'
             )
         ]
+
+    def __str__(self):
+        return f"{self.coupon_code} ({self.coupon_id.title})"
