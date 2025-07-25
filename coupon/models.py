@@ -18,6 +18,8 @@ class Coupon(models.Model):
 
     class Meta:
         db_table = "coupons"
+        verbose_name = "Coupon"
+        verbose_name_plural = "Coupons"
 
 
 class CouponCode(models.Model):
@@ -29,6 +31,8 @@ class CouponCode(models.Model):
 
     class Meta:
         db_table = "coupon_codes"
+        verbose_name = "Coupon code"
+        verbose_name_plural = "Coupon codes"
         constraints = [
             models.UniqueConstraint(
                 fields=['store', 'coupon_code'],
