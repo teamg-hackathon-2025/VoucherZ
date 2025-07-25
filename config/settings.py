@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-u*#zw@vb5csjz#v5*qkoscrvs9&!v&+dkq7(sc@03g90q&=pyw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DJANGO_ENV") == "development"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 if DEBUG:
@@ -46,16 +46,18 @@ if DEBUG:
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'account',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account',
     'coupon',
     'debug_toolbar',
     'django_extensions',
 ]
+
+AUTH_USER_MODEL = 'account.CustomUser'
 
 MIDDLEWARE = [ 
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -80,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'account.context_processors.user_name_context',
             ],
         },
     },
@@ -138,7 +141,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
