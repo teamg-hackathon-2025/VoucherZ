@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from account.views import TopPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/', include('account.urls')),
+    path('account/', include('account.urls', namespace='account')),
+    path('coupon/', include('coupon.urls', namespace='coupon')),
+    path('', TopPageView.as_view(), name='index')
 ]
 
 if settings.DEBUG:
