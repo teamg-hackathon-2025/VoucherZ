@@ -28,12 +28,18 @@ class Coupon(models.Model):
     def __str__(self):
         return f"{self.title} ({self.store_id.store_name})"
 
+
 class CouponCode(models.Model):
+    store_id = models.IntegerField()
     coupon_id = models.ForeignKey(Coupon, on_delete=models.CASCADE)
     coupon_code = models.CharField(max_length=6)
     redeemed_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def get_store(self):
+        from account.models import Store
+        return Store.objects.get(pk=self.store_id)
 
     class Meta:
         db_table = "coupon_codes"
@@ -41,7 +47,7 @@ class CouponCode(models.Model):
         verbose_name_plural = "Coupon codes"
         constraints = [
             models.UniqueConstraint(
-                fields=['store', 'coupon_code'],
+                fields=['store_id', 'coupon_code'],
                 name='unique_store_couponcode'
             )
         ]
