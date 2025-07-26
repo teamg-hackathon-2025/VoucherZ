@@ -26,7 +26,7 @@ class Coupon(models.Model):
         verbose_name_plural = "Coupons"
 
     def __str__(self):
-        return f"{self.title} ({self.store_id.store_name})"
+        return f"{self.title} ({self.store.store_name})"
 
 
 class CouponCode(models.Model):
@@ -42,9 +42,10 @@ class CouponCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_store(self):
-        from account.models import Store
-        return Store.objects.get(pk=self.store_id)
+    def save(self, *args, **kwargs):
+        if not self.pk:  # 新規作成時だけセット
+            self.store_id = self.coupon.store_id
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "coupon_codes"
@@ -58,4 +59,4 @@ class CouponCode(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.coupon_code} ({self.coupon_id.title})"
+        return f"{self.coupon_code} ({self.coupon.title})"
