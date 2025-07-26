@@ -31,7 +31,12 @@ class Coupon(models.Model):
 
 class CouponCode(models.Model):
     store_id = models.IntegerField()
-    coupon_id = models.ForeignKey(Coupon, on_delete=models.CASCADE)
+    coupon = models.ForeignKey(
+        'Coupon',
+        on_delete=models.CASCADE,
+        related_name='coupon_codes',
+        db_column='coupon_id',
+    )
     coupon_code = models.CharField(max_length=6)
     redeemed_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
