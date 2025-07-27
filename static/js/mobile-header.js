@@ -19,7 +19,6 @@ function closeMenu() {
   menu.style.display = "none";
 }
 
-
 // ウィンドウサイズ変更時にメニューをリセット
 window.addEventListener("resize", () => {
   if (window.innerWidth > 767) {

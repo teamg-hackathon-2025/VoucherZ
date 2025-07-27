@@ -117,56 +117,13 @@
 
 /* Responsive styles */
 @media (max-width: 767px) {
-  body {
-    flex-direction: column;
-  }
-  .sidebar {
-    position: static;
-    width: 100vw;
-    min-width: 0;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: auto;
-    min-height: 0;
-    padding: 0;
-    z-index: 1;
-  }
-  .sidebar-menu {
-    flex-direction: row;
-    gap: 0;
-    width: 100vw;
-    padding: 0;
-    margin: 0;
-  }
-  .sidebar-menu a,
-  .sidebar-menu button {
-    font-size: 0.95rem;
-    padding: 12px 8px;
-    border-radius: 0;
-    border-bottom: 2px solid transparent;
-    text-align: center;
-  }
-  .sidebar-menu .active {
-    border-bottom: 2px solid var(--button-border);
-    background: var(--sidebar-bg);
-    text-align: center;
-  }
-  .main {
-    margin-left: 0;
-    padding: 16px 0 0 0;
-  }
-  .main-header {
-    font-size: 1.3rem;
-    margin-left: 12px;
-    margin-bottom: 16px;
-  }
   .coupon-panel {
-    flex-direction: column;
     gap: 16px;
     overflow-x: unset;
     overflow-y: hidden;
-    padding: 0 8px 24px 8px;
+    margin-left: 6%;
+    padding: 10px 0 0 0;
+    flex-direction: column;
   }
   .coupon-card,
   .coupon-add-card {
