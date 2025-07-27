@@ -24,26 +24,26 @@
     {% for coupon in coupons %}
     <div class="coupon-card">
       <div class="coupon-title">
-        {{ coupon.title }}
+        <p>{{ coupon.title }}</p>
         <!-- DB情報：クーポンのタイトル -->
       </div>
       <div class="coupon-info">
-        商品名：{{ coupon.product_name }}
-        <!-- DB情報：クーポンの商品名 --><br />
-        割引内容：{{ coupon.discount }}
-        <!-- DB情報：クーポンの割引内容 --><br />
-        有効期限：～{{ coupon.expiration_date }}
+        <p>商品名：{{ coupon.product_name }}</p>
+        <!-- DB情報：クーポンの商品名 -->
+        <p>割引内容：{{ coupon.discount }}</p>
+        <!-- DB情報：クーポンの割引内容 -->
+        <p>有効期限：～{{ coupon.expiration_date }}</p>
         <!-- DB情報：クーポンの有効期限 -->
       </div>
       <div class="coupon-meta">
-        利用率：⚫︎計算
+        <p></p>利用率：⚫︎計算%</p>
         <!-- DB情報：クーポンの使用率 -->
-        %<br />
-        発行済：{{ coupon.issued_count }}<!-- DB情報：クーポンの発行枚数 -->/{{coupon.max_issuance}}<!-- DB情報：発行上限数 -->
+        
+        <p>発行済：{{ coupon.issued_count }}<!-- DB情報：クーポンの発行枚数 -->/{{coupon.max_issuance}}</p><!-- DB情報：発行上限数 -->
       </div>
-      <div class="coupon-action">
-        <button><span class="icon">&#9654;</span> クーポンを発行</button>
-      </div>
+      <a href="" class="button-primary" ><!-- href 確認 url.coupon_issue -->
+        <span class="icon">&#9654;</span> クーポンを発行
+      </a>
       {% endfor %}
 
       <!-- サンプル -->
@@ -55,53 +55,48 @@
           <p>有効期限：～coupon.expiration_date</p>
         </div>
         <div class="coupon-meta">
-          <p>利用率：バックエンドで簡単な計算実施→変数に代入？（要協議）</p>
+          <p>利用率：バックエンドで簡単な計算実施</p>
           <p>発行済：X/X</p>
         </div>
-        <div class="button-primary">
-          <a href=""><span class="icon">&#9654;</span> クーポンを発行</a>
-          <!-- href 確認 url.coupon_issue -->
-        </div>
+        <a href="" class="button-primary" >
+          <span class="icon">&#9654;</span> クーポンを発行
+        </a>
       </div>
       <!-- サンプル終わり -->
 
       <!-- サンプル -->
       <div class="coupon-card">
-        <div class="coupon-title">
-          見た目確認用サンプル。バックエンドからデータ表示できたら削除。
-        </div>
+        <div class="coupon-title"><h3>見た目確認用サンプル</h3></div>
         <div class="coupon-info">
-          商品名：coupon.product_name<br />
-          割引内容：coupon.discount<br />
-          有効期限：～coupon.expiration_date
+          <p>商品名：coupon.product_name</p>
+          <p>割引内容：coupon.discount</p>
+          <p>有効期限：～coupon.expiration_date</p>
         </div>
         <div class="coupon-meta">
-          利用率：バックエンドで簡単な計算実施→変数に代入？（要協議）<br />
-          発行済：coupon.issued_count/coupon.max_issuance
+          <p>利用率：バックエンドで簡単な計算実施</p>
+          <p>発行済：X/X</p>
         </div>
-        <div class="coupon-action">
-          <button><span class="icon">&#9654;</span> クーポンを発行</button>
-        </div>
+        <a href="" class="button-primary" >
+          <span class="icon">&#9654;</span> クーポンを発行
+        </a>
       </div>
       <!-- サンプル終わり -->
 
       <!-- サンプル -->
       <div class="coupon-card">
-        <div class="coupon-title">
-          見た目確認用サンプル。バックエンドからデータ表示できたら削除。
-        </div>
+        <div class="coupon-title"><h3>見た目確認用サンプル</h3></div>
         <div class="coupon-info">
-          商品名：coupon.product_name<br />
-          割引内容：coupon.discount<br />
-          有効期限：～coupon.expiration_date
+          <p>商品名：coupon.product_name</p>
+          <p>割引内容：coupon.discount</p>
+          <p>有効期限：～coupon.expiration_date</p>
         </div>
         <div class="coupon-meta">
-          利用率：バックエンドで簡単な計算実施→変数に代入？（要協議）<br />
-          発行済：coupon.issued_count/coupon.max_issuance
+          <p>利用率：バックエンドで簡単な計算実施</p>
+          <p>発行済：X/X</p>
         </div>
-        <div class="coupon-action">
-          <button><span class="icon">&#9654;</span> クーポンを発行</button>
-        </div>
+        <a href="" class="button-primary" >
+          <span class="icon">&#9654;</span> クーポンを発行
+        </a>
       </div>
       <!-- サンプル終わり -->
     </div>
