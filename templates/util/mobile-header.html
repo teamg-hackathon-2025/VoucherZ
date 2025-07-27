@@ -1,6 +1,6 @@
 {% load static %}
 <header class="header">
-  <div class="background-overlay"></div>
+  <div class="header-overlay"></div>
   <div class="container">
     <h1 class="logo">VoucherZ</h1>
     <button id="burger-icon" class="burger-icon">
@@ -10,7 +10,7 @@
       <img class="image" src="{% static 'img/close.png' %}" alt="メニューを閉じる">
     </button>
     <nav id="mobile-header" class="mobile-header">
-      <div class="background-overlay"></div>
+      <div class="mobile-menu-overlay"></div>
       <div class="list">
         <a href="{% url 'coupon:coupon_verify_manual'}" class="button-primary">クーポンを認証</a>
         <a href="{% url 'coupon:coupon_list'}" class="link">ホーム</a>

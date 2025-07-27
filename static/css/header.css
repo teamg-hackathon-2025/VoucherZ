@@ -13,12 +13,11 @@
   height: 68px;
 }
 
-.is-authenticated .header .background-overlay {
+.is-authenticated .header .header-overlay {
   background-color: var(--color-layout-background-overlay);
   position: fixed;
   width: 100%;
   height: inherit;
-  pointer-events: none;
 }
 
 .is-authenticated .header .container {
@@ -63,7 +62,7 @@
   padding: 68px 0 30px;
 }
 
-.is-authenticated .mobile-header .background-overlay {
+.is-authenticated .mobile-header .mobile-menu-overlay {
   background-color: var(--color-layout-background-overlay);
   position: fixed;
   top: 0;
