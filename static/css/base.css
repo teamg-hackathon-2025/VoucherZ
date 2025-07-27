@@ -73,5 +73,6 @@ button {
 @media screen and (max-width: 767px) {
   .is-authenticated .main {
     width: 100%;
+    padding-top: 68px;
   }
 }

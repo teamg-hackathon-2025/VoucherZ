@@ -8,9 +8,16 @@
   z-index: 9999;
   top: 0;
   right: 0;
-  background-color: var(--color-layout-background-overlay);
+  background-color: var(--color-layout-background-primary);
   width: 100%;
   height: 68px;
+}
+
+.is-authenticated .header .header-overlay {
+  background-color: var(--color-layout-background-overlay);
+  position: fixed;
+  width: 100%;
+  height: inherit;
 }
 
 .is-authenticated .header .container {
@@ -19,6 +26,7 @@
   justify-content: space-between;
   width: inherit;
   padding-left: 20px;
+  z-index: 1;
 }
 
 .is-authenticated .header .burger-icon {
@@ -54,7 +62,7 @@
   padding: 68px 0 30px;
 }
 
-.is-authenticated .header .background-overlay {
+.is-authenticated .mobile-header .mobile-menu-overlay {
   background-color: var(--color-layout-background-overlay);
   position: fixed;
   top: 0;
