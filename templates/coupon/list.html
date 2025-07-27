@@ -10,12 +10,13 @@
 {% block body %}
 <div class="coupon-list">
   <div class="coupon-list-header">
-    <!-- DB情報：お店の名前 -->{{ store_name }}
+    <!-- DB情報：お店の名前 -->{{ store_name }} お店の名前
   </div>
   <div class="coupon-panel">
     <div class="coupon-add-card">
-      新しいクーポンの種類を作成
-      <div class="coupon-add-icon">＋</div>
+      <p>新しいクーポンの種類を作成</p>
+      <!-- クラス名追加　クラス名追加 クラス名追加　クラス名追加　クラス名追加　クラス名追加　クラス名追加　クラス名追加-->
+      <span class="coupon-add-icon">＋</span>
     </div>
 
     <!-- for loop -->
@@ -47,18 +48,19 @@
 
       <!-- サンプル -->
       <div class="coupon-card">
-        <div class="coupon-title">見た目確認用サンプル</div>
+        <div class="coupon-title"><h3>見た目確認用サンプル</h3></div>
         <div class="coupon-info">
-          商品名：coupon.product_name<br />
-          割引内容：coupon.discount<br />
-          有効期限：～coupon.expiration_date
+          <p>商品名：coupon.product_name</p>
+          <p>割引内容：coupon.discount</p>
+          <p>有効期限：～coupon.expiration_date</p>
         </div>
         <div class="coupon-meta">
-          利用率：バックエンドで簡単な計算実施→変数に代入？（要協議）<br />
-          発行済：X/X
+          <p>利用率：バックエンドで簡単な計算実施→変数に代入？（要協議）</p>
+          <p>発行済：X/X</p>
         </div>
-        <div class="coupon-action">
-          <button><span class="icon">&#9654;</span> クーポンを発行</button>
+        <div class="button-primary">
+          <a href=""><span class="icon">&#9654;</span> クーポンを発行</a>
+          <!-- href 確認 url.coupon_issue -->
         </div>
       </div>
       <!-- サンプル終わり -->
