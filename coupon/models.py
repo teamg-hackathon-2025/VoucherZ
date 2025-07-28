@@ -34,6 +34,15 @@ class Coupon(models.Model):
 
     @classmethod
     def get_coupon(cls, coupon_id):
+        """
+        指定されたクーポンIDに対応するクーポン情報（店舗名付き）を取得する
+        Args:
+            coupon_id(int): 取得対象のクーポンID
+        Returns:
+            Coupon | None:
+            - 存在すれば Coupon インスタンス（store情報付き）。
+            - 存在しない、複数件見つかった、またはDBエラーの場合は None を返す。
+        """
         try:
             coupon = (
                 cls.objects
