@@ -26,7 +26,13 @@
       </div>
       <div class="item">
         <h4 class="item-label">有効期限:</h4>
-        <p class="item-value">{{ coupon.expiration_date|date:"Y/m/d" }}</p>
+        <p class="item-value">
+          {% if coupon.expiration_date %}
+            {{ coupon.expiration_date|date:"Y/m/d" }}
+          {% else %}
+            無期限
+          {% endif %}
+        </p>
       </div>
     </div>
   </div>
