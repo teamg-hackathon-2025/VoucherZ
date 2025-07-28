@@ -48,7 +48,7 @@ class Coupon(models.Model):
             return None
         # 同じ ID で複数件あった場合は整合性エラーとしてログ出力し、None を返す
         except cls.MultipleObjectsReturned as e:
-            # データの整合性エラー（1つの年の1つの月に複数の目標が存在する）
+            # データの整合性エラー
             logger.error(
                 f"[Coupon] Data integrity issue: Multiple entries found for coupon_id={coupon_id}. Error: {e}"
             )
