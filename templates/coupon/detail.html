@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}クーポン詳細{% endblock %}
+{% block title %}{{ coupon.title }} - クーポン詳細{% endblock %}
 {% block extra_css %}
 <link href="{% static 'css/coupon-detail.css' %}" rel="stylesheet">
 {% endblock %}
