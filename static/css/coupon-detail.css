@@ -1,0 +1,76 @@
+.coupon-detail {
+  max-width: 872px;
+  width: 100%;
+  margin: 55px auto;
+}
+
+.block-coupon {
+  background-color: var(--color-card-background-primary);
+  border-radius: 10px;
+  padding: 21px 25px 42px;
+}
+
+.block-coupon .title {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.block-coupon .box {
+  text-align: center;
+  padding-top: 5px;
+}
+
+.block-coupon .box .store-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.block-coupon .box .campaign-title {
+  font-size: 24px;
+}
+
+.block-coupon .box .message {
+  margin-top: 15px;
+}
+
+.block-coupon .box .item {
+  margin-top: 5px;
+}
+
+.block-coupon .box .item.coupon-code {
+  margin-top: 37px;
+}
+
+.block-coupon .box .item-label {
+  font-weight: 400;
+}
+
+.block-coupon .box .item-value {
+  font-size: 24px;
+  font-weight: 700;
+  padding-top: 1px;
+}
+
+.block-coupon .box .coupon-code .item-value {
+  font-size: 48px;
+}
+
+.block-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.block-button .button-primary {
+  border: 1px solid var(--color-button-primary-border);
+  max-width: 209px;
+  width: 100%;
+  text-align: center;
+  padding: 6px 10px;
+}
+
+.block-button .form {
+  max-width: 209px;
+  width: 100%;
+}

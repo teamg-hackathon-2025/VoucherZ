@@ -1,5 +1,8 @@
-from django.db import models
+import logging
 
+from django.db import models, DatabaseError
+
+logger = logging.getLogger(__name__)
 
 class Coupon(models.Model):
     store = models.ForeignKey(
@@ -26,7 +29,44 @@ class Coupon(models.Model):
         verbose_name_plural = "Coupons"
 
     def __str__(self):
-        return f"{self.title} ({self.store_id.store_name})"
+        return f"{self.title} ({self.store.store_name})"
+
+    @classmethod
+    def get_coupon(cls, coupon_id):
+        try:
+            coupon = (
+                cls.objects
+                .select_related("store")
+                .only("id", "store_id", "store__store_name")
+                .get(id=coupon_id)
+            )
+            return coupon
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Coupon] Coupon not found: id={coupon_id}"
+            )
+            return None
+        # 同じ ID で複数件あった場合は整合性エラーとしてログ出力し、None を返す
+        except cls.MultipleObjectsReturned as e:
+            # データの整合性エラー（1つの年の1つの月に複数の目標が存在する）
+            logger.error(
+                f"[Coupon] Data integrity issue: Multiple entries found for coupon_id={coupon_id}. Error: {e}"
+            )
+            return None
+        # DBエラーはログに記録して None を返す
+        except DatabaseError as e:
+            # データベース関連のエラー
+            logger.error(
+                f"[Coupon] DatabaseError: coupon_id={coupon_id}. Error: {e}"
+            )
+            return None
+        # 予期しないエラーもログに残して None を返す
+        except Exception as e:
+            # 予期しないエラーのキャッチ
+            logger.exception(
+                f"[Coupon] Unexpected error: coupon_id={coupon_id}. Error: {e}"
+            )
+            return None
 
 
 class CouponCode(models.Model):
@@ -58,4 +98,4 @@ class CouponCode(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.coupon_code} ({self.coupon_id.title})"
+        return f"{self.coupon_code} ({self.coupon.title})"
