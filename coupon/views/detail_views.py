@@ -14,6 +14,12 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "coupon"
 
     def get_object(self):
+        """
+        URLパスからクーポンIDを取得し、対応するクーポン情報を返す
+        Returns:
+            coupon: 指定されたクーポンIDが存在すれば coupon インスタンス。
+            None: 存在しない場合。
+        """
         coupon_id = self.kwargs.get("coupon_id")
         # coupon_idからcouponデータ取得
         coupon = Coupon.get_coupon(coupon_id)
@@ -21,13 +27,10 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         """
-        GETリクエストができなかった場合、リダイレクト
+        クーポン詳細ページ。
+        存在しない、または利用できないクーポンIDが指定された場合は一覧ページへリダイレクトする。
         """
         self.object = self.get_object()
         if self.object is None:
-            messages.warning(
-                request,
-                f"指定されたクーポンが存在しないか、既に削除されています。"
-            )
             return redirect(reverse("coupon:coupon_list"))
         return super().get(request, *args, **kwargs)
