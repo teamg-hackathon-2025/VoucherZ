@@ -1,0 +1,61 @@
+[
+  {
+    "model": "account.customuser",
+    "pk": "11111111-1111-1111-1111-111111111111",
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$zQP4YwkOU1Eba0tbxmFPH4$bE7taYjLQIk5pU0mPlXJKY7nw/YooxwwTML9kxtztJU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "testuser",
+      "first_name": "Taro",
+      "last_name": "Yamada",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-07-28T00:00:00Z",
+      "email": "testuser@example.com",
+      "updated_at": "2025-07-28T00:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "account.store",
+    "pk": 1,
+    "fields": {
+      "store_name": "焼きたて工房　さとう",
+      "created_at": "2025-07-28T00:00:00Z",
+      "updated_at": "2025-07-28T00:00:00Z",
+      "user": "11111111-1111-1111-1111-111111111111"
+    }
+  },
+  {
+    "model": "coupon.coupon",
+    "pk": 1,
+    "fields": {
+      "title": "夏休みキャンペーン",
+      "discount": "一杯無料",
+      "product_name": "コーヒー",
+      "message": "この度はご来店ありがとうございます。\n当店から夏の限定クーポンをお渡しいたします。",
+      "expiration_date": "2025-08-28",
+      "max_issuance": 1,
+      "redeemed_count": 0,
+      "issued_count": 1,
+      "deleted_at": null,
+      "created_at": "2025-07-28T00:00:00Z",
+      "updated_at": "2025-07-28T00:00:00Z",
+      "store": 1
+    }
+  },
+  {
+    "model": "coupon.couponcode",
+    "pk": 1,
+    "fields": {
+      "store_id": 1,
+      "coupon_code": "ABC123",
+      "redeemed_at": null,
+      "created_at": "2025-07-28T00:00:00Z",
+      "updated_at": "2025-07-28T00:00:00Z",
+      "coupon": 1
+    }
+  }
+]
