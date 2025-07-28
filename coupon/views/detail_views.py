@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -8,8 +8,7 @@ from django.urls import reverse
 from ..models import Coupon
 
 
-# class CouponDetailView(LoginRequiredMixin, DetailView):
-class CouponDetailView(DetailView):
+class CouponDetailView(LoginRequiredMixin, DetailView):
     template_name = "coupon/detail.html"
     model = Coupon
     context_object_name = "coupon"

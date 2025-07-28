@@ -4,6 +4,7 @@ from django.db import models, DatabaseError
 
 logger = logging.getLogger(__name__)
 
+
 class Coupon(models.Model):
     store = models.ForeignKey(
         'account.Store',
