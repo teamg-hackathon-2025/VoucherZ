@@ -1,18 +1,18 @@
 .coupon-detail {
-  max-width: 872px;
-  width: 100%;
   padding: 55px 0;
-  margin: 0 auto;
 }
 
 .coupon-detail .container {
   padding: 0 10px;
+  max-width: 892px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .coupon-detail .block-coupon {
   background-color: var(--color-card-background-primary);
   border-radius: 10px;
-  padding: 21px 25px 42px;
+  padding: 21px 25px 24px;
 }
 
 .coupon-detail .block-coupon .title {
@@ -47,6 +47,7 @@
 }
 
 .coupon-detail .block-coupon .box .item-label {
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -56,8 +57,16 @@
   padding-top: 1px;
 }
 
+.coupon-detail .block-coupon .box .item-value .suffix {
+  font-size: 16px;
+  font-weight: 400;
+  display: block;
+  padding-top: 4px;
+}
+
 .coupon-detail .block-coupon .box .coupon-code .item-value {
   font-size: 48px;
+  letter-spacing: 0.05em;
 }
 
 .coupon-detail .block-button {

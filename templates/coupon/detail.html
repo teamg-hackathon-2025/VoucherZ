@@ -29,7 +29,7 @@
           <h4 class="item-label">有効期限:</h4>
           <p class="item-value">
             {% if coupon.expiration_date %}
-              {{ coupon.expiration_date|date:"Y/m/d" }}
+              {{ coupon.expiration_date|date:"Y/m/d" }}<br><span class="suffix">まで</span>
             {% else %}
               無期限
             {% endif %}
