@@ -40,7 +40,7 @@ class Coupon(models.Model):
             coupon_id (int | UUID): 取得対象のクーポンID
         Returns:
             UUID | None:
-            - 該当クーポンが存在すれば、関連する店舗ユーザーのID（UUID）。
+            - 該当クーポンが存在する場合、関連する店舗ユーザーのID（UUID）。
             - 存在しない場合は None を返す。
         """
         try:
@@ -63,14 +63,13 @@ class Coupon(models.Model):
             coupon_id(int): 取得対象のクーポンID
         Returns:
             Coupon | None:
-            - 存在すれば Coupon インスタンス（store情報付き）。
+            - 存在する場合 Coupon インスタンス（store情報付き）。
             - 存在しない、複数件見つかった、またはDBエラーの場合は None を返す。
         """
         try:
             coupon = (
                 cls.objects
                 .select_related("store")
-                .only("id", "store_id", "store__store_name")
                 .get(id=coupon_id)
             )
             return coupon
