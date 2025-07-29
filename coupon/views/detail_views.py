@@ -23,11 +23,12 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
             PermissionDenied: アクセス権がない場合
         """
         coupon_id = self.kwargs.get("coupon_id")
+        # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
+        store_user_id = Coupon.get_store_user_id(coupon_id)
+        if store_user_id != self.request.user.id:
+            raise PermissionDenied("リソースにアクセスできません。")
         # coupon_idからcouponデータ取得
         coupon = Coupon.get_coupon(coupon_id)
-        # 所有者チェック（クーポンが所属する店舗のユーザーとログインユーザーが一致するか）
-        if coupon.store.user != self.request.user:
-            raise PermissionDenied("リソースにアクセスできません。")
         return coupon
 
     def get(self, request, *args, **kwargs):
