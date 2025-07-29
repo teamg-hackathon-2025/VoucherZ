@@ -1,5 +1,5 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
-from django.contrib import messages
 from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
@@ -19,18 +19,28 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         Returns:
             coupon: 指定されたクーポンIDが存在すれば coupon インスタンス。
             None: 存在しない場合。
+        Raises:
+            PermissionDenied: アクセス権がない場合
         """
         coupon_id = self.kwargs.get("coupon_id")
         # coupon_idからcouponデータ取得
         coupon = Coupon.get_coupon(coupon_id)
+        # 所有者チェック（クーポンが所属する店舗のユーザーとログインユーザーが一致するか）
+        if coupon.store.user != self.request.user:
+            raise PermissionDenied("リソースにアクセスできません。")
         return coupon
 
     def get(self, request, *args, **kwargs):
         """
         クーポン詳細ページ。
-        存在しない、または利用できないクーポンIDが指定された場合は一覧ページへリダイレクトする。
+        - 権限がない場合は一覧ページにリダイレクトする。
+        - 取得結果が None の場合も一覧ページにリダイレクトする。
+        - 正常取得できた場合は詳細ページを表示する。
         """
-        self.object = self.get_object()
+        try:
+            self.object = self.get_object()
+        except PermissionDenied:
+            return redirect(reverse("coupon:coupon_list"))
         if self.object is None:
             return redirect(reverse("coupon:coupon_list"))
         return super().get(request, *args, **kwargs)
