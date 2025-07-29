@@ -51,7 +51,9 @@ class Coupon(models.Model):
                 .get(id=coupon_id)
             )
             return coupon
+        # 指定された ID のクーポンが存在しない場合は警告ログを出力し、None を返す
         except cls.DoesNotExist:
+            # データ未存在エラー
             logger.warning(
                 f"[Coupon] Coupon not found: id={coupon_id}"
             )
