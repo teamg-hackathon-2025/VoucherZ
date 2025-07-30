@@ -4,8 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils import timezone
+import logging
 
 from ..models import Coupon
+logger = logging.getLogger(__name__)
 
 
 class CouponDetailView(LoginRequiredMixin, DetailView):
@@ -26,6 +28,14 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
         store_user_id = Coupon.get_store_user_id(coupon_id)
         if store_user_id != self.request.user.id:
+            logger.warning(
+                "Unauthorized access attempt",
+                extra={
+                    "user_id": self.request.user.id,
+                    "coupon_id": coupon_id,
+                    "ip": self.request.META.get("REMOTE_ADDR"),
+                },
+            )
             raise PermissionDenied("リソースにアクセスできません。")
         # coupon_idからcouponデータ取得
         coupon = Coupon.get_coupon(coupon_id)
