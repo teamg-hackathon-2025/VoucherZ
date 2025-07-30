@@ -8,7 +8,7 @@ from django.utils import timezone
 from ..models import Coupon
 
 
-class CouponDetailView(DetailView):
+class CouponDetailView(LoginRequiredMixin, DetailView):
     template_name = "coupon/detail.html"
     model = Coupon
     context_object_name = "coupon"
@@ -25,8 +25,8 @@ class CouponDetailView(DetailView):
         coupon_id = self.kwargs.get("coupon_id")
         # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
         store_user_id = Coupon.get_store_user_id(coupon_id)
-        # if store_user_id != self.request.user.id:
-        #     raise PermissionDenied("リソースにアクセスできません。")
+        if store_user_id != self.request.user.id:
+            raise PermissionDenied("リソースにアクセスできません。")
         # coupon_idからcouponデータ取得
         coupon = Coupon.get_coupon(coupon_id)
         return coupon
