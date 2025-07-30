@@ -93,12 +93,12 @@
   display: flex;
   justify-content: flex-end;
 }
-.button-primary {
+.coupon-list-button-primary {
   background: var(--color-button-primary-background);
   color: var(--color-layout-text-primary);
   border: none;
   border-radius: 8px;
-  padding: 8px 20px;
+  padding: 8px 80px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -106,7 +106,20 @@
   align-items: center;
   gap: 6px;
   transition: background 0.2s;
-  margin-right: auto; /* Position in the left */
+}
+.coupon-list-button-secondary {
+  background: red;
+  color: var(--color-layout-text-primary);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 80px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: not-allowed; /* Makes the cursor unclickable */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Aligns text in the center */
+  gap: 6px;
 }
 .coupon-action button:hover {
   background: #333;
