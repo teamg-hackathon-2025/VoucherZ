@@ -30,7 +30,7 @@ class Coupon(models.Model):
 
 
 class CouponCode(models.Model):
-    store_id = models.IntegerField()
+    store_id = models.BigIntegerField()
     coupon = models.ForeignKey(
         'Coupon',
         on_delete=models.CASCADE,
