@@ -4,6 +4,7 @@
   --color-main-background-primary: #1256c4;
   /* main以外 */
   --color-layout-text-primary: #ffffff;
+  --color-layout-text-secondary: #ffffff;
   --color-layout-background-primary: var(--color-main-background-primary);
   --color-layout-background-overlay: rgba(0, 0, 0, 0.3);
   /* panelは「操作・編集させる」ためのUI */
