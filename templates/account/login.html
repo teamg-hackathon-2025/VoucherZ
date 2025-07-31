@@ -1,0 +1,31 @@
+{% extends "account/base.html" %}
+{% load static %}
+
+{% block body %}
+    <h2>ログイン</h2>
+    <form action="{% url 'account:login' %}" method="POST"   novalidate>
+        {% csrf_token %}
+       <!-- フォーム全体 -->
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+
+        <!-- 各フィールド -->
+        {% for field in form %}
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        
+        <button type="submit">ログイン</button>
+        <a href="{% url 'account:signup' %}">アカウント作成</a>
+    </form>
+
+{% endblock %}

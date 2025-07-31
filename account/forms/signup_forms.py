@@ -1,15 +1,10 @@
 from django import forms
 from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from account.forms.validators import no_whitespace_validator
 
 User = get_user_model()
-
-def no_whitespace_validator(value):
-    if ' ' in value:
-        raise ValidationError(
-            "パスワードに空白を含めることはできません。",
-        )
 
 
 class SignUpForm(forms.Form):
