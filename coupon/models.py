@@ -116,9 +116,10 @@ class CouponCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_store(self):
-        from account.models import Store
-        return Store.objects.get(pk=self.store_id)
+    def save(self, *args, **kwargs):
+        if not self.pk:  # 新規作成時だけセット
+            self.store_id = self.coupon.store_id
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "coupon_codes"
