@@ -10,6 +10,7 @@ body {
   background-color: var(--color-main-background-primary);
   box-sizing: border-box;
   min-height: 100vh;
+  overflow-wrap: break-word;
 }
 
 li {
@@ -73,5 +74,6 @@ button {
 @media screen and (max-width: 767px) {
   .is-authenticated .main {
     width: 100%;
+    padding-top: 68px;
   }
 }
