@@ -12,15 +12,19 @@
       <div class="box">
         <p class="store-name">{{ coupon.store.store_name }}</p>
         <h3 class="campaign-title">{{ coupon.title }}</h3>
+        {% if coupon.message %}
         <p class="message">{{ coupon.message|linebreaksbr }}</p>
+        {% endif %}
         <div class="item coupon-code">
           <h4 class="item-label">クーポンコード:</h4>
           <p class="item-value">XXXXXXX  ※こちらは見本です</p>
         </div>
+        {% if coupon.product_name %}
         <div class="item">
           <h4 class="item-label">商品名:</h4>
           <p class="item-value">{{ coupon.product_name }}</p>
         </div>
+        {% endif %}
         <div class="item">
           <h4 class="item-label">割引内容:</h4>
           <p class="item-value">{{ coupon.discount }}</p>

@@ -53,10 +53,12 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
             self.object = self.get_object()
         except PermissionDenied:
             return redirect(reverse("coupon:coupon_list"))
+        today = timezone.now().date()
+        expiration_date = self.object.expiration_date
         # 取得結果がNone、もしくは今日より有効期限が前ならホーム画面へリダイレクト
         if (
             self.object is None or
-            self.object.expiration_date < timezone.now().date()
+            (expiration_date and expiration_date < today)
         ):
             return redirect(reverse("coupon:coupon_list"))
         return super().get(request, *args, **kwargs)
