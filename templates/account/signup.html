@@ -3,10 +3,15 @@
 
 {% block body %}
     <h2>アカウント作成</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+
     <form action="{% url 'account:signup' %}" method="POST"   novalidate>
         {% csrf_token %}
-
-        <!-- フォーム全体 -->
        
        <!-- フォーム全体 -->
         {% if form.non_field_errors %}

@@ -1,12 +1,14 @@
+from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from account.forms.signup_forms import SignUpForm
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, DatabaseError
-import logging
 from account.models import Store
 from django.db import transaction
+from django.contrib import messages
+import logging
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +46,9 @@ class SignUpView(FormView):
             return self.form_invalid(form)
         except DatabaseError as e:
             logger.exception(f"Database error during user signup for email={email}: {e}")
-            # 本番では500エラーページにリダイレクトする
-            raise # HttpResponseServerError() 
+            messages.error(self.request, 'データベースエラーが発生しました。もう一度お試しください。')
+            return redirect(reverse_lazy('account:signup'))
         except Exception as e:
             logger.exception(f"Unexpected error during user signup for email={email}: {e}")
-            raise #  HttpResponseServerError() など
+            messages.error(self.request, '不明なエラーが発生しました。時間をおいてから再度お試しください。')
+            return redirect(reverse_lazy('account:signup'))

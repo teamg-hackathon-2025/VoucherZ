@@ -3,6 +3,13 @@
 
 {% block body %}
     <h2>ログイン</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    
     <form action="{% url 'account:login' %}" method="POST"   novalidate>
         {% csrf_token %}
        <!-- フォーム全体 -->
@@ -23,7 +30,8 @@
                 {% endfor %}
             {% endif %}
         {% endfor %}
-        
+    
+
         <button type="submit">ログイン</button>
         <a href="{% url 'account:signup' %}">アカウント作成</a>
     </form>

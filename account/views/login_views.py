@@ -3,8 +3,12 @@ from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import LoginView
 from account.forms.login_forms import LoginForm
+from django.db import DatabaseError
+from django.contrib import messages
+import logging
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
 
 class LoginView(LoginView):
     template_name = 'account/login.html'
@@ -15,4 +19,15 @@ class LoginView(LoginView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('coupon:coupon_list')
-        return super().dispatch(request, *args, **kwargs)
+        
+        try:
+            return super().dispatch(request, *args, **kwargs)
+        except DatabaseError as e:
+            logger.exception("Database error occurred during login process.")
+            messages.error(request, 'データベースエラーが発生しました。もう一度お試しください。')
+            return redirect(reverse_lazy('account:login'))
+        except Exception as e:
+            # その他の予期せぬエラー
+            logger.exception("Unexpected error occurred during login process.")
+            messages.error(request, '不明なエラーが発生しました。時間をおいてから再度お試しください。')
+            return redirect(reverse_lazy('account:login'))
