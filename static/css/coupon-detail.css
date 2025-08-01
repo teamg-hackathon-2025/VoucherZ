@@ -21,21 +21,23 @@
 }
 
 .coupon-detail .block-coupon .box {
-  text-align: center;
   padding-top: 5px;
 }
 
 .coupon-detail .block-coupon .box .store-name {
   font-size: 20px;
   font-weight: 700;
+  text-align: center;
 }
 
 .coupon-detail .block-coupon .box .campaign-title {
   font-size: 24px;
+  text-align: center;
 }
 
 .coupon-detail .block-coupon .box .message {
   margin-top: 15px;
+  text-align: center;
 }
 
 .coupon-detail .block-coupon .box .item {
@@ -49,12 +51,14 @@
 .coupon-detail .block-coupon .box .item-label {
   font-size: 16px;
   font-weight: 400;
+  text-align: center;
 }
 
 .coupon-detail .block-coupon .box .item-value {
   font-size: 24px;
   font-weight: 700;
   padding-top: 1px;
+  text-align: center;
 }
 
 .coupon-detail .block-coupon .box .item-value .suffix {
