@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
+from django.contrib.auth import login
 from account.forms.signup_forms import SignUpForm
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
@@ -25,14 +26,19 @@ class SignUpView(FormView):
         password = form.cleaned_data['password']
         store_name = form.cleaned_data['store_name']
 
+        user_name = form.cleaned_data.get("user_name", "").strip()
+        if not user_name:
+            user_name = None
+
         try:
             # トランザクションを開始(user,storeどちらも作成成功したら完了)
             with transaction.atomic():
                 # CustomUserManagerのcreate_userを呼び出す
                 # raise：メール重複、パスワードバリデーション、DBエラー、予期せぬエラー
                 # メール重複、パスワードバリデーションは予期せぬケースへのセーフティネットとして記述
-                user = User.objects.create_user(email=email, password=password)
+                user = User.objects.create_user(email=email, password=password, user_name=user_name)
                 Store.objects.create(user=user, store_name=store_name)
+                login(self.request, user)
 
             return super().form_valid(form)
         except IntegrityError:

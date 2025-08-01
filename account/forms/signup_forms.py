@@ -11,6 +11,7 @@ class SignUpForm(forms.Form):
     user_name = forms.CharField(
         label='名前（ニックネーム）',
         max_length=255, # Userモデルのmax_lengthに合わせる
+        required=False,
         widget=forms.TextInput(attrs={'autofocus': True, 'placeholder': '例: 山田 太郎（ニックネーム可）'}),
     )
     store_name = forms.CharField(

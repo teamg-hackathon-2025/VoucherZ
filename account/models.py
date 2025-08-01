@@ -8,7 +8,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password):
+    def create_user(self, email, password, user_name=None):
         """
         ユーザーを作成するためのメソッド。
         Args:
@@ -34,6 +34,10 @@ class CustomUserManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email)
+
+        if user_name:
+            user.user_name = user_name
+
         user.set_password(password)
 
         try:
