@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% load static %}
+<!-- ライブラリのstaticをロード -->
+
+<!-- ページ固有のCSSを追加 -->
+{% block extra_css %}
+<link href="{% static 'css/coupon-list.css' %}" rel="stylesheet" />
+{% endblock %}
+
+<!-- ページ固有のbodyを追加 -->
+{% block body %}
+<p>Hello World</p>
+{% endblock %}
