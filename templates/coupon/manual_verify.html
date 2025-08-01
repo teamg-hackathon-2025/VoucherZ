@@ -3,10 +3,23 @@
 
 <!-- ページ固有のCSSを追加 -->
 {% block extra_css %}
-<link href="{% static 'css/coupon-list.css' %}" rel="stylesheet" />
+<link href="{% static 'css/verify.css' %}" rel="stylesheet" />
 {% endblock %}
 
 <!-- ページ固有のbodyを追加 -->
 {% block body %}
-<p>Hello World</p>
+<div class="verification-container">
+  <form class="verification-form">
+    <h3 class="verification-form-title">クーポンを認証</h3>
+    <label for="verification-code">クーポンコード</label>
+    <input
+      type="text"
+      id="verification-code"
+      name="verification-code"
+      placeholder="コードを入力"
+      required
+    />
+    <button type="submit">使用済みにする</button>
+  </form>
+</div>
 {% endblock %}
