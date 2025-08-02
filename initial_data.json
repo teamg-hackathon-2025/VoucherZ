@@ -24,28 +24,10 @@
     "model": "coupon.coupon",
     "pk": 4,
     "fields": {
-      "title": "春のキャンペーン",
-      "discount": "",
-      "product_name": "",
-      "message": "",
-      "expiration_date": "2025-05-01",
-      "max_issuance": 15,
-      "redeemed_count": 0,
-      "issued_count": 0,
-      "deleted_at": null,
-      "created_at": "2025-03-01T00:00:00Z",
-      "updated_at": "2025-03-01T00:00:00Z",
-      "store": 1
-    }
-  },
-  {
-    "model": "coupon.coupon",
-    "pk": 3,
-    "fields": {
       "title": "全品10％OFFキャンペーン",
       "discount": "一杯無料",
-      "product_name": "コーヒー",
-      "message": "",
+      "target_product": "コーヒー",
+      "message": null,
       "expiration_date": "2025-09-01",
       "max_issuance": 15,
       "redeemed_count": 0,
@@ -58,7 +40,7 @@
   },
   {
     "model": "coupon.coupon",
-    "pk": 2,
+    "pk": 3,
     "fields": {
       "title": "無期限クーポン",
       "discount": "10%OFF",
@@ -76,7 +58,7 @@
   },
   {
     "model": "coupon.coupon",
-    "pk": 1,
+    "pk": 2,
     "fields": {
       "title": "夏休みキャンペーン",
       "discount": "一杯無料",
@@ -93,6 +75,24 @@
     }
   },
   {
+    "model": "coupon.coupon",
+    "pk": 1,
+    "fields": {
+      "title": "春のキャンペーン",
+      "discount": "10％OFF",
+      "target_product": "全品",
+      "message": "",
+      "expiration_date": "2025-05-01",
+      "max_issuance": 15,
+      "redeemed_count": 0,
+      "issued_count": 0,
+      "deleted_at": null,
+      "created_at": "2025-03-01T00:00:00Z",
+      "updated_at": "2025-03-01T00:00:00Z",
+      "store": 1
+    }
+  },
+  {
     "model": "coupon.couponcode",
     "pk": 1,
     "fields": {
@@ -101,7 +101,7 @@
       "redeemed_at": null,
       "created_at": "2025-07-28T00:00:00Z",
       "updated_at": "2025-07-28T00:00:00Z",
-      "coupon": 1
+      "coupon": 2
     }
   }
 ]

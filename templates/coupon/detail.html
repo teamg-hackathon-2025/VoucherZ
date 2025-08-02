@@ -19,12 +19,10 @@
           <h4 class="item-label">クーポンコード:</h4>
           <p class="item-value">XXXXXXX  ※こちらは見本です</p>
         </div>
-        {% if coupon.product_name %}
         <div class="item">
-          <h4 class="item-label">商品名:</h4>
-          <p class="item-value">{{ coupon.product_name }}</p>
+          <h4 class="item-label">対象商品:</h4>
+          <p class="item-value">{{ coupon.target_product }}</p>
         </div>
-        {% endif %}
         <div class="item">
           <h4 class="item-label">割引内容:</h4>
           <p class="item-value">{{ coupon.discount }}</p>
