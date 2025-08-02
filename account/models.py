@@ -138,7 +138,6 @@ class User(AbstractBaseUser):
 class Store(models.Model):
     user = models.ForeignKey(
         'User',
-        'User',
         on_delete=models.CASCADE,
         related_name='stores',
         db_column='user_id',
