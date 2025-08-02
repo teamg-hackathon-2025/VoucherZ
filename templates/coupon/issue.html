@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} - クーポン発行{% endblock %}
+{% block extra_css %}
+<link href="{% static 'css/coupon-issue.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<section class="coupon-issue">
+  <div class="container">
+    <div class="block-coupon">
+      <div class="box">
+        <p class="store-name">焼きたて工房　さとう</p>
+        <h2 class="campaign-title">夏休みキャンペーン</h2>
+        <!-- messageがあった場合 -->
+        <p class="message">この度はご来店ありがとうございます。<br>当店から夏の限定クーポンをお渡しいたします。</p>
+        <div class="item coupon-code">
+          <h3 class="item-label">クーポンコード:</h3>
+          <p class="item-value">HEZQ2A7</p>
+        </div>
+        <div class="item">
+          <h3 class="item-label">対象商品:</h3>
+          <p class="item-value">コーヒー</p>
+        </div>
+        <div class="item">
+          <h3 class="item-label">割引内容:</h3>
+          <p class="item-value">一杯無料</p>
+        </div>
+        <div class="item">
+          <!-- 有効期限があった場合と無期限の場合 -->
+          <h3 class="item-label">有効期限:</h3>
+          <p class="item-value">
+            2025/08/28<span class="suffix">まで</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="block-button">
+      <a class="link button-primary" href="#">ホームに戻る</a>
+      <form class="form" method="POST" action="#">
+        {% csrf_token %}
+        <button class="button-primary" type="submit">クーポンを続けて発行</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
