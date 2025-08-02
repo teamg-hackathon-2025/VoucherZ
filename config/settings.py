@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
+    'account',
     'coupon',
     'debug_toolbar',
     'django_extensions',

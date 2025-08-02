@@ -68,8 +68,19 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
+    user_name = models.CharField(max_length=255, blank=True, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    last_login = None
+
+    USERNAME_FIELD = "email" # ログインはemailで行う
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
 
     class Meta:
+        db_table="users"
         db_table="users"
         verbose_name = 'User'
         verbose_name_plural = 'Users'
@@ -99,10 +110,34 @@ class User(AbstractBaseUser):
         # メールアドレスからuser_nameを作成
         pre_username = self.email.split('@')[0][:10] # メールアドレスの@より前10文字
         return pre_username
+    
+    # saveメソッドをオーバーライドしてuser_nameを自動生成
+    def save(self, *args, **kwargs):
+        # user_nameが未設定の場合のみ自動生成を試みる
+        if not self.user_name: 
+            try:
+                self.user_name = self._generate_pre_username()
+            except Exception as e:
+                # user_name生成失敗時のエラーハンドリング。
+                # 今回は自動生成が失敗したら、DBに空文字で保存される
+                logger.error(f"Failed to generate user_name for email={self.email}. Saving with empty user_name. Error: {e}")
+                self.user_name = ""
+        
+        try:
+            super().save(*args, **kwargs)
+        except Exception as e:
+            logger.exception(f"Unexpected error during user object save for email={self.email}: {e}")
+            raise
+
+    def _generate_pre_username(self):
+        # メールアドレスからuser_nameを作成
+        pre_username = self.email.split('@')[0][:10] # メールアドレスの@より前10文字
+        return pre_username
 
 
 class Store(models.Model):
     user = models.ForeignKey(
+        'User',
         'User',
         on_delete=models.CASCADE,
         related_name='stores',
