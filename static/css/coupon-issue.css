@@ -92,6 +92,10 @@
     padding: 21px 15px 24px;
   }
 
+  .coupon-issue .block-coupon .box {
+    padding-top: 16px;
+  }
+
   .coupon-issue .block-coupon .box .coupon-code .item-value {
     font-size: 42px;
   }
