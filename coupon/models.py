@@ -14,7 +14,7 @@ class Coupon(models.Model):
     )
     title = models.CharField(max_length=255)
     discount = models.CharField(max_length=255)
-    product_name = models.CharField(max_length=255, null=True, blank=True)
+    target_product = models.CharField(max_length=255)
     message = models.CharField(max_length=255, null=True, blank=True)
     expiration_date = models.DateField(null=True, blank=True)
     max_issuance = models.IntegerField(null=True, blank=True)
@@ -104,7 +104,7 @@ class Coupon(models.Model):
 
 
 class CouponCode(models.Model):
-    store_id = models.IntegerField()
+    store_id = models.BigIntegerField()
     coupon = models.ForeignKey(
         'Coupon',
         on_delete=models.CASCADE,
