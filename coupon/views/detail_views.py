@@ -47,7 +47,7 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         - 権限がない場合は一覧ページにリダイレクトする。
         - 取得結果が None の場合も一覧ページにリダイレクトする。
         - 今日より有効期限が前の場合も一覧ページにリダイレクトする
-        - 発行数の上限に発行数が達した場合も一覧ページにリダイレクトする
+        - 発行数の上限に達した場合も一覧ページにリダイレクトする
         - 正常取得できた場合は詳細ページを表示する。
         """
         try:
@@ -62,7 +62,7 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         issued_count = self.object.issued_count
         if (
             (expiration_date and expiration_date < today) or
-            (max_issuance and issued_count and max_issuance <= issued_count)
+            (max_issuance is not None and max_issuance <= issued_count)
         ):
             return redirect(reverse("coupon:coupon_list"))
         return super().get(request, *args, **kwargs)
