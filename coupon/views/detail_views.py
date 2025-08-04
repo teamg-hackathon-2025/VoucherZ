@@ -28,14 +28,6 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
         store_user_id = Coupon.get_store_user_id(coupon_id)
         if store_user_id != self.request.user.id:
-            logger.warning(
-                "Unauthorized access attempt",
-                extra={
-                    "user_id": self.request.user.id,
-                    "coupon_id": coupon_id,
-                    "ip": self.request.META.get("REMOTE_ADDR"),
-                },
-            )
             raise PermissionDenied("リソースにアクセスできません。")
         # coupon_idからcouponデータ取得
         coupon = Coupon.get_coupon(coupon_id)
@@ -53,6 +45,14 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         try:
             self.object = self.get_object()
         except PermissionDenied:
+            logger.warning(
+                "Unauthorized access attempt",
+                extra={
+                    "user_id": self.request.user.id,
+                    "coupon_id": kwargs.get("coupon_id"),
+                    "ip": self.request.META.get("REMOTE_ADDR"),
+                },
+            )
             return redirect(reverse("coupon:coupon_list"))
         if self.object is None:
             return redirect(reverse("coupon:coupon_list"))
