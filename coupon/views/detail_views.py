@@ -3,6 +3,7 @@ from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.http import Http404
 from django.utils import timezone
 import logging
 
@@ -19,31 +20,42 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         """
         URLパスからクーポンIDを取得し、対応するクーポン情報を返す
         Returns:
-            coupon: 指定されたクーポンIDが存在すれば coupon インスタンス。
-            None: 存在しない場合。
-        Raises:
-            PermissionDenied: アクセス権がない場合
+            coupon: 指定されたクーポンIDが存在すれば coupon インスタンス
+            None: レコード未存在、整合性エラー、DBエラー、その他予期せぬエラーが発生した場合
         """
         coupon_id = self.kwargs.get("coupon_id")
-        # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
-        store_user_id = Coupon.get_store_user_id(coupon_id)
-        if store_user_id != self.request.user.id:
-            raise PermissionDenied("リソースにアクセスできません。")
-        # coupon_idからcouponデータ取得
         coupon = Coupon.get_coupon(coupon_id)
         return coupon
 
     def get(self, request, *args, **kwargs):
         """
         クーポン詳細ページ。
-        - 権限がない場合は一覧ページにリダイレクトする。
-        - 取得結果が None の場合も一覧ページにリダイレクトする。
-        - 今日より有効期限が前の場合も一覧ページにリダイレクトする
-        - 発行数の上限に達した場合も一覧ページにリダイレクトする
+        - coupon_idに紐づいているデータがない場合はホーム画面にリダイレクトする
+        - 権限がない場合はホーム画面にリダイレクトする。
+        - 取得結果が None の場合もホーム画面にリダイレクトする。
+        - 今日より有効期限が前の場合もホーム画面にリダイレクトする
+        - 発行数の上限に達した場合もホーム画面にリダイレクトする
         - 正常取得できた場合は詳細ページを表示する。
         """
+        coupon_id = kwargs.get("coupon_id")
         try:
+            # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
+            store_user_id = Coupon.get_store_user_id(coupon_id)
+            if store_user_id is None:
+                raise Http404()
+            if store_user_id != request.user.id:
+                raise PermissionDenied()
             self.object = self.get_object()
+        except Http404:
+            logger.info(
+                "Coupon not found",
+                extra={
+                    "user_id": request.user.id,
+                    "coupon_id": coupon_id,
+                    "ip": request.META.get("REMOTE_ADDR"),
+                },
+            )
+            return redirect(reverse("coupon:coupon_list"))
         except PermissionDenied:
             logger.warning(
                 "Unauthorized access attempt",
