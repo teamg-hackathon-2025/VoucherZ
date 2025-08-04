@@ -61,7 +61,7 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         max_issuance = self.object.max_issuance
         issued_count = self.object.issued_count
         if (
-            (expiration_date and expiration_date < today) or
+            (expiration_date is not None and expiration_date < today) or
             (max_issuance is not None and max_issuance <= issued_count)
         ):
             return redirect(reverse("coupon:coupon_list"))
