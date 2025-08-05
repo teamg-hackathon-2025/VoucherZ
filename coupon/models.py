@@ -51,8 +51,16 @@ class Coupon(models.Model):
             )
             return user_id
         except cls.DoesNotExist:
-            # データ未存在
+            # データ未存在エラー
             logger.warning(f"[Coupon] Coupon not found: id={coupon_id}")
+            return None
+        except DatabaseError as e:
+            # データベース関連のエラー
+            logger.error(f"[Coupon] Database error when fetching store_user_id: id={coupon_id}, error={e}")
+            return None
+        except Exception as e:
+            # 予期しないエラーのキャッチ
+            logger.exception(f"[Coupon] Unexpected error when fetching store_user_id: id={coupon_id}, error={e}")
             return None
 
     @classmethod
@@ -73,28 +81,24 @@ class Coupon(models.Model):
                 .get(id=coupon_id)
             )
             return coupon
-        # 指定された ID のクーポンが存在しない場合は警告ログを出力し、None を返す
         except cls.DoesNotExist:
             # データ未存在エラー
             logger.warning(
                 f"[Coupon] Coupon not found: id={coupon_id}"
             )
             return None
-        # 同じ ID で複数件あった場合は整合性エラーとしてログ出力し、None を返す
         except cls.MultipleObjectsReturned as e:
             # データの整合性エラー
             logger.error(
                 f"[Coupon] Data integrity issue: Multiple entries found for coupon_id={coupon_id}. Error: {e}"
             )
             return None
-        # DBエラーはログに記録して None を返す
         except DatabaseError as e:
             # データベース関連のエラー
             logger.error(
                 f"[Coupon] DatabaseError: coupon_id={coupon_id}. Error: {e}"
             )
             return None
-        # 予期しないエラーもログに残して None を返す
         except Exception as e:
             # 予期しないエラーのキャッチ
             logger.exception(
