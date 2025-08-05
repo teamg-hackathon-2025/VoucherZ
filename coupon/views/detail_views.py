@@ -37,7 +37,7 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         - 発行数の上限に達した場合もホーム画面にリダイレクトする
         - 正常取得できた場合は詳細ページを表示する。
         """
-        coupon_id = kwargs.get("coupon_id")
+        coupon_id = self.kwargs.get("coupon_id")
         try:
             # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
             store_user_id = Coupon.get_store_user_id(coupon_id)
