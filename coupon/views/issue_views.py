@@ -38,6 +38,8 @@ class CouponIssueView(View):
                 raise PermissionDenied()
             # 有効期限切れまたは発行数上限に達している場合は一覧へリダイレクト
             coupon_for_check = Coupon.get_for_status_check(coupon_id)
+            if coupon_for_check is None:
+                return redirect(reverse("coupon:coupon_list"))
             expiration_date = coupon_for_check.expiration_date
             today = timezone.now().date()
             max_issuance = coupon_for_check.max_issuance
