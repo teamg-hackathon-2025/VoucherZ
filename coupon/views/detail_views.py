@@ -32,9 +32,9 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         クーポン詳細ページ。
         - coupon_idに紐づいているデータがない場合はホーム画面にリダイレクトする
         - 権限がない場合はホーム画面にリダイレクトする。
-        - 取得結果が None の場合もホーム画面にリダイレクトする。
         - 今日より有効期限が前の場合もホーム画面にリダイレクトする
         - 発行数の上限に達した場合もホーム画面にリダイレクトする
+        - 取得結果が None の場合もホーム画面にリダイレクトする。
         - 正常取得できた場合は詳細ページを表示する。
         """
         coupon_id = self.kwargs.get("coupon_id")
@@ -45,7 +45,22 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                 raise Http404()
             if store_user_id != request.user.id:
                 raise PermissionDenied()
+            # 有効期限切れまたは発行数上限に達している場合は一覧へリダイレクト
+            coupon_for_check = Coupon.get_for_status_check(coupon_id)
+            if coupon_for_check is None:
+                return redirect(reverse("coupon:coupon_list"))
+            expiration_date = coupon_for_check.expiration_date
+            today = timezone.now().date()
+            max_issuance = coupon_for_check.max_issuance
+            issued_count = coupon_for_check.issued_count
+            if (
+                (expiration_date is not None and expiration_date < today) or
+                (max_issuance is not None and max_issuance <= issued_count)
+            ):
+                return redirect(reverse("coupon:coupon_list"))
             self.object = self.get_object()
+            if self.object is None:
+                return redirect(reverse("coupon:coupon_list"))
         except Http404:
             logger.info(
                 "Coupon not found",
@@ -65,16 +80,5 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                     "ip": self.request.META.get("REMOTE_ADDR"),
                 },
             )
-            return redirect(reverse("coupon:coupon_list"))
-        if self.object is None:
-            return redirect(reverse("coupon:coupon_list"))
-        expiration_date = self.object.expiration_date
-        today = timezone.now().date()
-        max_issuance = self.object.max_issuance
-        issued_count = self.object.issued_count
-        if (
-            (expiration_date is not None and expiration_date < today) or
-            (max_issuance is not None and max_issuance <= issued_count)
-        ):
             return redirect(reverse("coupon:coupon_list"))
         return super().get(request, *args, **kwargs)
