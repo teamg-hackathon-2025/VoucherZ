@@ -193,7 +193,7 @@ class CouponCode(models.Model):
             coupon = Coupon.objects.get(id=coupon_id)
         except Coupon.DoesNotExist:
             logger.warning(
-                f"[CouponCode][issue] Not found: coupon_id={coupon_id}"
+                f"[CouponCode][Issue] Not found: coupon_id={coupon_id}"
             )
             return None
         for _ in range(max_retries):
@@ -215,16 +215,16 @@ class CouponCode(models.Model):
                 continue
             except DatabaseError as e:
                 logger.error(
-                    f"[CouponCode][issue] DatabaseError: coupon_id={coupon_id}. Error: {e}"
+                    f"[CouponCode][Issue] DatabaseError: coupon_id={coupon_id}. Error: {e}"
                 )
                 return None
             except Exception as e:
                 logger.exception(
-                    f"[CouponCode][issue] Unexpected error: coupon_id={coupon_id}. Error: {e}"
+                    f"[CouponCode][Issue] Unexpected error: coupon_id={coupon_id}. Error: {e}"
                 )
                 return None
 
         logger.error(
-            f"[CouponCode][issue] Failed to issue after {max_retries} retries: coupon_id={coupon_id}"
+            f"[CouponCode][Issue] Failed to issue after {max_retries} retries: coupon_id={coupon_id}"
         )
         return None
