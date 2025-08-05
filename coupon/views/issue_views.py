@@ -26,7 +26,9 @@ class CouponIssueView(View):
         - 有効期限切れまたは発行数上限に達している場合はホーム画面にリダイレクトする
         - 正常な場合はクーポンコードを発行し、発行後の処理を実行する
         Returns:
-            HttpResponse: リダイレクトまたは発行後のレスポンス
+            HttpResponse:
+            - 成功時: 発行したクーポン内容を表示するレスポンス
+            - 失敗時: ホーム画面へのリダイレクトレスポンス
         """
         coupon_id = self.kwargs.get("coupon_id")
         try:
