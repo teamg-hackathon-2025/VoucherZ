@@ -1,4 +1,7 @@
 .coupon-list-header {
+  margin-bottom: 30px;
+}
+.coupon-list-header {
   font-size: 2rem;
   font-weight: bold;
   color: var(--color-layout-text-primary);

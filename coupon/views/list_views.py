@@ -4,5 +4,4 @@ from django.views import View
 app_name = "coupon"
 
 class CouponListView(View):
-    def get(self, request):
-        return render(request, 'coupon/list.html')
+    template_name = "coupon/list.html"
