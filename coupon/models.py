@@ -1,6 +1,7 @@
 import logging
 import string
 import random
+from django.db.models import F
 
 from django.db import models, DatabaseError, IntegrityError, transaction
 
@@ -199,11 +200,17 @@ class CouponCode(models.Model):
             code = cls.generate_code(length)
             try:
                 with transaction.atomic():
-                    return cls.objects.create(
+                    # クーポンコード発行
+                    coupon_code = cls.objects.create(
                         coupon=coupon,
                         store_id=coupon.store_id,
                         coupon_code=code
                     )
+                    # 発行数を +1（競合に強いF()で）
+                    Coupon.objects.filter(id=coupon_id).update(
+                        issued_count=F('issued_count') + 1
+                    )
+                    return coupon_code
             except IntegrityError:
                 continue
             except DatabaseError as e:
