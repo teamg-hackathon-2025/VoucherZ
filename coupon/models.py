@@ -37,11 +37,10 @@ class Coupon(models.Model):
         """
         指定されたクーポンIDに紐づく店舗ユーザーのIDを取得する
         Args:
-            coupon_id (int | UUID): 取得対象のクーポンID
+            coupon_id (int): 取得対象のクーポンID
         Returns:
-            UUID | None:
-            - 該当クーポンが存在する場合、関連する店舗ユーザーのID（UUID）。
-            - 存在しない場合は None を返す。
+            user_id: 該当クーポンが存在する場合、関連する店舗ユーザーのID（UUID）。
+            None: 存在しない、DBエラー、予期しないエラーの場合
         """
         try:
             user_id = (
@@ -51,16 +50,19 @@ class Coupon(models.Model):
             )
             return user_id
         except cls.DoesNotExist:
-            # データ未存在エラー
-            logger.warning(f"[Coupon] Coupon not found: id={coupon_id}")
+            logger.warning(
+                f"[Coupon][StoreUserIdFetch] Not found: id={coupon_id}"
+            )
             return None
         except DatabaseError as e:
-            # データベース関連のエラー
-            logger.error(f"[Coupon] Database error when fetching store_user_id: id={coupon_id}, error={e}")
+            logger.error(
+                f"[Coupon][StoreUserIdFetch] Database error: id={coupon_id}, error={e}"
+            )
             return None
         except Exception as e:
-            # 予期しないエラーのキャッチ
-            logger.exception(f"[Coupon] Unexpected error when fetching store_user_id: id={coupon_id}, error={e}")
+            logger.exception(
+                f"[Coupon][StoreUserIdFetch] Unexpected error: id={coupon_id}, error={e}"
+            )
             return None
 
     @classmethod
@@ -70,9 +72,8 @@ class Coupon(models.Model):
         Args:
             coupon_id(int): 取得対象のクーポンID
         Returns:
-            Coupon | None:
-            - 存在する場合 Coupon インスタンス（store情報付き）。
-            - 存在しない、複数件見つかった、またはDBエラーの場合は None を返す。
+            coupon: 存在する場合、Couponインスタンス（store情報付き）。
+            None: 存在しない、複数件見つかった、またはDBエラーの場合
         """
         try:
             coupon = (
@@ -82,27 +83,23 @@ class Coupon(models.Model):
             )
             return coupon
         except cls.DoesNotExist:
-            # データ未存在エラー
             logger.warning(
-                f"[Coupon] Coupon not found: id={coupon_id}"
+                f"[Coupon][DetailFetch] Not found: id={coupon_id}"
             )
             return None
         except cls.MultipleObjectsReturned as e:
-            # データの整合性エラー
             logger.error(
-                f"[Coupon] Data integrity issue: Multiple entries found for coupon_id={coupon_id}. Error: {e}"
+                f"[Coupon][DetailFetch] Data integrity issue: id={coupon_id}, error={e}"
             )
             return None
         except DatabaseError as e:
-            # データベース関連のエラー
             logger.error(
-                f"[Coupon] DatabaseError: coupon_id={coupon_id}. Error: {e}"
+                f"[Coupon][DetailFetch] Database error: id={coupon_id}, error={e}"
             )
             return None
         except Exception as e:
-            # 予期しないエラーのキャッチ
             logger.exception(
-                f"[Coupon] Unexpected error: coupon_id={coupon_id}. Error: {e}"
+                f"[Coupon][DetailFetch] Unexpected error: id={coupon_id}, error={e}"
             )
             return None
 
