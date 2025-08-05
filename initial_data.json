@@ -25,8 +25,8 @@
     "pk": 5,
     "fields": {
       "title": "全品10％OFFキャンペーン(上限達しています)",
-      "discount": "一杯無料",
-      "target_product": "コーヒー",
+      "discount": "10％OFF",
+      "target_product": "全品",
       "message": null,
       "expiration_date": "2025-09-01",
       "max_issuance": 15,
@@ -43,8 +43,8 @@
     "pk": 4,
     "fields": {
       "title": "全品10％OFFキャンペーン",
-      "discount": "一杯無料",
-      "target_product": "コーヒー",
+      "discount": "10％OFF",
+      "target_product": "全品",
       "message": null,
       "expiration_date": "2025-09-01",
       "max_issuance": 15,
