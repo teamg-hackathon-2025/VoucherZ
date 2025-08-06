@@ -1,6 +1,6 @@
-{% extends 'base.html' %} {% load static %} {% block title %}{{ coupon.title }}
-ホーム {% endblock %} {% block extra_css %}
-<link href="{% static 'css/coupon-detail.css' %}" rel="stylesheet" />
+{% extends 'base.html' %} {% load static %} {% block title %} ホーム {% endblock
+%} {% block extra_css %}
+<link href="{% static 'css/coupon-list.css' %}" rel="stylesheet" />
 {% endblock %}
 
 <!-- ページ固有のbodyを追加 -->
@@ -24,7 +24,7 @@
         <!-- DB情報：クーポンのタイトル -->
       </div>
       <div class="coupon-info">
-        <p>対象商品：{{ coupon.product_name }}</p>
+        <p>対象商品：{{ coupon.target_product }}</p>
         <!-- DB情報：クーポンの商品名 -->
         <p>割引内容：{{ coupon.discount }}</p>
         <!-- DB情報：クーポンの割引内容 -->
@@ -52,7 +52,7 @@
       </a>
       {% elif coupon.expiration_date == today %}
       <p class="coupon-list-button-secondary">期限切れ</p>
-      {% elif coupon.issued_count == coupon.max_issuance %}
+      {% elif coupon.issued_count => coupon.max_issuance %}
       <p class="coupon-list-button-secondary">発行上限到達</p>
       {% endif %} {% endfor %}
 
