@@ -41,7 +41,7 @@
     </div>
     <div class="block-button">
       <a class="link button-primary" href="{% url 'coupon:coupon_list' %}">ホームに戻る</a>
-      <form class="form" method="POST" action="{% url 'coupon:coupon_issue' %}">
+      <form class="form" method="POST" action="{% url 'coupon:coupon_issue' coupon.id %}">
         {% csrf_token %}
         <button class="button-primary" type="submit">クーポンを発行</button>
       </form>
