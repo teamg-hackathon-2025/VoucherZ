@@ -1,0 +1,29 @@
+body {
+    background-image: url('../img/small-LP.png');
+    height: 100vh;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.lp-button {
+    font-weight: 700;
+    color: var(--color-button-primary-text);
+    background-color: transparent;
+    border-radius: 10px;
+    border: 2px solid white;
+
+    
+}
+
+
+/* ========================================================== */
+/* レスポンシブ */
+
+@media (min-width: 768px) {
+    body {
+        background-image: url('../img/large-LP.png');
+
+
+    }
+}
