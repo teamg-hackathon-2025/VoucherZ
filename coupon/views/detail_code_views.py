@@ -11,7 +11,7 @@ from ..models import Coupon, CouponCode
 logger = logging.getLogger(__name__)
 
 
-class CouponCodeDetailView(DetailView):
+class CouponCodeDetailView(LoginRequiredMixin, DetailView):
     template_name = "coupon/detail-code.html"
 
     def get_object(self):
@@ -85,3 +85,16 @@ class CouponCodeDetailView(DetailView):
             )
             return redirect(reverse("coupon:coupon_list"))
         return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        """
+        テンプレートに渡すコンテキスト変数を設定する。
+        self.object が dict（coupon, coupon_code を含む）の場合、
+        その中身を context に展開してテンプレートで直接使えるようにする。
+        Returns:
+            dict: テンプレートに渡すコンテキスト（coupon, coupon_code などを含む）
+        """
+        context = super().get_context_data(**kwargs)
+        if isinstance(self.object, dict):
+            context.update(self.object)
+        return context
