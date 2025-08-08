@@ -13,8 +13,7 @@ from ..models import Coupon, CouponCode
 logger = logging.getLogger(__name__)
 
 
-# class CouponIssueView(LoginRequiredMixin, View):
-class CouponIssueView(View):
+class CouponIssueView(LoginRequiredMixin, View):
     def post(self, request, **kwargs):
         """
         クーポン発行処理。
