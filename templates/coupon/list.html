@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% load static %} {% block title %} ホーム {% endblock
-%} {% block extra_css %}
+{% extends 'base.html' %}{% load static %}{% block title
+%}ホーム{%endblock%}{%block extra_css %}
 <link href="{% static 'css/coupon-list.css' %}" rel="stylesheet" />
 {% endblock %}
 
@@ -52,7 +52,7 @@
       </a>
       {% elif coupon.expiration_date == today %}
       <p class="coupon-list-button-secondary">期限切れ</p>
-      {% elif coupon.issued_count => coupon.max_issuance %}
+      {% elif coupon.issued_count >= coupon.max_issuance %}
       <p class="coupon-list-button-secondary">発行上限到達</p>
       {% endif %} {% endfor %}
 
