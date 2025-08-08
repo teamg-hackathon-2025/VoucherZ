@@ -104,7 +104,7 @@ class Coupon(models.Model):
         """
         指定されたクーポンIDに対応するクーポン情報（店舗名付き）を取得する
         Args:
-            coupon_id(int): 取得対象のクーポンID
+            coupon_id (int): 取得対象のクーポンID
         Returns:
             coupon: 存在する場合、Couponインスタンス（store情報付き）。
             None: 存在しない、複数件見つかった、またはDBエラーの場合
