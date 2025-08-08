@@ -15,9 +15,6 @@ logger = logging.getLogger(__name__)
 
 # class CouponIssueView(LoginRequiredMixin, View):
 class CouponIssueView(View):
-    def get(self, request):
-        return render(request, 'coupon/issue.html')
-
     def post(self, request, **kwargs):
         """
         クーポン発行処理。
@@ -63,8 +60,9 @@ class CouponIssueView(View):
                     },
                 )
                 return redirect(reverse("coupon:coupon_list"))
-            self.object = coupon_code
-            return self.get(request, **kwargs)
+            return redirect(
+                reverse("coupon:coupon_code_detail", kwargs={"coupon_code_id": coupon_code.id})
+            )
         except Http404:
             logger.info(
                 "Coupon not found",

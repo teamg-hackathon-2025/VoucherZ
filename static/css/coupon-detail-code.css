@@ -1,77 +1,77 @@
-.coupon-issue {
+.coupon-detail-code {
   padding: 55px 0;
 }
 
-.coupon-issue .container {
+.coupon-detail-code .container {
   padding: 0 10px;
   max-width: 892px;
   width: 100%;
   margin: 0 auto;
 }
 
-.coupon-issue .block-coupon {
+.coupon-detail-code .block-coupon {
   background-color: var(--color-card-background-primary);
   border-radius: 10px;
   padding: 30px 25px 24px;
 }
 
-.coupon-issue .block-coupon .box .store-name {
+.coupon-detail-code .block-coupon .box .store-name {
   font-size: 20px;
   font-weight: 700;
   text-align: center;
 }
 
-.coupon-issue .block-coupon .box .campaign-title {
+.coupon-detail-code .block-coupon .box .campaign-title {
   font-size: 24px;
   text-align: center;
 }
 
-.coupon-issue .block-coupon .box .message {
+.coupon-detail-code .block-coupon .box .message {
   margin-top: 15px;
   text-align: center;
 }
 
-.coupon-issue .block-coupon .box .item {
+.coupon-detail-code .block-coupon .box .item {
   margin-top: 5px;
 }
 
-.coupon-issue .block-coupon .box .item.coupon-code {
+.coupon-detail-code .block-coupon .box .item.coupon-code {
   margin-top: 37px;
 }
 
-.coupon-issue .block-coupon .box .item-label {
+.coupon-detail-code .block-coupon .box .item-label {
   font-size: 16px;
   font-weight: 400;
   text-align: center;
 }
 
-.coupon-issue .block-coupon .box .item-value {
+.coupon-detail-code .block-coupon .box .item-value {
   font-size: 24px;
   font-weight: 700;
   padding-top: 1px;
   text-align: center;
 }
 
-.coupon-issue .block-coupon .box .item-value .suffix {
+.coupon-detail-code .block-coupon .box .item-value .suffix {
   font-size: 16px;
   font-weight: 400;
   display: block;
   padding-top: 4px;
 }
 
-.coupon-issue .block-coupon .box .coupon-code .item-value {
+.coupon-detail-code .block-coupon .box .coupon-code .item-value {
   font-size: 48px;
   letter-spacing: 0.05em;
 }
 
-.coupon-issue .block-button {
+.coupon-detail-code .block-button {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 25px;
 }
 
-.coupon-issue .block-button .button-primary {
+.coupon-detail-code .block-button .button-primary {
   border: 2px solid var(--color-button-primary-border);
   max-width: 209px;
   width: 100%;
@@ -79,7 +79,7 @@
   padding: 6px 10px;
 }
 
-.coupon-issue .block-button .form {
+.coupon-detail-code .block-button .form {
   max-width: 209px;
   width: 100%;
 }
@@ -88,25 +88,25 @@
 /* レスポンシブ */
 
 @media screen and (max-width: 767px) {
-  .coupon-issue .block-coupon {
+  .coupon-detail-code .block-coupon {
     padding: 21px 15px 24px;
   }
 
-  .coupon-issue .block-coupon .box {
+  .coupon-detail-code .block-coupon .box {
     padding-top: 16px;
   }
 
-  .coupon-issue .block-coupon .box .coupon-code .item-value {
+  .coupon-detail-code .block-coupon .box .coupon-code .item-value {
     font-size: 42px;
   }
 
-  .coupon-issue .block-button {
+  .coupon-detail-code .block-button {
     width: 100%;
     flex-direction: column-reverse;
     margin-top: 0;
   }
 
-  .coupon-issue .block-button .button-primary {
+  .coupon-detail-code .block-button .button-primary {
     margin-top: 30px;
   }
 }
