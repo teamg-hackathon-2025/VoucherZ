@@ -79,7 +79,7 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                 extra={
                     "user_id": request.user.id,
                     "coupon_id": coupon_id,
-                    "ip": self.request.META.get("REMOTE_ADDR"),
+                    "ip": request.META.get("REMOTE_ADDR"),
                 },
             )
             return redirect(reverse("coupon:coupon_list"))
