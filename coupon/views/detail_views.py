@@ -13,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 class CouponDetailView(LoginRequiredMixin, DetailView):
     template_name = "coupon/detail.html"
-    model = Coupon
     context_object_name = "coupon"
 
     def get_object(self):
@@ -75,8 +74,8 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
             logger.warning(
                 "Unauthorized access attempt",
                 extra={
-                    "user_id": self.request.user.id,
-                    "coupon_id": kwargs.get("coupon_id"),
+                    "user_id": request.user.id,
+                    "coupon_id": coupon_id,
                     "ip": self.request.META.get("REMOTE_ADDR"),
                 },
             )
