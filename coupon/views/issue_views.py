@@ -1,6 +1,4 @@
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
-from django.contrib import messages
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
