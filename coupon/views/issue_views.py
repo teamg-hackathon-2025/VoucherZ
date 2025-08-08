@@ -76,8 +76,8 @@ class CouponIssueView(LoginRequiredMixin, View):
             logger.warning(
                 "Unauthorized access attempt",
                 extra={
-                    "user_id": self.request.user.id,
-                    "coupon_id": kwargs.get("coupon_id"),
+                    "user_id": request.user.id,
+                    "coupon_id": coupon_id,
                     "ip": self.request.META.get("REMOTE_ADDR"),
                 },
             )
