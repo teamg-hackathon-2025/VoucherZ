@@ -84,6 +84,13 @@
   width: 100%;
 }
 
+.coupon-detail-code .block-button .button-secondary {
+  max-width: 209px;
+  width: 100%;
+  text-align: center;
+  padding: 6px 10px;
+}
+
 /* ========================================================== */
 /* レスポンシブ */
 
@@ -106,7 +113,8 @@
     margin-top: 0;
   }
 
-  .coupon-detail-code .block-button .button-primary {
+  .coupon-detail-code .block-button .button-primary,
+  .coupon-detail-code .block-button .button-secondary {
     margin-top: 30px;
   }
 }
