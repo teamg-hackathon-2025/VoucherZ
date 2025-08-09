@@ -1,29 +1,117 @@
-body {
-    background-image: url('../img/small-LP.png');
-    height: 100vh;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+/* ========================================================== */
+/* スマホ用 */
+
+.lp-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    gap: 2rem;
+    width: 100%;
 }
 
-.lp-button {
-    font-weight: 700;
-    color: var(--color-button-primary-text);
-    background-color: transparent;
-    border-radius: 10px;
-    border: 2px solid white;
+.lp-hero__illustration img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 
-    
+
+/* 開始ボタン配置 */
+.lp-hero__cta {
+    text-align: center;
+}
+
+/* ロゴ用ガイドテキスト */
+.lp-hero__guide-text {
+    color: #D9D9D9;
+    margin-bottom: -0.5rem;
+    font-size: 18px;
+}
+
+/* 開始ボタン用ガイドテキスト */
+.lp-hero__cta-guide {
+    color: #D9D9D9;
+    margin-bottom: 0.8rem;
+}
+
+/* ロゴ用・開始ボタン用ガイドテキストの非表示 */
+.hide-on-mobile {
+    display: none;
+}
+
+/* メインテキストエリア */
+.lp-hero__text-area {
+    margin-top: 4rem;
+    margin-left: 2rem;
+    color: var(--color-layout-text-primary);
+    font-size: 2rem;
+}
+
+/* 開始ボタン */
+.lp-hero__button {
+    font-weight: 400;
+    color: #D9D9D9;
+    background-color: transparent;
+    border-radius: 32px;
+    border: 2px solid var(--color-button-primary-border);
+    padding: 15px;
+    font-size: 30px;
+    letter-spacing: -2px;
+}
+
+.lp-hero__button:hover {
+    background-color: rgba(52, 152, 219, 0.25);
+}
+
+.lp-hero__button:active {
+    background-color: rgba(52, 152, 219, 0.5); 
 }
 
 
 /* ========================================================== */
-/* レスポンシブ */
+/* レスポンシブ-タブレット- */
 
 @media (min-width: 768px) {
-    body {
-        background-image: url('../img/large-LP.png');
-
-
+    .lp-hero {
+        flex-direction: row;
+        align-items: flex-start;
+        box-sizing: border-box;
     }
+    
+    .lp-hero > div:first-child {
+        margin-right: -8rem;
+        z-index: 1;
+        position: relative;
+    }
+    
+    .logo {
+        padding-left: 0.5rem;
+    }
+    
+    /* サブテキストとの間隔調整 */
+    .lp-hero__headline {
+        margin-bottom: 2.5rem;
+    }
+    
+    /* 開始ボタン用ガイドテキストを表示する */
+    .hide-on-mobile {
+        display: block;
+    }
+    
+    /* メインテキスト */
+    .lp-hero__text-area {
+        font-size: clamp(2.5rem, 2vw + 1.5rem, 6rem);
+        white-space: nowrap;
+        margin-left: -0.5rem;
+        margin-top: 8rem;
+    }
+    
+    /* ロゴエリアの位置調整 */
+    .lp-hero__logo-area {
+        margin-top: -1.3rem;
+    }
+
 }
+

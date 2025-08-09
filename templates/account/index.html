@@ -6,5 +6,23 @@
 {% endblock %}
 
 {% block body %}
-    <a class="lp-button" href="{#}">今すぐ始める</a>
+    <div class="lp-hero">
+        <div class="lp-hero__content">
+            <div class="lp-hero__logo-area">
+                <p class="lp-hero__guide-text hide-on-mobile">デジタルクーポンの作成・管理なら</p>
+                <h1 class="logo">VoucherZ</h1>
+            </div>
+            <div class="lp-hero__text-area">
+                <p class="lp-hero__headline">紙のクーポンは、<br>もう終わり。</p>
+                <p class="lp-hero__subtext">さあ、あなたのお店も。</p>
+            </div>
+        </div>
+        <div class="lp-hero__illustration">
+            <img src="{% static 'img/VoucherZ-LPイラスト.jpg' %}" alt="アプリのイラスト" />
+        </div>
+    </div>
+    <div class="lp-hero__cta">
+        <p class="lp-hero__cta-guide hide-on-mobile">デジタルクーポンの作成・管理を</p>
+        <a class="lp-hero__button" href="{% url 'account:login' %}">今すぐ始める</a>
+    </div>
 {% endblock %}
