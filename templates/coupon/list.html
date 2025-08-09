@@ -50,10 +50,12 @@
         ><!-- href 確認 url.coupon_issue -->
         <span class="icon">&#9654;</span> クーポンを発行
       </a>
-      {% elif coupon.expiration_date == today %}
+      {% elif coupon.expiration_date != None and today > coupon.expiration_date
+      %}
       <p class="coupon-list-button-secondary">期限切れ</p>
-      {% elif coupon.issued_count >= coupon.max_issuance %}
-      <p class="coupon-list-button-secondary">発行上限到達</p>
+      {% elif coupon.max_issuance != null and coupon.issued_count >=
+      coupon.max_issuance %}
+      <p class="coupon-list-button-secondary">発行上限に達しました</p>
       {% endif %} {% endfor %}
 
       <!-- サンプル -->
