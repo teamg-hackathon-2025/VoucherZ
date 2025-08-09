@@ -14,11 +14,13 @@ class LoginView(LoginView):
     template_name = 'account/login.html'
     form_class = LoginForm
     def get_success_url(self):
-        return reverse_lazy('coupon:coupon_list')
+        # return reverse_lazy('coupon:coupon_list')
+        return reverse_lazy('index')
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('coupon:coupon_list')
+            # return redirect('coupon:coupon_list')
+            return redirect('index')
         
         try:
             return super().dispatch(request, *args, **kwargs)

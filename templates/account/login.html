@@ -1,39 +1,61 @@
 {% extends "account/base.html" %}
 {% load static %}
+{% block title %}ログイン{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'css/login.css' %}" rel="stylesheet">
+    <link href="{% static 'css/account_messages.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-    <h2>ログイン</h2>
-    
-    {% if messages %}
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    {% endif %}
-    
-    <form action="{% url 'account:login' %}" method="POST"   novalidate>
-        {% csrf_token %}
-       <!-- フォーム全体 -->
-        {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-                {{ error }}
-            {% endfor %}
-        {% endif %}
-
-        <!-- 各フィールド -->
-        {% for field in form %}
-            {{ field.label_tag }}
-            {{ field }}
-
-            {% if field.errors %}
-                {% for error in field.errors %}
-                    {{ error }}
+    <h1 class="logo">VoucherZ</h1>
+    <div class="login">
+        <h2 class="login__title">ログイン</h2>
+        
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="account__message">{{ message }}</p>
                 {% endfor %}
             {% endif %}
-        {% endfor %}
-    
+        </div>
+        
+        <form action="{% url 'account:login' %}" method="POST"   novalidate>
+            {% csrf_token %}
+            <!-- フォーム全体 -->
+            <div>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="account__error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
 
-        <button type="submit">ログイン</button>
-        <a href="{% url 'account:signup' %}">アカウント作成</a>
-    </form>
-
+            <!-- 各フィールド -->
+            <div class="login__fields">
+                {% for field in form %}
+                    <div class="login__field-label">
+                        {{ field.label_tag }}
+                    </div>
+                    <div class="login__field-input">
+                        {{ field }}
+                    </div>
+                    
+                    <div>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="account__error">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+                
+            <div class="login__actions">
+                <button type="submit" class="button-primary">ログイン</button>
+                <a href="{% url 'account:signup' %}" class="button-secondary">アカウント作成</a>
+            </div>
+        </form>
+    </div>
+        
 {% endblock %}
+        
