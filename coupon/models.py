@@ -1,6 +1,9 @@
 import logging
+import string
+import random
+from django.db.models import F
 
-from django.db import models, DatabaseError
+from django.db import models, DatabaseError, IntegrityError, transaction
 
 logger = logging.getLogger(__name__)
 
@@ -100,6 +103,40 @@ class Coupon(models.Model):
             return None
 
     @classmethod
+    def get_for_status_check(cls, coupon_id):
+        """
+        指定されたクーポンIDに対応するクーポン情報（有効期限・発行数チェック用のみフィールド取得）
+        Args:
+            coupon_id (int): 取得対象のクーポンID
+        Returns:
+            coupon: 存在する場合、Couponインスタンス
+                （expiration_date, max_issuance, issued_countのみ）。
+            None: 存在しない、DBエラー、または予期しないエラーが発生した場合。
+        """
+        try:
+            coupon_for_check = (
+                cls.objects
+                .only("expiration_date", "max_issuance", "issued_count")
+                .get(id=coupon_id)
+            )
+            return coupon_for_check
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Coupon][StatusCheck] Not found: id={coupon_id}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[Coupon][StatusCheck] Database error: id={coupon_id}, error={e}"
+            )
+            return None
+        except Exception as e:
+            logger.exception(
+                f"[Coupon][StatusCheck] Unexpected error: id={coupon_id}, error={e}"
+            )
+            return None
+
+    @classmethod
     def get_coupon(cls, coupon_id):
         """
         指定されたクーポンIDに対応するクーポン情報（店舗名付き）を取得する
@@ -151,11 +188,6 @@ class CouponCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def save(self, *args, **kwargs):
-        if not self.pk:  # 新規作成時だけセット
-            self.store_id = self.coupon.store_id
-        super().save(*args, **kwargs)
-
     class Meta:
         db_table = "coupon_codes"
         verbose_name = "Coupon code"
@@ -169,3 +201,132 @@ class CouponCode(models.Model):
 
     def __str__(self):
         return f"{self.coupon_code} ({self.coupon.title})"
+
+    @staticmethod
+    def generate_code(length=6):
+        """
+        指定された長さのランダムなクーポンコードを生成する
+        Args:
+            length (int): 生成するクーポンコードの文字数（デフォルト: 6）
+        Returns:
+            str: 英大文字と数字からなるランダムなクーポンコード
+        """
+        chars = string.ascii_uppercase + string.digits
+        return ''.join(random.choices(chars, k=length))
+
+    @classmethod
+    def issue(cls, coupon_id, length=6, max_retries=10):
+        """
+        指定されたクーポンIDに対応するクーポンコードを発行する
+        Args:
+            coupon_id(int): 発行対象のクーポンID
+        Returns:
+            coupon_code: 存在すれば CouponCode インスタンス（store情報付き）
+            None: 存在しない、複数件見つかった、またはDBエラーの場合
+        """
+        try:
+            coupon = Coupon.objects.get(id=coupon_id)
+        except Coupon.DoesNotExist:
+            logger.warning(
+                f"[CouponCode][Issue] Not found: coupon_id={coupon_id}"
+            )
+            return None
+        for _ in range(max_retries):
+            code = cls.generate_code(length)
+            try:
+                with transaction.atomic():
+                    # クーポンコード発行
+                    coupon_code = cls.objects.create(
+                        coupon=coupon,
+                        store_id=coupon.store_id,
+                        coupon_code=code
+                    )
+                    # 発行数を +1
+                    Coupon.objects.filter(id=coupon_id).update(
+                        issued_count=F('issued_count') + 1
+                    )
+                    return coupon_code
+            except IntegrityError:
+                continue
+            except DatabaseError as e:
+                logger.error(
+                    f"[CouponCode][Issue] DatabaseError: coupon_id={coupon_id}. Error: {e}"
+                )
+                return None
+            except Exception as e:
+                logger.exception(
+                    f"[CouponCode][Issue] Unexpected error: coupon_id={coupon_id}. Error: {e}"
+                )
+                return None
+
+        logger.error(
+            f"[CouponCode][Issue] Failed to issue after {max_retries} retries: coupon_id={coupon_id}"
+        )
+        return None
+
+    @classmethod
+    def get_coupon_id(cls, coupon_code_id):
+        """
+        指定されたクーポンコードIDに対応するクーポンIDを取得
+        Args:
+            coupon_code_id (int): 取得対象のクーポンコードID
+        Returns:
+            coupon_id: 存在する場合、クーポンID
+            None: 存在しない、DBエラー、または予期しないエラーが発生した場合。
+        """
+        try:
+            coupon_id = (
+                cls.objects
+                .values_list("coupon", flat=True)
+                .get(id=coupon_code_id)
+            )
+            return coupon_id
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[CouponCode][RelationFetch] Not found: id={coupon_code_id}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[CouponCode][RelationFetch] Database error: id={coupon_code_id}, error={e}"
+            )
+            return None
+        except Exception as e:
+            logger.exception(
+                f"[CouponCode][RelationFetch] Unexpected error: id={coupon_code_id}, error={e}"
+            )
+            return None
+
+    @classmethod
+    def get_coupon_code(cls, coupon_code_id):
+        """
+        指定されたクーポンコードIDに対応するクーポンコード情報を取得する
+        Args:
+            coupon_code_id (int): 取得対象のクーポンID
+        Returns:
+            coupon_code: 存在する場合、CouponCodeインスタンス。
+            None: 存在しない、複数件見つかった、またはDBエラーの場合
+        """
+        try:
+            coupon_code = cls.objects.get(id=coupon_code_id)
+            return coupon_code
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[CouponCode][DetailFetch] Not found: id={coupon_code_id}"
+            )
+            return None
+        except cls.MultipleObjectsReturned as e:
+            logger.error(
+                f"[CouponCode][DetailFetch] Data integrity issue: id={coupon_code_id}, error={e}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[CouponCode][DetailFetch] Database error: id={coupon_code_id}, error={e}"
+            )
+            return None
+        except Exception as e:
+            logger.exception(
+                f"[CouponCode][DetailFetch] Unexpected error: id={coupon_code_id}, error={e}"
+            )
+            return None
