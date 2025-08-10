@@ -101,6 +101,22 @@
     transform: translateY(1px);
 }
 
+.password-wrapper {
+  position: relative;
+  /* width: 100%; */
+}
+
+.toggle-password {
+  position: absolute;
+  width: 24px;
+  height: auto;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+}
+
 /* ========================================================== */
 /* レスポンシブ-タブレット- */
 

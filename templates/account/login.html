@@ -37,7 +37,14 @@
                         {{ field.label_tag }}
                     </div>
                     <div class="login__field-input">
-                        {{ field }}
+                        {% if field.name == 'password' %}
+                            <div class="password-wrapper">
+                                {{ field }}
+                                <img id="togglePassword" src="{% static 'img/eye-slash.svg' %}" alt="パスワード表示切替" class="toggle-password">
+                            </div>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
                     </div>
                     
                     <div>
@@ -57,5 +64,9 @@
         </form>
     </div>
         
+{% endblock %}
+
+{% block script %}
+          <script src="{% static 'js/login.js' %}"></script>
 {% endblock %}
         

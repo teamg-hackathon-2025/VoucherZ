@@ -16,7 +16,7 @@ class LoginForm(AuthenticationForm):
     )
     password = forms.CharField(
         label="パスワード",
-        widget=forms.PasswordInput(attrs={'placeholder': '半角英数字8文字以上'}),
+        widget=forms.PasswordInput(attrs={'placeholder': '半角英数字8文字以上', 'id': 'password'}),
         strip=False, # Djangoが自動で空白を削除しないように設定
         validators=[no_whitespace_validator]
     )

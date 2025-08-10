@@ -38,7 +38,19 @@
                         {{ field.label_tag }}
                     </div>
                     <div class="signup__field-input">
-                        {{ field }}
+                        {% if field.name == 'password' %}
+                            <div class="password-wrapper">
+                                {{ field }}
+                                <img id="togglePassword" src="{% static 'img/eye-slash.svg' %}" alt="パスワード表示切替" class="toggle-password">
+                            </div>
+                        {% elif field.name == 'password_confirm' %}
+                            <div class="password-wrapper">
+                                {{ field }}
+                                <img id="togglePasswordConfirm" src="{% static 'img/eye-slash.svg' %}" alt="確認用パスワード表示切替" class="toggle-password">
+                            </div>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
                     </div>
                     <div>
                         {% if field.errors %}
@@ -56,4 +68,8 @@
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block script %}
+          <script src="{% static 'js/signup.js' %}"></script>
 {% endblock %}
