@@ -32,7 +32,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DJANGO_ENV") == "development"
+#DEBUG = env("DJANGO_ENV") == "development"
+DEBUG = True
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 
@@ -90,25 +91,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-DATABASES = {
-        'default': {
-                    'ENGINE': 'django.db.backends.mysql',
-                    'NAME': env('MYSQL_DATABASE'),
-                    'USER': env('MYSQL_USER'),
-                    'PASSWORD': env('MYSQL_PASSWORD'),
-                    'HOST': env('MYSQL_CONTAINER_NAME'),
-                    'PORT': '3306',
-                    'OPTIONS': {
-                        'charset': 'utf8mb4',
-                    },
-        }
-}
 #DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
+#        'default': {
+#                    'ENGINE': 'django.db.backends.mysql',
+#                    'NAME': env('MYSQL_DATABASE'),
+#                    'USER': env('MYSQL_USER'),
+#                    'PASSWORD': env('MYSQL_PASSWORD'),
+#                    'HOST': env('MYSQL_CONTAINER_NAME'),
+#                    'PORT': '3306',
+#                    'OPTIONS': {
+#                        'charset': 'utf8mb4',
+#                    },
+#        }
 #}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
