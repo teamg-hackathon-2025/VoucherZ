@@ -19,6 +19,10 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
+
+
 EXPOSE 8000
 
 CMD /bin/sh -c 'if [ "$DJANGO_ENV" = "production" ]; then \

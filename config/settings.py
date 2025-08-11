@@ -54,12 +54,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'coupon',
-    'debug_toolbar',
     'django_extensions',
 ]
 
+AUTH_USER_MODEL = 'account.User'
+
+# ログイン時のURL名
+LOGIN_URL = 'account:login/'
+# ログイン後の遷移先のURL名
+LOGIN_REDIRECT_URL = 'coupon:coupon_list'
+# ログアウト後のリダイレクト先URL名
+LOGOUT_REDIRECT_URL = 'account:login' 
+
 MIDDLEWARE = [ 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'account.context_processors.user_name_context',
             ],
         },
     },
@@ -91,25 +99,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-#DATABASES = {
-#        'default': {
-#                    'ENGINE': 'django.db.backends.mysql',
-#                    'NAME': env('MYSQL_DATABASE'),
-#                    'USER': env('MYSQL_USER'),
-#                    'PASSWORD': env('MYSQL_PASSWORD'),
-#                    'HOST': env('MYSQL_CONTAINER_NAME'),
-#                    'PORT': '3306',
-#                    'OPTIONS': {
-#                        'charset': 'utf8mb4',
-#                    },
-#        }
-#}
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'default': {
+                    'ENGINE': 'django.db.backends.mysql',
+                    'NAME': env('MYSQL_DATABASE'),
+                    'USER': env('MYSQL_USER'),
+                    'PASSWORD': env('MYSQL_PASSWORD'),
+                    'HOST': env('MYSQL_CONTAINER_NAME'),
+                    'PORT': '3306',
+                    'OPTIONS': {
+                        'charset': 'utf8mb4',
+                    },
+        }
 }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 
 # Password validation
@@ -134,9 +142,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -151,7 +159,6 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 STATIC_ROOT = 'staticfiles'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -163,4 +170,8 @@ INTERNAL_IPS = [
 ]
 
 
+# 開発環境の場合
+if DEBUG and os.environ.get("DJANGO_ENV") == "development":
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 

@@ -1,0 +1,19 @@
+:root {
+  /* main部分 */
+  --color-main-text-primary: #222222;
+  --color-main-background-primary: #1256C4;
+  /* main以外 */
+  --color-layout-text-primary: #ffffff;
+  --color-layout-background-primary: var(--color-main-background-primary);
+  --color-layout-background-overlay: rgba(0, 0, 0, 0.3);
+  /* panelは「操作・編集させる」ためのUI */
+  --color-panel-background-primary: #ffffff;
+  /* cardは「情報を見せる」ためのUI */
+  --color-card-background-primary: #ffffff;
+  --color-button-primary-text: #ffffff;
+  --color-button-primary-background: #222222;
+  --color-button-primary-border: #D9D9D9;
+  --color-button-secondary-text: #222222;
+  --color-button-secondary-background: #ffffff;
+  --color-button-secondary-border: #222222;
+}

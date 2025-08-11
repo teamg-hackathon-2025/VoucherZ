@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ coupon.title }} - クーポン詳細{% endblock %}
+{% block extra_css %}
+<link href="{% static 'css/coupon-detail.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<section class="coupon-detail">
+  <div class="container">
+    <div class="block-coupon">
+      <h2 class="title">クーポン見本</h2>
+      <div class="box">
+        <p class="store-name">{{ coupon.store.store_name }}</p>
+        <h3 class="campaign-title">{{ coupon.title }}</h3>
+        {% if coupon.message %}
+        <p class="message">{{ coupon.message|linebreaksbr }}</p>
+        {% endif %}
+        <div class="item coupon-code">
+          <h4 class="item-label">クーポンコード:</h4>
+          <p class="item-value">XXXXXX  ※こちらは見本です</p>
+        </div>
+        <div class="item">
+          <h4 class="item-label">対象商品:</h4>
+          <p class="item-value">{{ coupon.target_product }}</p>
+        </div>
+        <div class="item">
+          <h4 class="item-label">割引内容:</h4>
+          <p class="item-value">{{ coupon.discount }}</p>
+        </div>
+        <div class="item">
+          <h4 class="item-label">有効期限:</h4>
+          <p class="item-value">
+            {% if coupon.expiration_date %}
+              {{ coupon.expiration_date|date:"Y/m/d" }}<br><span class="suffix">まで</span>
+            {% else %}
+              無期限
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="block-button">
+      <a class="link button-primary" href="{% url 'coupon:coupon_list' %}">ホームに戻る</a>
+      <form class="form" method="POST" action="{% url 'coupon:coupon_issue' coupon.id %}">
+        {% csrf_token %}
+        <button class="button-primary" type="submit">クーポンを発行</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

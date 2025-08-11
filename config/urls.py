@@ -17,14 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from .views import health_check
+from account.views import TopPageView
+import environ
+
+env = environ.Env()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/', include('account.urls')),
+    path('account/', include('account.urls', namespace='account')),
+    path('coupon/', include('coupon.urls', namespace='coupon')),
+    path('', TopPageView.as_view(), name='index')
 ]
 
-if settings.DEBUG:
+if settings.DEBUG and env("DJANGO_ENV") == "development":
     import debug_toolbar
     urlpatterns += [
         path("__debug__/", include(debug_toolbar.urls)),
