@@ -1,0 +1,9 @@
+FROM nginx:latest
+
+COPY --from=voucherz-app /app/staticfiles /staticfiles
+
+# ローカルの default.conf をイメージ内にコピー
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+RUN mkdir -p /staticfiles
+
