@@ -1,26 +1,29 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+
 /* form全体 */
 .signup {
     background-color: var(--color-panel-background-primary);
     border-radius: 20px;
     width: 85%;
-    max-width: 500px;
+    max-width: 400px;
     height: auto;
     margin: 0 auto;
     padding: 10px 20px;
 }
 
-/* ロゴ配置調整 */
-.logo {
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
 
 /* アカウントタイトル調整 */
 .signup__title {
-    padding-top: 10px;
+    padding: 10px 0;
     text-align: center;
-    padding-bottom: 10px;
 }
 
 /* フィールド */
@@ -57,16 +60,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 /* 登録ボタン */
 .button-primary {
     padding: 10px;
-    max-width: 200px;
-    width: 70%;
+    max-width: 13rem;
+    width: 100%;
     margin: 30px auto 0;
-    display: block;
+    display: inline-block;
 }
 
 .button-primary:hover {
@@ -86,8 +89,8 @@
     text-align: center;
     margin: 0 auto;
     padding: 10px;
-    width: 70%;
-    max-width: 200px;
+    width: 100%;
+    max-width: 13rem;
 }
 
 .button-secondary:hover {
@@ -102,38 +105,35 @@
 }
 
 .password-wrapper {
-  position: relative;
-  /* width: 100%; */
+    position: relative;
 }
 
+.password-wrapper input[type="password"] {
+    padding-right: 1.4em;
+}
+
+
 .toggle-password {
-  position: absolute;
-  width: 24px;
-  height: auto;
-  top: 50%;
-  right: 5px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  user-select: none;
+    position: absolute;
+    width: 24px;
+    height: auto;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
 }
 
 /* ========================================================== */
 /* レスポンシブ-タブレット- */
 
 @media (min-width: 768px) {
-    .signup {
-        width: 100%;
-        padding: 30px 50px;
-        margin-top: 50px;
+    .main {
+        gap: 60px;
     }
-
+    
     .logo {
-        text-align: left;
-        margin-left: 50px;
-        padding-top: 20px;
-    }
-
-    .signup__actions {
-        gap: 30px;
+        width: 100%;
+        padding-left: 40px;
     }
 }
