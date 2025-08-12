@@ -16,7 +16,7 @@
 }
 
 .coupon-detail .block-coupon .title {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 400;
 }
 
@@ -25,13 +25,13 @@
 }
 
 .coupon-detail .block-coupon .box .store-name {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
   text-align: center;
 }
 
 .coupon-detail .block-coupon .box .campaign-title {
-  font-size: 24px;
+  font-size: 1.5rem;
   text-align: center;
 }
 
@@ -49,27 +49,27 @@
 }
 
 .coupon-detail .block-coupon .box .item-label {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   text-align: center;
 }
 
 .coupon-detail .block-coupon .box .item-value {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   padding-top: 1px;
   text-align: center;
 }
 
 .coupon-detail .block-coupon .box .item-value .suffix {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   display: block;
   padding-top: 4px;
 }
 
 .coupon-detail .block-coupon .box .coupon-code .item-value {
-  font-size: 48px;
+  font-size: 3rem;
   letter-spacing: 0.05em;
 }
 
@@ -106,7 +106,7 @@
   }
 
   .coupon-detail .block-coupon .box .coupon-code .item-value {
-    font-size: 42px;
+    font-size: 2.625rem;
   }
 
   .coupon-detail .block-button {
@@ -115,7 +115,12 @@
     margin-top: 0;
   }
 
+  .coupon-detail .block-button .form {
+    max-width: 13.0625rem;
+  }
+
   .coupon-detail .block-button .button-primary {
     margin-top: 30px;
+    max-width: 13.0625rem;
   }
 }
