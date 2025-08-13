@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="logo">VoucherZ</h1>
-    <div class="login">
+    <h1 class="logo logo--custom">VoucherZ</h1>
+    <div class="login login--style">
         <h2 class="login__title">ログイン</h2>
         
         <div>
@@ -33,7 +33,7 @@
             <!-- 各フィールド -->
             <div class="login__fields">
                 {% for field in form %}
-                    <div class="login__field-label">
+                    <div class="login__field-label login__field-label--style">
                         {{ field.label_tag }}
                     </div>
                     <div class="login__field-input">
@@ -58,8 +58,8 @@
             </div>
                 
             <div class="login__actions">
-                <button type="submit" class="button-primary">ログイン</button>
-                <a href="{% url 'account:signup' %}" class="button-secondary">アカウント作成</a>
+                <button type="submit" class="button-primary button-primary--modifier">ログイン</button>
+                <a href="{% url 'account:signup' %}" class="button-secondary button-secondary--modifier">アカウント作成</a>
             </div>
         </form>
     </div>

@@ -1,3 +1,5 @@
+/* ===== レイアウト（スマホベース） ===== */
+
 .main {
     display: flex;
     flex-direction: column;
@@ -7,18 +9,20 @@
     padding-bottom: 5px;
 }
 
+/* ロゴ配置 */
+.logo--custom {
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+}
 
-/* form全体 */
+/* フォーム全体 */
 .signup {
-    background-color: var(--color-panel-background-primary);
-    border-radius: 20px;
     width: 85%;
     max-width: 400px;
     height: auto;
     margin: 0 auto;
-    padding: 10px 20px;
 }
-
 
 /* アカウントタイトル調整 */
 .signup__title {
@@ -34,25 +38,38 @@
     gap: 8px;
 }
 
+/* ラベル */
 .signup__field-label {
     margin-top: 10px;
-    font-weight: bold;
 }
 
+/* 入力欄 */
 .signup__field-input {
     width: 100%;
 }
 
+/* 入力欄 */
 .signup__field-input input {
-    border: 1px solid #222222;
-    border-radius: 10px;
-    padding: 8px;
     box-sizing: border-box;
     width: 100%;
 }
 
-.signup__field-input input::placeholder {
-    color: #222222;
+/* パスワード入力欄 */
+.password-wrapper {
+    position: relative;
+}
+
+/* パスワード入力欄アイコンスペース */
+.password-wrapper input[type="password"] {
+    padding-right: 1.4em;
+}
+
+/* パスワード表示切替アイコン */
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
 }
 
 /* ボタン配置 */
@@ -64,77 +81,95 @@
 }
 
 /* 登録ボタン */
-.button-primary {
-    padding: 10px;
+.button-primary--modifier {
     max-width: 13rem;
     width: 100%;
     margin: 30px auto 0;
     display: inline-block;
 }
 
-.button-primary:hover {
+/* 戻るボタン */
+.button-secondary--modifier {
+    display: inline-block;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 13rem;
+}
+
+
+/* ===== デザイン（スマホベース） ===== */
+
+/* フォーム全体 */
+.signup--style {
+    background-color: var(--color-panel-background-primary);
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+/* ラベル */
+.signup__field-label--style {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* 入力欄 */
+.signup__field-input input {
+    border: 1px solid #222222;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+/* 入力欄 */
+.signup__field-input input::placeholder {
+    color: #222222;
+}
+
+/* パスワード表示切替アイコン */
+.toggle-password {
+    width: 24px;
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 登録ボタン */
+.button-primary--modifier {
+    padding: 10px;
+}
+
+.button-primary--modifier:hover {
     background-color: #0056b3;
     cursor: pointer;
     transform: translateY(-1px);
 }
 
-.button-primary:active {
+.button-primary--modifier:active {
     background-color: #004080;
     transform: translateY(1px);
 }
 
 /* 戻るボタン */
-.button-secondary {
-    display: inline-block;
-    text-align: center;
-    margin: 0 auto;
+.button-secondary--modifier {
     padding: 10px;
-    width: 100%;
-    max-width: 13rem;
 }
 
-.button-secondary:hover {
+.button-secondary--modifier:hover {
     background-color: #f0f0f0;
     cursor: pointer;
     transform: translateY(-1px);
 }
 
-.button-secondary:active {
+.button-secondary--modifier:active {
     background-color: #e0e0e0;
     transform: translateY(1px);
 }
 
-.password-wrapper {
-    position: relative;
-}
-
-.password-wrapper input[type="password"] {
-    padding-right: 1.4em;
-}
-
-
-.toggle-password {
-    position: absolute;
-    width: 24px;
-    height: auto;
-    top: 50%;
-    right: 5px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    user-select: none;
-}
-
-.logo {
-    width: 100%;
-    text-align: left;
-    padding-left: 20px;
-}
-/* ========================================================== */
-/* レスポンシブ-タブレット- */
+/* ===== レイアウト（タブレット） ===== */
 
 @media (min-width: 768px) {
     .main {
         gap: 60px;
     }
-    
 }

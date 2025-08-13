@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="logo">VoucherZ</h1>
-    <div class="signup">
+    <h1 class="logo logo--custom">VoucherZ</h1>
+    <div class="signup signup--style">
         <h2 class="signup__title">アカウント作成</h2>
         
         <div>
@@ -22,7 +22,6 @@
         <form action="{% url 'account:signup' %}" method="POST" novalidate>
             {% csrf_token %}
             
-            <!-- フォーム全体 -->
             <div>
                 {% if form.non_field_errors %}
                     {% for error in form.non_field_errors %}
@@ -31,10 +30,9 @@
                 {% endif %}
             </div>
             
-            <!-- 各フィールド -->
             <div class="signup__fields">
                 {% for field in form %}
-                    <div class="signup__field-label">
+                    <div class="signup__field-label signup__field-label--style">
                         {{ field.label_tag }}
                     </div>
                     <div class="signup__field-input">
@@ -63,8 +61,8 @@
             </div>
             
             <div class="signup__actions">
-                <button type="submit" class="button-primary">登録する</button>
-                <a href="{% url 'account:login' %}" class="button-secondary">戻る</a>
+                <button type="submit" class="button-primary button-primary--modifier">登録する</button>
+                <a href="{% url 'account:login' %}" class="button-secondary button-secondary--modifier">戻る</a>
             </div>
         </form>
     </div>

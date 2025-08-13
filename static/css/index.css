@@ -1,16 +1,12 @@
-/* ========================================================== */
-/* スマホ用 */
+/* ===== レイアウト（スマホベース） ===== */
+
 /* ロゴ配置 */
 .lp__logo-area {
     padding-top: 30px;
     padding-left: 15px;
 }
 
-/* ロゴサイズ */
-.logo {
-    font-size: clamp(1.5rem, 3vw + 1rem, 2.5rem);
-}
-
+/* 全体配置 */
 .lp-hero__container {
     display: flex;
     flex-direction: column;
@@ -19,39 +15,30 @@
     margin-top: 20px;
 }
 
+/* テキストエリア・イラストエリアの配置 */
 .lp-hero__content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* イラスト */
+/* イラストサイズ調整 */
 .lp-hero__illustration img {
     width: clamp(350px, 75vw, 700px);
 }
-
 
 /* ロゴ用ガイドテキストの非表示 */
 .hide-on-mobile {
     display: none;
 }
 
-/* メインテキストエリア */
-.lp-hero__text-area {
-    color: var(--color-layout-text-primary);
-    font-size: clamp(2rem, 2vw + 1.8rem, 3.5rem);
-    font-weight: bold;
-}
-    
+/* テキストエリアの配置調整 */
 .lp-hero__subtext {
     margin-top: 30px;
 }
 
-/* 開始ボタン */
 /* 開始ボタン用ガイドテキスト */
 .lp-hero__cta-guide {
-    color: #D9D9D9;
-    font-size: 1.25rem;
     margin-bottom: 13px;
     margin-top: -10px;
     box-sizing: border-box;
@@ -63,9 +50,29 @@
     text-align: center;
 }
 
+/* ===== デザイン（スマホベース） ===== */
+/* ロゴサイズ */
+.logo--modifier {
+    font-size: clamp(1.5rem, 3vw + 1rem, 2.5rem);
+}
+
+/* メインテキストエリア */
+.lp-hero__text-area--style {
+    color: var(--color-layout-text-primary);
+    font-size: clamp(2rem, 2vw + 1.8rem, 3.5rem);
+    font-weight: bold;
+}
+
+/* 開始ボタン用ガイドテキスト */
+.lp-hero__cta-guide--style {
+    color: #D9D9D9;
+    font-size: 1.25rem;
+}
+
+/* 開始ボタン */
 .lp-hero__button {
     font-weight: 400;
-    color: #ffff;
+    color: #ffffff;
     background-color: transparent;
     border-radius: 32px;
     border: 2px solid var(--color-button-primary-border);
@@ -83,41 +90,42 @@
 }
 
 
-/* ========================================================== */
-/* レスポンシブ-タブレット- */
+/* ======================================================= */
 
 @media (min-width: 768px) and (orientation: landscape)  {
+   /* ===== レイアウト（タブレット） ===== */
+
+    /* テキストエリア・イラストエリアの配置 */
     .lp-hero__content {
         flex-direction: row;
     }
 
+    /* イラスト配置 */
     .lp-hero__illustration {
         margin-left: -35px;
         position: relative;
         z-index: 1;
     }
     
+    /* イラストサイズ調整 */
     .lp-hero__illustration  img {
         width: clamp(400px, 55vw, 800px);
     }    
 
+    /* メインテキストエリア */
     .lp-hero__text-area {
-        /* white-space: nowrap; */
         position: relative;
         z-index: 2;
-        font-weight: normal;
-        /* font-size: 4vw; */
-        font-size: clamp(2rem, 1.3vw + 2.2rem, 4rem);
-        margin-top: 100px;
-        margin-right: -35px;
-        margin-left: 20px;
+        margin: 100px -35px 0 20px;
     }
 
+    /* メインテキスト */
     .lp-hero__headline,
     .lp-hero__subtext {
         white-space: nowrap;
     }
     
+    /* サブテキスト */
     .lp-hero__subtext br {
         display: none;
     }
@@ -135,12 +143,25 @@
 
     /* ロゴ用ガイドテキスト */
     .lp__guide-text {
-        color: #D9D9D9;
         margin-bottom: -10px;
-        font-size: 1.1rem;
     }
 
-    .logo {
+    /* ロゴ配置 */
+    .logo--modifier {
         margin-left: 10px;
+    }
+
+    /* ===== デザイン（タブレット） ===== */
+
+    /* メインテキストエリア */
+    .lp-hero__text-area--style {
+        font-weight: normal;
+        font-size: clamp(2rem, 1.3vw + 2.2rem, 4rem);
+    }
+
+        /* ロゴ用ガイドテキスト */
+    .lp__guide-text--style {
+        color: #D9D9D9;
+        font-size: 1.1rem;
     }
 }
