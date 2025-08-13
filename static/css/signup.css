@@ -124,6 +124,11 @@
     user-select: none;
 }
 
+.logo {
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+}
 /* ========================================================== */
 /* レスポンシブ-タブレット- */
 
@@ -132,8 +137,4 @@
         gap: 60px;
     }
     
-    .logo {
-        width: 100%;
-        padding-left: 40px;
-    }
 }
