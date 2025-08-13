@@ -60,11 +60,11 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'account.User'
 
 # ログイン時のURL名
-LOGIN_URL = 'account:login/'
+LOGIN_URL = 'account:login'
 # ログイン後の遷移先のURL名
 LOGIN_REDIRECT_URL = 'coupon:coupon_list'
 # ログアウト後のリダイレクト先URL名
-LOGOUT_REDIRECT_URL = 'account:login' 
+LOGOUT_REDIRECT_URL = 'account:login'
 
 MIDDLEWARE = [ 
     'debug_toolbar.middleware.DebugToolbarMiddleware',
