@@ -1,7 +1,7 @@
 [
   {
     "model": "account.user",
-    "pk": "11111111-1111-1111-1111-111111111111",
+    "pk": "1ce96ca1858f4d5e945ff5a0f4c77866",
     "fields": {
       "password": "pbkdf2_sha256$1000000$zQP4YwkOU1Eba0tbxmFPH4$bE7taYjLQIk5pU0mPlXJKY7nw/YooxwwTML9kxtztJU=",
       "email": "testuser@example.com",
@@ -17,7 +17,7 @@
       "store_name": "焼きたて工房　さとう",
       "created_at": "2025-03-01T00:00:00Z",
       "updated_at": "2025-03-01T00:00:00Z",
-      "user": "11111111-1111-1111-1111-111111111111"
+      "user": "1ce96ca1858f4d5e945ff5a0f4c77866"
     }
   },
   {
