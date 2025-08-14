@@ -1,0 +1,41 @@
+.error {
+  padding: 110px 0 110px;
+}
+
+.error .container {
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.error .title {
+  font-size: 4rem;
+  color: var(--color-main-text-secondary);
+  text-align: center;
+  letter-spacing: .05em;
+}
+
+.error .description {
+  margin-top: 40px;
+}
+
+.error .description .text {
+  color: var(--color-main-text-secondary);
+  text-align: center;
+  margin-top: 10px;
+}
+
+.error .button-primary {
+  display: block;
+  border: 2px solid var(--color-button-primary-border);
+  max-width: 13.0625rem;
+  width: 100%;
+  text-align: center;
+  padding: 6px 10px;
+  margin: 25px auto 0;
+}
+
+@media screen and (max-width: 767px) {
+  .error .title {
+    font-size: 3rem;
+  }
+}
