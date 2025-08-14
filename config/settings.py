@@ -29,12 +29,13 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u*#zw@vb5csjz#v5*qkoscrvs9&!v&+dkq7(sc@03g90q&=pyw'
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DJANGO_ENV") == "development"
+#DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 
 if DEBUG:
@@ -53,21 +54,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'coupon',
-    'debug_toolbar',
     'django_extensions',
 ]
 
 AUTH_USER_MODEL = 'account.User'
 
 # ログイン時のURL名
-LOGIN_URL = 'account:login/'
+LOGIN_URL = 'account:login'
 # ログイン後の遷移先のURL名
 LOGIN_REDIRECT_URL = 'coupon:coupon_list'
 # ログアウト後のリダイレクト先URL名
-LOGOUT_REDIRECT_URL = 'account:login' 
+LOGOUT_REDIRECT_URL = 'account:login'
 
 MIDDLEWARE = [ 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -113,6 +112,13 @@ DATABASES = {
                     },
         }
 }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -148,12 +154,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-
-
+STATIC_ROOT = 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -163,4 +168,10 @@ INTERNAL_IPS = [
     '127.0.0.1',
     '172.17.0.1',  # ホストのゲートウェイIP
 ]
+
+
+# 開発環境の場合
+if DEBUG and os.environ.get("DJANGO_ENV") == "development":
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
