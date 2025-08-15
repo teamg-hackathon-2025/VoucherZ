@@ -25,12 +25,12 @@ class SignUpForm(forms.Form):
     )
     password = forms.CharField(
         label='パスワード',
-        widget=forms.PasswordInput(attrs={'placeholder': '半角英数字8文字以上'}),
+        widget=forms.PasswordInput(attrs={'placeholder': '半角英数字8文字以上', 'id': 'password'}),
         validators=[no_whitespace_validator]
     )
     password_confirm = forms.CharField(
         label='パスワード（確認用）',
-        widget=forms.PasswordInput(attrs={'placeholder': 'もう一度パスワードを入力'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'もう一度パスワードを入力', 'id': 'password_confirm'}),
         validators=[no_whitespace_validator]
     )
 

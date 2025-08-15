@@ -1,0 +1,154 @@
+/* ===== レイアウト（スマホベース） ===== */
+
+/* ログインフォーム全体 */
+.login {
+    max-width: 400px;
+    width: 85%;
+    height: auto;
+    margin: 80px auto 30px;
+}
+
+/* ログインタイトル */
+.login__title {
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* フィールド */
+.login__fields {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+/* ラベル */
+.login__field-label {
+    margin-top: 10px; 
+}
+
+/* 入力欄 */
+.login__field-input {
+    width: 100%;
+}
+
+/* 入力欄 */
+.login__field-input input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* パスワード入力欄 */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* パスワード入力欄アイコンスペース */
+.password-wrapper input[type="password"] {
+    padding-right: 1.4em;
+}    
+
+/* パスワード表示切替アイコン */
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+}
+
+/* ボタン配置 */
+.login__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* 登録ボタン */
+.button-primary--modifier {
+    display: inline-block;
+    max-width: 13rem;
+    width: 100%;
+    margin: 30px auto 0;
+}
+
+/* アカウント作成ボタン */
+.button-secondary--modifier {
+    display: inline-block;
+    max-width: 13rem;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+/* ===== デザイン（スマホベース） ===== */
+
+/* ログインフォーム全体 */
+.login--style {
+    background-color: var(--color-panel-background-primary);
+    border-radius: 20px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+/* ラベル */
+.login__field-label--style {
+    font-weight: bold;
+}
+
+/* 入力欄 */
+.login__field-input input {
+    border: 1px solid #222222;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+/* 入力欄 */
+.login__field-input input::placeholder {
+    color: #222222;
+}
+
+/* パスワード表示切替アイコン */
+.toggle-password {
+    width: 24px;
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 登録ボタン */
+.button-primary--modifier {
+    padding: 10px;
+}
+
+.button-primary--modifier:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.button-primary--modifier:active {
+    background-color: #004080;
+    transform: translateY(1px);
+}
+
+/* アカウント作成ボタン */
+.button-secondary--modifier {
+    padding: 10px;
+}
+
+.button-secondary--modifier:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transform: translateY(-1px);
+}
+
+.button-secondary--modifier:active {
+    background-color: #e0e0e0;
+    transform: translateY(1px);
+}
+
+
