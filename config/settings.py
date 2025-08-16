@@ -71,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    "coupon.middleware.ClearFlowSessionOnLeaveMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -169,9 +170,18 @@ INTERNAL_IPS = [
     '172.17.0.1',  # ホストのゲートウェイIP
 ]
 
-
 # 開発環境の場合
 if DEBUG and os.environ.get("DJANGO_ENV") == "development":
     INSTALLED_APPS += ["debug_toolbar"]
     MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
+FLOW_GUARDS = [
+    {
+        "session_key": "coupon_data",
+        "ignore_prefixes": ("/static/", "/media/"),
+        "allow": [
+            ("coupon", "coupon_create"),
+            ("coupon", "coupon_create_confirm"),
+        ],
+    },
+]
