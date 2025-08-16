@@ -19,6 +19,7 @@
     <link href="{% static 'css/color.css' %}" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <link href="{% static 'css/header.css' %}" rel="stylesheet">
+    <link href="{% static 'css/account_header.css' %}" rel="stylesheet">
 
     <!-- ページ固有のCSSを追加できる -->
     {% block extra_css %}{% endblock %}
@@ -30,9 +31,11 @@
   </head>
   <body class="is-guest">
     <!-- header -->
-    <header class="header"></header>
-    <!-- main -->
-    <main class="main">
+    {% block header %}
+      {% include "account/header_default.html" %}
+    {% endblock %}
+    <!-- main --> 
+    <main>
       {% block body %}{% endblock %}
     </main>
     <!-- JavaScript -->

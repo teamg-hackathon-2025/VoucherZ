@@ -1,0 +1,15 @@
+/* フィールド全体のメッセージ */
+.account__message {
+    color: #7C5535;
+    background-color: #eef3ff;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+/* エラー */
+.account__error {
+    background-color: #fee;
+    color: #b00020;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
