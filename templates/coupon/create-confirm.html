@@ -18,7 +18,7 @@
                 <p class="label-text">タイトル</p>
               </dt>
               <dd class="value">
-                <p class="value-text">夏休みキャンペーン</p>
+                <p class="value-text">{{ coupon.title }}</p>
               </dd>
             </div>
             <div class="row">
@@ -26,7 +26,7 @@
                 <p class="label-text">対象商品</p>
               </dt>
               <dd class="value">
-                <p class="value-text">コーヒー</p>
+                <p class="value-text">{{ coupon.target_product }}</p>
               </dd>
             </div>
             <div class="row">
@@ -34,7 +34,7 @@
                 <p class="label-text">割引内容</p>
               </dt>
               <dd class="value">
-                <p class="value-text">一杯無料</p>
+                <p class="value-text">{{ coupon.discount }}</p>
               </dd>
             </div>
             <div class="row">
@@ -42,8 +42,13 @@
                 <p class="label-text">発行数の上限</p>
               </dt>
               <dd class="value">
-                <!-- 発行数の上限があった場合と無制限の場合 -->
-                <p class="value-text">100</p>
+                <p class="value-text">
+                  {% if coupon.max_issuance %}
+                    {{ coupon.max_issuance }}
+                  {% else %}
+                    無制限
+                  {% endif %}
+                </p>
               </dd>
             </div>
             <div class="row">
@@ -51,8 +56,13 @@
                 <p class="label-text">有効期限</p>
               </dt>
               <dd class="value">
-                <!-- 有効期限があった場合と無期限の場合 -->
-                <p class="value-text">2025/08/28</p>
+                <p class="value-text">
+                  {% if coupon.expiration_date_display %}
+                    {{ coupon.expiration_date_display|date:"Y/m/d" }}
+                  {% else %}
+                    無期限
+                  {% endif %}
+                </p>
               </dd>
             </div>
             <div class="row">
@@ -60,8 +70,7 @@
                 <p class="label-text">メッセージ</p>
               </dt>
               <dd class="value">
-                <!-- messageがあった場合となかった場合 -->
-                <p class="value-text">この度はご来店ありがとうございます。<br>当店から夏の限定クーポンをお渡しいたします。</p>
+                <p class="value-text">{{ coupon.message|default_if_none:""|linebreaksbr }}</p>
               </dd>
             </div>
           </dl>
@@ -70,35 +79,38 @@
       <div class="block-coupon">
         <h3 class="block-title">クーポン見本</h3>
         <div class="box box--coupon">
-          <p class="store-name">焼きたて工房　さとう</p>
-          <h4 class="campaign-title">夏休みキャンペーン</h4>
-          <!-- messageがあった場合 -->
-          <p class="message">この度はご来店ありがとうございます。<br>当店から夏の限定クーポンをお渡しいたします。</p>
+          <p class="store-name">{{ coupon.store.store_name }}</p>
+          <h4 class="campaign-title">{{ coupon.title }}</h4>
+          {% if coupon.message %}
+          <p class="message">{{ coupon.message|linebreaksbr }}</p>
+          {% endif %}
           <div class="item coupon-code">
             <h5 class="item-label">クーポンコード:</h5>
             <p class="item-value">XXXXXX  ※こちらは見本です</p>
           </div>
           <div class="item">
             <h5 class="item-label">対象商品:</h5>
-            <p class="item-value">コーヒー</p>
+            <p class="item-value">{{ coupon.target_product }}</p>
           </div>
           <div class="item">
             <h5 class="item-label">割引内容:</h5>
-            <p class="item-value">一杯無料</p>
+            <p class="item-value">{{ coupon.discount }}</p>
           </div>
           <div class="item">
             <h5 class="item-label">有効期限:</h5>
-            <!-- 有効期限があった場合と無期限の場合 -->
             <p class="item-value">
-              2025/08/28
-              <br><span class="suffix">まで</span>
+              {% if coupon.expiration_date_display %}
+                {{ coupon.expiration_date_display|date:"Y/m/d" }}<br><span class="suffix">まで</span>
+              {% else %}
+                無期限
+              {% endif %}
             </p>
           </div>
         </div>
       </div>
       <div class="block-button">
-        <a class="link button-primary" href="#">修正する</a>
-        <form class="form" method="POST" action="#">
+        <a class="link button-primary" href="{% url 'coupon:coupon_create' %}">修正する</a>
+        <form class="form" method="POST" action="{% url 'coupon:coupon_create_confirm' %}">
           {% csrf_token %}
           <button class="button-primary" type="submit">作成を完了する</button>
         </form>

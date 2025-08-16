@@ -10,7 +10,7 @@
 }
 
 .coupon-create-confirm .title {
-  font-size: 36px;
+  font-size: 2.25rem;
   font-weight: 700;
   color: var(--color-main-text-secondary);
 }
@@ -29,7 +29,7 @@
 }
 
 .coupon-create-confirm .block-coupon .block-title {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 400;
 }
 
@@ -69,13 +69,13 @@
 }
 
 .coupon-create-confirm .block-coupon .box .store-name {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
   text-align: center;
 }
 
 .coupon-create-confirm .block-coupon .box .campaign-title {
-  font-size: 24px;
+  font-size: 1.5rem;
   text-align: center;
 }
 
@@ -93,27 +93,27 @@
 }
 
 .coupon-create-confirm .block-coupon .box .item-label {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   text-align: center;
 }
 
 .coupon-create-confirm .block-coupon .box .item-value {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   padding-top: 1px;
   text-align: center;
 }
 
 .coupon-create-confirm .block-coupon .box .item-value .suffix {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   display: block;
   padding-top: 4px;
 }
 
 .coupon-create-confirm .block-coupon .box .coupon-code .item-value {
-  font-size: 48px;
+  font-size: 3rem;
   letter-spacing: 0.05em;
 }
 
@@ -129,7 +129,7 @@
   max-width: 209px;
   width: 100%;
   text-align: center;
-  padding: 6px 10px;
+  padding: 0.375rem 10px;
 }
 
 .coupon-create-confirm .block-button .form {
@@ -163,7 +163,7 @@
   }
 
   .coupon-create-confirm .block-coupon .box .coupon-code .item-value {
-    font-size: 42px;
+    font-size: 2.625rem;
   }
 
   .coupon-create-confirm .block-button {

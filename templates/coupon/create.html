@@ -9,43 +9,77 @@
   <div class="container">
     <div class="block-create">
       <h2 class="title">クーポン作成</h2>
-      <form class="form" id="form" action="{% url 'coupon:coupon_create' %}" method="post">
+      <form class="form" id="form" action="{% url 'coupon:coupon_create' %}" method="post" novalidate>
         {% csrf_token %}
         <div class="form-field">
           <label class="label" for="title">タイトル</label>
-          <input class="input" type="text" id="title" name="title" placeholder="例）夏休みキャンペーン" maxlength="255" required>
+          {{ form.title }}
+          {% if form.title.errors %}
+          <div class="form-error">
+            {{ form.title.errors.0 }}
+          </div>
+          {% endif %}
         </div>
         <div class="form-field">
           <label class="label" for="targetProduct">対象商品</label>
-          <input class="input" type="text" id="targetProduct" name="target_product" placeholder="例）アイスクリーム" maxlength="255" required>
+          {{ form.target_product }}
+          {% if form.target_product.errors %}
+          <div class="form-error">
+            {{ form.target_product.errors.0 }}
+          </div>
+          {% endif %}
         </div>
         <div class="form-field">
           <label class="label" for="discount">割引内容</label>
-          <input class="input" type="text" id="discount" name="discount" placeholder="例）5% OFF, 100円引" maxlength="255" required>
+          {{ form.discount }}
+          {% if form.discount.errors %}
+          <div class="form-error">
+            {{ form.discount.errors.0 }}
+          </div>
+          {% endif %}
         </div>
         <div class="form-group">
-          <div class="form-item">
-            <label class="label" for="maxIssuance">発行数の上限</label>
-            <input class="input" type="text" id="maxIssuance" name="max_issuance">
+          <div class="form-control-group">
+            <div class="form-item">
+              <label class="label" for="maxIssuance">発行数の上限</label>
+            {{ form.max_issuance }}
+            </div>
+            <div class="form-item-sub">
+              {{ form.no_max_issuance }}
+              <label class="label" for="noMaxIssuance">無制限</label>
+            </div>
           </div>
-          <div class="form-item-sub">
-            <input class="input" type="checkbox" id="noMaxIssuance" name="no_max_issuance">
-            <label class="label" for="noMaxIssuance">無制限</label>
+          {% if form.max_issuance.errors %}
+          <div class="form-error">
+            {{ form.max_issuance.errors.0 }}
           </div>
+          {% endif %}
         </div>
         <div class="form-group">
-          <div class="form-item">
-            <label class="label" for="expirationDate">有効期限</label>
-            <input class="input" type="date" id="expirationDate" name="expiration_date">
+          <div class="form-control-group">
+            <div class="form-item">
+              <label class="label" for="expirationDate">有効期限</label>
+            {{ form.expiration_date }}
+            </div>
+            <div class="form-item-sub">
+              {{ form.no_expiration_date }}
+              <label class="label" for="noExpirationDate">無期限</label>
+            </div>
           </div>
-          <div class="form-item-sub">
-            <input class="input" type="checkbox" id="noExpirationDate" name="no_expiration_date">
-            <label class="label" for="noExpirationDate">無期限</label>
+          {% if form.expiration_date.errors %}
+          <div class="form-error">
+            {{ form.expiration_date.errors.0 }}
           </div>
+          {% endif %}
         </div>
         <div class="form-field">
           <label class="label" for="message">メッセージ（任意）</label>
-          <textarea class="input" id="message" name="message" placeholder="お客様へのメッセージをこちらに入力できます。" maxlength="255" rows="3"></textarea>
+          {{ form.message }}
+          {% if form.message.errors %}
+          <div class="form-error">
+            {{ form.message.errors.0 }}
+          </div>
+          {% endif %}
         </div>
         <div class="form-button">
           <button type="submit" class="button-primary">確認画面へ</button>
