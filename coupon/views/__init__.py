@@ -2,4 +2,3 @@ from .customer_views import CouponCustomerView
 from .detail_views import CouponDetailView
 from .issue_views import CouponIssueView
 from .detail_code_views import CouponCodeDetailView
-from .list_views import CouponListView
