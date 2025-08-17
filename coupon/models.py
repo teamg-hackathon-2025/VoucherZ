@@ -44,7 +44,10 @@ class Coupon(models.Model):
             coupon_id (int): 取得対象のクーポンID
         Returns:
             user_id: 該当クーポンが存在する場合、関連する店舗ユーザーのID（UUID）。
-            None: 存在しない、DBエラー、予期しないエラーの場合
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作中にエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
         """
         try:
             user_id = (
@@ -62,12 +65,12 @@ class Coupon(models.Model):
             logger.error(
                 f"[Coupon][StoreUserIdFetch] Database error: id={coupon_id}, error={e}"
             )
-            return None
+            raise
         except Exception as e:
             logger.exception(
                 f"[Coupon][StoreUserIdFetch] Unexpected error: id={coupon_id}, error={e}"
             )
-            return None
+            raise
 
     @classmethod
     def get_for_status_check(cls, coupon_id):
@@ -78,7 +81,10 @@ class Coupon(models.Model):
         Returns:
             coupon: 存在する場合、Couponインスタンス
                 （expiration_date, max_issuance, issued_countのみ）。
-            None: 存在しない、DBエラー、または予期しないエラーが発生した場合。
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作中にエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
         """
         try:
             coupon_for_check = (
@@ -96,12 +102,12 @@ class Coupon(models.Model):
             logger.error(
                 f"[Coupon][StatusCheck] Database error: id={coupon_id}, error={e}"
             )
-            return None
+            raise
         except Exception as e:
             logger.exception(
                 f"[Coupon][StatusCheck] Unexpected error: id={coupon_id}, error={e}"
             )
-            return None
+            raise
 
     @classmethod
     def get_coupon(cls, coupon_id):
@@ -112,6 +118,9 @@ class Coupon(models.Model):
         Returns:
             coupon: 存在する場合、Couponインスタンス（store情報付き）。
             None: 存在しない、複数件見つかった、またはDBエラーの場合
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: 上記以外の予期しないエラーが発生した場合
         """
         try:
             coupon = (
@@ -125,21 +134,16 @@ class Coupon(models.Model):
                 f"[Coupon][DetailFetch] Not found: id={coupon_id}"
             )
             return None
-        except cls.MultipleObjectsReturned as e:
-            logger.error(
-                f"[Coupon][DetailFetch] Data integrity issue: id={coupon_id}, error={e}"
-            )
-            return None
         except DatabaseError as e:
             logger.error(
                 f"[Coupon][DetailFetch] Database error: id={coupon_id}, error={e}"
             )
-            return None
+            raise
         except Exception as e:
             logger.exception(
                 f"[Coupon][DetailFetch] Unexpected error: id={coupon_id}, error={e}"
             )
-            return None
+            raise
 
 
 class CouponCode(models.Model):
@@ -194,7 +198,10 @@ class CouponCode(models.Model):
             coupon_id(int): 発行対象のクーポンID
         Returns:
             coupon_code: 存在すれば CouponCode インスタンス（store情報付き）
-            None: 存在しない、複数件見つかった、またはDBエラーの場合
+            None: クーポンが存在しない場合、リトライ上限に達した場合、その他のDBエラー
+        Raises:
+            DatabaseError: データベース操作に失敗した場合
+            Exception: 予期しないエラーが発生した場合
         """
         try:
             coupon = Coupon.objects.get(id=coupon_id)
@@ -224,12 +231,12 @@ class CouponCode(models.Model):
                 logger.error(
                     f"[CouponCode][Issue] DatabaseError: coupon_id={coupon_id}. Error: {e}"
                 )
-                return None
+                raise
             except Exception as e:
                 logger.exception(
                     f"[CouponCode][Issue] Unexpected error: coupon_id={coupon_id}. Error: {e}"
                 )
-                return None
+                raise
 
         logger.error(
             f"[CouponCode][Issue] Failed to issue after {max_retries} retries: coupon_id={coupon_id}"
@@ -244,7 +251,10 @@ class CouponCode(models.Model):
             coupon_code_id (int): 取得対象のクーポンコードID
         Returns:
             coupon_id: 存在する場合、クーポンID
-            None: 存在しない、DBエラー、または予期しないエラーが発生した場合。
+            None: 存在しない場合。
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
         """
         try:
             coupon_id = (
@@ -255,19 +265,19 @@ class CouponCode(models.Model):
             return coupon_id
         except cls.DoesNotExist:
             logger.warning(
-                f"[CouponCode][RelationFetch] Not found: id={coupon_code_id}"
+                f"[CouponCode][RelationFetch] Not found: coupon_code_id={coupon_code_id}"
             )
             return None
         except DatabaseError as e:
             logger.error(
-                f"[CouponCode][RelationFetch] Database error: id={coupon_code_id}, error={e}"
+                f"[CouponCode][RelationFetch] Database error: coupon_code_id={coupon_code_id}, error={e}"
             )
-            return None
+            raise
         except Exception as e:
             logger.exception(
-                f"[CouponCode][RelationFetch] Unexpected error: id={coupon_code_id}, error={e}"
+                f"[CouponCode][RelationFetch] Unexpected error: coupon_code_id={coupon_code_id}, error={e}"
             )
-            return None
+            raise
 
     @classmethod
     def get_coupon_code(cls, coupon_code_id):
@@ -277,28 +287,26 @@ class CouponCode(models.Model):
             coupon_code_id (int): 取得対象のクーポンID
         Returns:
             coupon_code: 存在する場合、CouponCodeインスタンス。
-            None: 存在しない、複数件見つかった、またはDBエラーの場合
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
         """
         try:
             coupon_code = cls.objects.get(id=coupon_code_id)
             return coupon_code
         except cls.DoesNotExist:
             logger.warning(
-                f"[CouponCode][DetailFetch] Not found: id={coupon_code_id}"
-            )
-            return None
-        except cls.MultipleObjectsReturned as e:
-            logger.error(
-                f"[CouponCode][DetailFetch] Data integrity issue: id={coupon_code_id}, error={e}"
+                f"[CouponCode][DetailFetch] Not found: coupon_code_id={coupon_code_id}"
             )
             return None
         except DatabaseError as e:
             logger.error(
-                f"[CouponCode][DetailFetch] Database error: id={coupon_code_id}, error={e}"
+                f"[CouponCode][DetailFetch] Database error: coupon_code_id={coupon_code_id}, error={e}"
             )
-            return None
+            raise
         except Exception as e:
             logger.exception(
-                f"[CouponCode][DetailFetch] Unexpected error: id={coupon_code_id}, error={e}"
+                f"[CouponCode][DetailFetch] Unexpected error: coupon_code_id={coupon_code_id}, error={e}"
             )
-            return None
+            raise

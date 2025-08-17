@@ -20,22 +20,23 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         URLパスからクーポンIDを取得し、対応するクーポン情報を返す
         Returns:
             coupon: 指定されたクーポンIDが存在すれば coupon インスタンス
-            None: レコード未存在、整合性エラー、DBエラー、その他予期せぬエラーが発生した場合
+        Raises:
+            Http404: 該当するクーポンが存在しない場合
         """
         coupon_id = self.kwargs.get("coupon_id")
         coupon = Coupon.get_coupon(coupon_id)
+        if coupon is None:
+            raise Http404()
         return coupon
 
     def get(self, request, *args, **kwargs):
         """
         クーポン詳細ページ。
 
-        以下の条件に該当する場合はクーポン一覧ページにリダイレクトする：
-        - coupon_idに紐づいているデータがない場合
-        - 権限がない場合（クーポンの店舗ユーザー ≠ ログインユーザー）
-        - クーポンの有効期限が切れている場合（今日より前）
-        - 発行数の上限に達した場合
-        - クーポンの取得結果が None の場合
+        - coupon_idに紐づいているデータがない場合404に返す
+        - 権限がない場合クーポン一覧ページにリダイレクトする
+        - クーポンの有効期限が切れている場合（今日より前）クーポン一覧ページにリダイレクトする
+        - 発行数の上限に達した場合クーポン一覧ページにリダイレクトする
 
         上記に該当しない場合は、クーポン詳細ページを表示する。
         """
@@ -52,7 +53,7 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
             if coupon_for_check is None:
                 return redirect(reverse("coupon:coupon_list"))
             expiration_date = coupon_for_check.expiration_date
-            today = timezone.now().date()
+            today = timezone.localdate()
             max_issuance = coupon_for_check.max_issuance
             issued_count = coupon_for_check.issued_count
             if (
@@ -61,18 +62,6 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
             ):
                 return redirect(reverse("coupon:coupon_list"))
             self.object = self.get_object()
-            if self.object is None:
-                return redirect(reverse("coupon:coupon_list"))
-        except Http404:
-            logger.info(
-                "Coupon not found",
-                extra={
-                    "user_id": request.user.id,
-                    "coupon_id": coupon_id,
-                    "ip": request.META.get("REMOTE_ADDR"),
-                },
-            )
-            return redirect(reverse("coupon:coupon_list"))
         except PermissionDenied:
             logger.warning(
                 "Unauthorized access attempt",

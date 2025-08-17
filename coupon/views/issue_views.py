@@ -15,7 +15,7 @@ class CouponIssueView(LoginRequiredMixin, View):
     def post(self, request, **kwargs):
         """
         クーポン発行処理。
-        - coupon_idに紐づくクーポンが存在しない場合はホーム画面にリダイレクトする
+        - coupon_idに紐づくクーポンが存在しない場合は404に返す
         - 権限がない場合はホーム画面にリダイレクトする
         - 有効期限切れまたは発行数上限に達している場合はホーム画面にリダイレクトする
         - 正常な場合はクーポンコードを発行し、発行後の処理を実行する
@@ -32,12 +32,13 @@ class CouponIssueView(LoginRequiredMixin, View):
                 raise Http404()
             if store_user_id != request.user.id:
                 raise PermissionDenied()
+
             # 有効期限切れまたは発行数上限に達している場合は一覧へリダイレクト
             coupon_for_check = Coupon.get_for_status_check(coupon_id)
             if coupon_for_check is None:
                 return redirect(reverse("coupon:coupon_list"))
             expiration_date = coupon_for_check.expiration_date
-            today = timezone.now().date()
+            today = timezone.localdate()
             max_issuance = coupon_for_check.max_issuance
             issued_count = coupon_for_check.issued_count
             if (
@@ -45,31 +46,13 @@ class CouponIssueView(LoginRequiredMixin, View):
                 (max_issuance is not None and max_issuance <= issued_count)
             ):
                 return redirect(reverse("coupon:coupon_list"))
+
             coupon_code = CouponCode.issue(coupon_id)
             if coupon_code is None:
-                # 発行失敗時の対応
-                logger.error(
-                    "Coupon issue failed",
-                    extra={
-                        "user_id": request.user.id,
-                        "coupon_id": coupon_id,
-                        "ip": request.META.get("REMOTE_ADDR"),
-                    },
-                )
                 return redirect(reverse("coupon:coupon_list"))
             return redirect(
                 reverse("coupon:coupon_code_detail", kwargs={"coupon_code_id": coupon_code.id})
             )
-        except Http404:
-            logger.info(
-                "Coupon not found",
-                extra={
-                    "user_id": request.user.id,
-                    "coupon_id": coupon_id,
-                    "ip": request.META.get("REMOTE_ADDR"),
-                },
-            )
-            return redirect(reverse("coupon:coupon_list"))
         except PermissionDenied:
             logger.warning(
                 "Unauthorized access attempt",
