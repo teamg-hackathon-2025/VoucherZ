@@ -1,6 +1,7 @@
 import logging
 import string
 import random
+import uuid
 from django.db.models import F
 
 from django.db import models, DatabaseError, IntegrityError, transaction
@@ -21,11 +22,11 @@ class Coupon(models.Model):
     message = models.CharField(max_length=255, null=True, blank=True)
     expiration_date = models.DateField(null=True, blank=True)
     max_issuance = models.IntegerField(null=True, blank=True)
-    redeemed_count = models.IntegerField(default=0)
-    issued_count = models.IntegerField(default=0)
+    redeemed_count = models.IntegerField(default=0, editable=False)
+    issued_count = models.IntegerField(default=0, editable=False)
     deleted_at = models.DateTimeField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         db_table = "coupons"
@@ -149,10 +150,15 @@ class CouponCode(models.Model):
         related_name='coupon_codes',
         db_column='coupon_id',
     )
-    coupon_code = models.CharField(max_length=6)
+    coupon_code = models.CharField(max_length=6, editable=False)
+    coupon_uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True
+    )
     redeemed_at = models.DateTimeField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         db_table = "coupon_codes"

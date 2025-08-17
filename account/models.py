@@ -57,10 +57,10 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(unique=True, null=False, blank=False)
-    user_name = models.CharField(max_length=255, blank=True, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    email = models.EmailField(unique=True, blank=False)
+    user_name = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     last_login = None
 
@@ -68,7 +68,7 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
-    user_name = models.CharField(max_length=255, blank=True, null=False)
+    user_name = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -80,8 +80,7 @@ class User(AbstractBaseUser):
     objects = CustomUserManager()
 
     class Meta:
-        db_table="users"
-        db_table="users"
+        db_table = "users"
         verbose_name = 'User'
         verbose_name_plural = 'Users'
 
@@ -91,7 +90,7 @@ class User(AbstractBaseUser):
     # saveメソッドをオーバーライドしてuser_nameを自動生成
     def save(self, *args, **kwargs):
         # user_nameが未設定の場合のみ自動生成を試みる
-        if not self.user_name: 
+        if not self.user_name:
             try:
                 self.user_name = self._generate_pre_username()
             except Exception as e:
@@ -110,7 +109,7 @@ class User(AbstractBaseUser):
         # メールアドレスからuser_nameを作成
         pre_username = self.email.split('@')[0][:10] # メールアドレスの@より前10文字
         return pre_username
-    
+
     # saveメソッドをオーバーライドしてuser_nameを自動生成
     def save(self, *args, **kwargs):
         # user_nameが未設定の場合のみ自動生成を試みる
@@ -143,9 +142,9 @@ class Store(models.Model):
         db_column='user_id',
     )
 
-    store_name = models.CharField(max_length=255, null=False, blank=False)
-    created_at = models.DateTimeField(auto_now_add=True, null=False)
-    updated_at = models.DateTimeField(auto_now=True, null=False)
+    store_name = models.CharField(max_length=255, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         db_table = 'stores'
