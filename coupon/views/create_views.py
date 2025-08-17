@@ -140,7 +140,7 @@ class CouponCreateConfirmView(LoginRequiredMixin, TemplateView):
         }
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         """
         クーポン作成確認画面のPOST処理。
 
