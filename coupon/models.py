@@ -103,40 +103,6 @@ class Coupon(models.Model):
             return None
 
     @classmethod
-    def get_for_status_check(cls, coupon_id):
-        """
-        指定されたクーポンIDに対応するクーポン情報（有効期限・発行数チェック用のみフィールド取得）
-        Args:
-            coupon_id (int): 取得対象のクーポンID
-        Returns:
-            coupon: 存在する場合、Couponインスタンス
-                （expiration_date, max_issuance, issued_countのみ）。
-            None: 存在しない、DBエラー、または予期しないエラーが発生した場合。
-        """
-        try:
-            coupon_for_check = (
-                cls.objects
-                .only("expiration_date", "max_issuance", "issued_count")
-                .get(id=coupon_id)
-            )
-            return coupon_for_check
-        except cls.DoesNotExist:
-            logger.warning(
-                f"[Coupon][StatusCheck] Not found: id={coupon_id}"
-            )
-            return None
-        except DatabaseError as e:
-            logger.error(
-                f"[Coupon][StatusCheck] Database error: id={coupon_id}, error={e}"
-            )
-            return None
-        except Exception as e:
-            logger.exception(
-                f"[Coupon][StatusCheck] Unexpected error: id={coupon_id}, error={e}"
-            )
-            return None
-
-    @classmethod
     def get_coupon(cls, coupon_id):
         """
         指定されたクーポンIDに対応するクーポン情報（店舗名付き）を取得する
