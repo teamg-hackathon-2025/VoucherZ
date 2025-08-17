@@ -65,6 +65,9 @@ class CouponForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["title"].error_messages["required"] = "タイトルを入力してください。"
+        self.fields["target_product"].error_messages["required"] = "対象商品を入力してください。"
+        self.fields["discount"].error_messages["required"] = "割引内容を入力してください。"
         self.fields["expiration_date"].widget.attrs["min"] = timezone.localdate().strftime("%Y-%m-%d")
 
     def clean_title(self):
