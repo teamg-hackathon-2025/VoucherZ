@@ -1,7 +1,7 @@
 [
   {
     "model": "account.user",
-    "pk": "1ce96ca1858f4d5e945ff5a0f4c77866",
+    "pk": "1ce96ca1-858f-4d5e-945f-f5a0f4c77866",
     "fields": {
       "password": "pbkdf2_sha256$1000000$zQP4YwkOU1Eba0tbxmFPH4$bE7taYjLQIk5pU0mPlXJKY7nw/YooxwwTML9kxtztJU=",
       "email": "testuser@example.com",
@@ -17,7 +17,7 @@
       "store_name": "焼きたて工房　さとう",
       "created_at": "2025-03-01T00:00:00Z",
       "updated_at": "2025-03-01T00:00:00Z",
-      "user": "1ce96ca1858f4d5e945ff5a0f4c77866"
+      "user": "1ce96ca1-858f-4d5e-945f-f5a0f4c77866"
     }
   },
   {
@@ -93,19 +93,6 @@
     }
   },
   {
-    "model": "coupon.couponcode",
-    "pk": 1,
-    "fields": {
-      "store_id": 1,
-      "coupon_code": "HEZQ2Q",
-      "coupon_uuid": "550e8400e29b41d4a716446655440000",
-      "redeemed_at": null,
-      "created_at": "2025-03-01T00:00:00Z",
-      "updated_at": "2025-03-01T00:00:00Z",
-      "coupon": 1
-    }
-  },
-  {
     "model": "coupon.coupon",
     "pk": 5,
     "fields": {
@@ -125,11 +112,24 @@
   },
   {
     "model": "coupon.couponcode",
+    "pk": 1,
+    "fields": {
+      "store_id": 1,
+      "coupon_code": "HEZQ2Q",
+      "coupon_uuid": "550e8400-e29b-41d4-a716-446655440000",
+      "redeemed_at": null,
+      "created_at": "2025-03-01T00:00:00Z",
+      "updated_at": "2025-03-01T00:00:00Z",
+      "coupon": 1
+    }
+  },
+  {
+    "model": "coupon.couponcode",
     "pk": 2,
     "fields": {
       "store_id": 1,
       "coupon_code": "HEZQ2A",
-      "coupon_uuid": "550e8400e29b41d4a716446655440001",
+      "coupon_uuid": "550e8400-e29b-41d4-a716-446655440001",
       "redeemed_at": null,
       "created_at": "2025-07-28T00:00:00Z",
       "updated_at": "2025-07-28T00:00:00Z",
@@ -142,7 +142,7 @@
     "fields": {
       "store_id": 1,
       "coupon_code": "HEZQ2B",
-      "coupon_uuid": "550e8400e29b41d4a716446655440002",
+      "coupon_uuid": "550e8400-e29b-41d4-a716-446655440002",
       "redeemed_at": null,
       "created_at": "2025-07-28T00:00:00Z",
       "updated_at": "2025-07-28T00:00:00Z",
@@ -155,7 +155,7 @@
     "fields": {
       "store_id": 1,
       "coupon_code": "HEZQ2C",
-      "coupon_uuid": "550e8400e29b41d4a716446655440003",
+      "coupon_uuid": "550e8400-e29b-41d4-a716-446655440003",
       "redeemed_at": null,
       "created_at": "2025-07-28T00:00:00Z",
       "updated_at": "2025-07-28T00:00:00Z",
