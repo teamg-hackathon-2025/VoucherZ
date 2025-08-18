@@ -48,20 +48,23 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                 raise Http404()
             if store_user_id != request.user.id:
                 raise PermissionDenied()
+
             # 有効期限切れまたは発行数上限に達している場合は一覧へリダイレクト
             coupon_for_check = Coupon.get_for_status_check(coupon_id)
             if coupon_for_check is None:
-                return redirect(reverse("coupon:coupon_list"))
+                raise Http404()
+
             expiration_date = coupon_for_check.expiration_date
             today = timezone.localdate()
+            if expiration_date is not None and expiration_date < today:
+                return redirect(reverse("coupon:coupon_list"))
+
             max_issuance = coupon_for_check.max_issuance
             issued_count = coupon_for_check.issued_count
-            if (
-                (expiration_date is not None and expiration_date < today) or
-                (max_issuance is not None and max_issuance <= issued_count)
-            ):
+            if max_issuance is not None and max_issuance <= issued_count:
                 return redirect(reverse("coupon:coupon_list"))
-            self.object = self.get_object()
+
+            return super().get(request, *args, **kwargs)
         except PermissionDenied:
             logger.warning(
                 "Unauthorized access attempt",
@@ -72,4 +75,3 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                 },
             )
             return redirect(reverse("coupon:coupon_list"))
-        return super().get(request, *args, **kwargs)

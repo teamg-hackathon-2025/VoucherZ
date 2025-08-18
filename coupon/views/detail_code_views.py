@@ -26,24 +26,29 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
         coupon_id = self.coupon_id
         if coupon_id is None:
             coupon_id = CouponCode.get_coupon_id(coupon_code_id)
+
         coupon_code = CouponCode.get_coupon_code(coupon_code_id)
-        coupon = Coupon.get_coupon(coupon_id)
-        if coupon_code is None or coupon is None:
+        if coupon_code is None:
             raise Http404()
+
+        coupon = Coupon.get_coupon(coupon_id)
+        if coupon is None:
+            raise Http404()
+
         return {"coupon_code": coupon_code, "coupon": coupon}
 
     def get(self, request, *args, **kwargs):
         """
         クーポン発行後の詳細ページ。
 
-        - coupon_id に紐づく店舗ユーザーが存在しない場合: 404 を返す
-        - 権限がない場合（クーポンの店舗ユーザー ≠ ログインユーザー）: クーポン一覧ページへリダイレクト
-        - クーポンの有効期限が切れている場合（今日より前）: クーポン一覧ページへリダイレクト
-
-        上記に該当しない場合は、クーポンコード詳細ページを表示する。
+        Returns:
+            HttpResponse: 404/ホーム画面にリダイレクト/詳細ページのいずれか。
         """
         coupon_code_id = self.kwargs.get("coupon_code_id")
         coupon_id = CouponCode.get_coupon_id(coupon_code_id)
+        if coupon_id is None:
+            raise Http404()
+
         try:
             # 権限チェック（店舗ユーザーとログインユーザーの一致を確認）
             store_user_id = Coupon.get_store_user_id(coupon_id)
@@ -55,14 +60,15 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
             # 有効期限切れの場合は一覧へリダイレクト
             coupon_for_check = Coupon.get_for_status_check(coupon_id)
             if coupon_for_check is None:
-                return redirect(reverse("coupon:coupon_list"))
+                raise Http404()
+
             expiration_date = coupon_for_check.expiration_date
             today = timezone.localdate()
             if expiration_date is not None and expiration_date < today:
                 return redirect(reverse("coupon:coupon_list"))
 
             self.coupon_id = coupon_id
-            self.object = self.get_object()
+            return super().get(request, *args, **kwargs)
         except PermissionDenied:
             logger.warning(
                 "Unauthorized access attempt",
@@ -73,7 +79,6 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
                 },
             )
             return redirect(reverse("coupon:coupon_list"))
-        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         """
