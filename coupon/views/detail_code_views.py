@@ -20,14 +20,12 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
         Returns:
             dict: {"coupon_code": CouponCode, "coupon": Coupon}
         Raises:
-            Http404:
-                - self.coupon_id が未設定の場合
-                - 対応するクーポンコードまたはクーポンが存在しない場合
+            Http404: 対応するクーポンコードまたはクーポンが存在しない場合
         """
         coupon_code_id = self.kwargs.get("coupon_code_id")
         coupon_id = self.coupon_id
         if coupon_id is None:
-            raise Http404()
+            coupon_id = CouponCode.get_coupon_id(coupon_code_id)
         coupon_code = CouponCode.get_coupon_code(coupon_code_id)
         coupon = Coupon.get_coupon(coupon_id)
         if coupon_code is None or coupon is None:
