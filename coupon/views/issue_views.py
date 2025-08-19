@@ -1,5 +1,5 @@
 from django.core.exceptions import PermissionDenied
-from django.views.generic import DetailView
+from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -7,37 +7,22 @@ from django.http import Http404
 from django.utils import timezone
 import logging
 
-from ..models import Coupon
+from ..models import Coupon, CouponCode
 logger = logging.getLogger(__name__)
 
 
-class CouponDetailView(LoginRequiredMixin, DetailView):
-    template_name = "coupon/detail.html"
-    context_object_name = "coupon"
-
-    def get_object(self):
+class CouponIssueView(LoginRequiredMixin, View):
+    def post(self, request, **kwargs):
         """
-        URLパスからクーポンIDを取得し、対応するクーポン情報を返す
+        クーポン発行処理。
+        - coupon_idに紐づくクーポンが存在しない場合はホーム画面にリダイレクトする
+        - 権限がない場合はホーム画面にリダイレクトする
+        - 有効期限切れまたは発行数上限に達している場合はホーム画面にリダイレクトする
+        - 正常な場合はクーポンコードを発行し、発行後の処理を実行する
         Returns:
-            coupon: 指定されたクーポンIDが存在すれば coupon インスタンス
-            None: レコード未存在、整合性エラー、DBエラー、その他予期せぬエラーが発生した場合
-        """
-        coupon_id = self.kwargs.get("coupon_id")
-        coupon = Coupon.get_coupon(coupon_id)
-        return coupon
-
-    def get(self, request, *args, **kwargs):
-        """
-        クーポン詳細ページ。
-
-        以下の条件に該当する場合はクーポン一覧ページにリダイレクトする：
-        - coupon_idに紐づいているデータがない場合
-        - 権限がない場合（クーポンの店舗ユーザー ≠ ログインユーザー）
-        - クーポンの有効期限が切れている場合（今日より前）
-        - 発行数の上限に達した場合
-        - クーポンの取得結果が None の場合
-
-        上記に該当しない場合は、クーポン詳細ページを表示する。
+            HttpResponse:
+            - 成功時: 発行したクーポン内容を表示するレスポンス
+            - 失敗時: ホーム画面へのリダイレクトレスポンス
         """
         coupon_id = self.kwargs.get("coupon_id")
         try:
@@ -60,9 +45,21 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                 (max_issuance is not None and max_issuance <= issued_count)
             ):
                 return redirect(reverse("coupon:coupon_list"))
-            self.object = self.get_object()
-            if self.object is None:
+            coupon_code = CouponCode.issue(coupon_id)
+            if coupon_code is None:
+                # 発行失敗時の対応
+                logger.error(
+                    "Coupon issue failed",
+                    extra={
+                        "user_id": request.user.id,
+                        "coupon_id": coupon_id,
+                        "ip": request.META.get("REMOTE_ADDR"),
+                    },
+                )
                 return redirect(reverse("coupon:coupon_list"))
+            return redirect(
+                reverse("coupon:coupon_code_detail", kwargs={"coupon_code_id": coupon_code.id})
+            )
         except Http404:
             logger.info(
                 "Coupon not found",
@@ -83,4 +80,3 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                 },
             )
             return redirect(reverse("coupon:coupon_list"))
-        return super().get(request, *args, **kwargs)

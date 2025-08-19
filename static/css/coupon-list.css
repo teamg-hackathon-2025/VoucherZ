@@ -2,7 +2,7 @@
   margin-bottom: 30px;
 }
 .coupon-list-header {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: var(--color-layout-text-primary);
   margin-top: 24px;
@@ -42,7 +42,7 @@
   align-items: center;
   justify-content: center;
   color: #222;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
@@ -62,7 +62,7 @@
   justify-content: center;
 }
 .coupon-title {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 8px;
   display: flex;
@@ -73,7 +73,7 @@
   background: none;
   border: none;
   color: #444;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   cursor: pointer;
   margin-left: 8px;
   transition: color 0.2s;
@@ -82,12 +82,12 @@
   color: #e53935;
 }
 .coupon-info {
-  font-size: 0.98rem;
+  font-size: 1rem;
   margin-bottom: 12px;
   color: var(--color-main-text-primary);
 }
 .coupon-meta {
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: #666;
   margin-bottom: 16px;
 }
@@ -128,7 +128,7 @@
   background: #333;
 }
 .coupon-action .icon {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 /* Responsive styles */

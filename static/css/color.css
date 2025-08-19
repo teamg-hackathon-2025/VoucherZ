@@ -1,6 +1,7 @@
 :root {
   /* main部分 */
   --color-main-text-primary: #222222;
+  --color-main-text-secondary: #ffffff;
   --color-main-background-primary: #1256c4;
   /* main以外 */
   --color-layout-text-primary: #ffffff;
