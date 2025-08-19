@@ -32,6 +32,9 @@ startBtn.addEventListener('click', async () => {
 
     video.srcObject = stream;
     await video.play();
+
+    qr_check = false;
+    scanning = true;
     checkImage();
     startBtn.style.display = 'none';
     startGuide.style.display = 'none';
@@ -39,11 +42,55 @@ startBtn.addEventListener('click', async () => {
     frame.style.display = 'block';
 });
 
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let qr_check = false; // true:QRコード読み取り成功 false:読み取り失敗or未チェック
+let scanning = true; // true:checkImage稼働許可 false:checkImage停止
+const checkImage = () => {
+    if (!scanning) return;
+
+    // 取得している動画をCanvasに描画
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Canvasからデータを取得
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    
+    // jsQRに渡す
+    const code = jsQR(imageData.data, canvas.width, canvas.height);
+    
+    // QRコードの読み取りに成功したら値を出力
+    // 失敗したら再度実行
+    if (!qr_check && code) {
+        console.log("QRcodeが見つかりました", code); // デバッグ用
+        qr_check = true;
+        scanning = false;
+
+        // カメラ停止、画面リセット
+        const tracks = stream.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+        startBtn.style.display = 'block';
+        startGuide.style.display = 'block';
+        closeBtn.style.display = 'none';
+        frame.style.display = 'none';
+
+        // バックへ非同期処理
+        
+    } else {
+        console.log("失敗。0.5秒後に再トライ"); // デバッグ用
+        qr_check = false;
+        scanning = true;
+        setTimeout(() => { checkImage() }, 500);
+    }
+};
+
 closeBtn.addEventListener('click', () => {
     if (stream) {
         const tracks = stream.getTracks().forEach(track => track.stop());
     }
-    
+    qr_check = false;
+    scanning = false;
     video.srcObject = null;
     startBtn.style.display = 'block';
     startGuide.style.display = 'block';
@@ -51,35 +98,6 @@ closeBtn.addEventListener('click', () => {
     frame.style.display = 'none';
 });
     
-
-const canvas = document.querySelector('#canvas');
-const ctx = canvas.getContext('2d');
-
-let qr_check = false;
-const checkImage = () => {
-    // 取得している動画をCanvasに描画
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Canvasからデータを取得
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-    // jsQRに渡す
-    const code = jsQR(imageData.data, canvas.width, canvas.height);
-
-    // QRコードの読み取りに成功したら値を出力
-    // 失敗したら再度実行
-    if (!qr_check && code) {
-        console.log("QRcodeが見つかりました", code); // デバッグ用
-        qr_check = true;
-        // バックへ非同期処理
-        
-    } else {
-        console.log("失敗。0.5秒後に再トライ"); // デバッグ用
-        qr_check = false;
-        setTimeout(() => { checkImage() }, 500);
-    }
-};
-
 
 
 

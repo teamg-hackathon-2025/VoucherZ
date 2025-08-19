@@ -16,7 +16,7 @@
 }
 
 .verification-form-title {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   margin-top: 20px;
@@ -27,7 +27,7 @@
 .verification-form label {
   display: block;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 1rem;
   color: var(--color-main-text-primary);
 }
 
@@ -37,17 +37,22 @@
   margin-bottom: 15px;
   border: 1px solid #cccccc;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 1rem;
+}
+
+.verification-form input::placeholder{
+  font-size: 1rem;
 }
 
 .verification-form button {
-  width: 50%;
+  max-width: 9rem;
+  width: 100%;
   padding: 10px;
   background-color: var(--color-button-primary-background);
   color: var(--color-button-primary-text);
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 1rem;
   cursor: pointer;
   display: block;
   margin: 0 auto;
@@ -58,16 +63,13 @@
 }
 
 
-
-
-
 /* ===== QRコード用追記  ===== */
 .camera-wrapper {
   position: relative;
   max-width: 450px;
   width: 100%;
   aspect-ratio: 1 / 1; /* 枠を正方形にする */
-  margin: 0 auto;
+  margin: 0 auto 30px auto;
 }
 
 .reader-video {
@@ -123,4 +125,8 @@
   background-size: cover;
   background-position: center;
   cursor: pointer;
+}
+
+.camera-guide {
+  font-weight: bold;
 }
