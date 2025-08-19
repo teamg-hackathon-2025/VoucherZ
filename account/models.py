@@ -153,3 +153,76 @@ class Store(models.Model):
 
     def __str__(self):
         return self.store_name
+
+    @classmethod
+    def get_store_id_for_user(cls, user_id):
+        """
+        指定されたユーザーIDに紐づく店舗のIDを1件取得する
+        Args:
+            user_id (UUID): 取得対象のユーザーID
+        Returns:
+            store_id: 該当ユーザーに紐づく店舗ID
+            None: 存在しない場合
+            raise: 複数件見つかった、DBエラー、予期しないエラーの場合
+        """
+        try:
+            store_id = (
+                cls.objects
+                .values_list('id', flat=True)
+                .get(user=user_id)
+            )
+            return store_id
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Store][GetStoreId] Not found: user_id={user_id}"
+            )
+            return None
+        except cls.MultipleObjectsReturned as e:
+            logger.error(
+                f"[Store][GetStoreId] Multiple stores found: user_id={user_id}, error={e}"
+            )
+            raise
+        except DatabaseError as e:
+            logger.error(
+                f"[Store][GetStoreId] Database error: user_id={user_id}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Store][GetStoreId] Unexpected error: user_id={user_id}, error={e}"
+            )
+            raise
+
+    @classmethod
+    def get_store_name(cls, store_id):
+        """
+        指定された店舗IDに紐づく店舗名を取得する
+        Args:
+            store_id (int): 取得対象の店舗ID
+        Returns:
+            store_name: 店舗IDに紐づく店舗名
+            None: 存在しない場合
+            raise: DBエラー、予期しないエラーの場合
+        """
+        try:
+            store_name = (
+                cls.objects
+                .values_list("store_name", flat=True)
+                .get(id=store_id)
+            )
+            return store_name
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Store][GetStoreName] Not found: store_id={store_id}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[Store][GetStoreName] Database error: store_id={store_id}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Store][GetStoreName] Unexpected error: store_id={store_id}, error={e}"
+            )
+            raise

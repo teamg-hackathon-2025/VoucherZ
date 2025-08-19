@@ -37,14 +37,15 @@ class CouponIssueView(LoginRequiredMixin, View):
             coupon_for_check = Coupon.get_for_status_check(coupon_id)
             if coupon_for_check is None:
                 return redirect(reverse("coupon:coupon_list"))
+
             expiration_date = coupon_for_check.expiration_date
             today = timezone.localdate()
+            if expiration_date is not None and expiration_date < today:
+                return redirect(reverse("coupon:coupon_list"))
+
             max_issuance = coupon_for_check.max_issuance
             issued_count = coupon_for_check.issued_count
-            if (
-                (expiration_date is not None and expiration_date < today) or
-                (max_issuance is not None and max_issuance <= issued_count)
-            ):
+            if max_issuance is not None and max_issuance <= issued_count:
                 return redirect(reverse("coupon:coupon_list"))
 
             coupon_code = CouponCode.issue(coupon_id)
