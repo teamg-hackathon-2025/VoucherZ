@@ -283,7 +283,7 @@ class CouponCode(models.Model):
         return None
 
     @classmethod
-    def get_coupon_id(cls, coupon_code_id):
+    def get_coupon_id_by_id(cls, coupon_code_id):
         """
         指定されたクーポンコードIDに対応するクーポンIDを取得
         Args:
@@ -355,7 +355,7 @@ class CouponCode(models.Model):
             raise
 
     @classmethod
-    def get_coupon_code(cls, coupon_code_id):
+    def get_coupon_code_by_id(cls, coupon_code_id):
         """
         指定されたクーポンコードIDに対応するクーポンコード情報を取得する
         Args:

@@ -25,9 +25,9 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
         coupon_code_id = self.kwargs.get("coupon_code_id")
         coupon_id = self.coupon_id
         if coupon_id is None:
-            coupon_id = CouponCode.get_coupon_id(coupon_code_id)
+            coupon_id = CouponCode.get_coupon_id_by_id(coupon_code_id)
 
-        coupon_code = CouponCode.get_coupon_code(coupon_code_id)
+        coupon_code = CouponCode.get_coupon_code_by_id(coupon_code_id)
         if coupon_code is None:
             raise Http404()
 
@@ -45,7 +45,7 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
             HttpResponse: 404/ホーム画面にリダイレクト/詳細ページのいずれか。
         """
         coupon_code_id = self.kwargs.get("coupon_code_id")
-        coupon_id = CouponCode.get_coupon_id(coupon_code_id)
+        coupon_id = CouponCode.get_coupon_id_by_id(coupon_code_id)
         if coupon_id is None:
             raise Http404()
 
