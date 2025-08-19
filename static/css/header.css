@@ -85,7 +85,7 @@
 
 .is-authenticated .header .mobile-header .button-primary {
   border: 2px solid var(--color-button-primary-border);
-  padding: 5px 24px;
+  padding: 0.3125rem 1.5rem;
 }
 
 .is-authenticated .header .list .link {

@@ -57,10 +57,10 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(unique=True, null=False, blank=False)
-    user_name = models.CharField(max_length=255, blank=True, null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    email = models.EmailField(unique=True, blank=False)
+    user_name = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     last_login = None
 
@@ -68,7 +68,7 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
-    user_name = models.CharField(max_length=255, blank=True, null=False)
+    user_name = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -80,8 +80,7 @@ class User(AbstractBaseUser):
     objects = CustomUserManager()
 
     class Meta:
-        db_table="users"
-        db_table="users"
+        db_table = "users"
         verbose_name = 'User'
         verbose_name_plural = 'Users'
 
@@ -91,7 +90,7 @@ class User(AbstractBaseUser):
     # saveメソッドをオーバーライドしてuser_nameを自動生成
     def save(self, *args, **kwargs):
         # user_nameが未設定の場合のみ自動生成を試みる
-        if not self.user_name: 
+        if not self.user_name:
             try:
                 self.user_name = self._generate_pre_username()
             except Exception as e:
@@ -110,7 +109,7 @@ class User(AbstractBaseUser):
         # メールアドレスからuser_nameを作成
         pre_username = self.email.split('@')[0][:10] # メールアドレスの@より前10文字
         return pre_username
-    
+
     # saveメソッドをオーバーライドしてuser_nameを自動生成
     def save(self, *args, **kwargs):
         # user_nameが未設定の場合のみ自動生成を試みる
@@ -143,9 +142,9 @@ class Store(models.Model):
         db_column='user_id',
     )
 
-    store_name = models.CharField(max_length=255, null=False, blank=False)
-    created_at = models.DateTimeField(auto_now_add=True, null=False)
-    updated_at = models.DateTimeField(auto_now=True, null=False)
+    store_name = models.CharField(max_length=255, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         db_table = 'stores'
@@ -154,3 +153,76 @@ class Store(models.Model):
 
     def __str__(self):
         return self.store_name
+
+    @classmethod
+    def get_store_id_for_user(cls, user_id):
+        """
+        指定されたユーザーIDに紐づく店舗のIDを1件取得する
+        Args:
+            user_id (UUID): 取得対象のユーザーID
+        Returns:
+            store_id: 該当ユーザーに紐づく店舗ID
+            None: 存在しない場合
+            raise: 複数件見つかった、DBエラー、予期しないエラーの場合
+        """
+        try:
+            store_id = (
+                cls.objects
+                .values_list('id', flat=True)
+                .get(user=user_id)
+            )
+            return store_id
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Store][GetStoreId] Not found: user_id={user_id}"
+            )
+            return None
+        except cls.MultipleObjectsReturned as e:
+            logger.error(
+                f"[Store][GetStoreId] Multiple stores found: user_id={user_id}, error={e}"
+            )
+            raise
+        except DatabaseError as e:
+            logger.error(
+                f"[Store][GetStoreId] Database error: user_id={user_id}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Store][GetStoreId] Unexpected error: user_id={user_id}, error={e}"
+            )
+            raise
+
+    @classmethod
+    def get_store_name(cls, store_id):
+        """
+        指定された店舗IDに紐づく店舗名を取得する
+        Args:
+            store_id (int): 取得対象の店舗ID
+        Returns:
+            store_name: 店舗IDに紐づく店舗名
+            None: 存在しない場合
+            raise: DBエラー、予期しないエラーの場合
+        """
+        try:
+            store_name = (
+                cls.objects
+                .values_list("store_name", flat=True)
+                .get(id=store_id)
+            )
+            return store_name
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Store][GetStoreName] Not found: store_id={store_id}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[Store][GetStoreName] Database error: store_id={store_id}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Store][GetStoreName] Unexpected error: store_id={store_id}, error={e}"
+            )
+            raise
