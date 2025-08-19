@@ -1,0 +1,126 @@
+.coupon-detail {
+  padding: 55px 0;
+}
+
+.coupon-detail .container {
+  padding: 0 10px;
+  max-width: 892px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.coupon-detail .block-coupon {
+  background-color: var(--color-card-background-primary);
+  border-radius: 10px;
+  padding: 21px 25px 24px;
+}
+
+.coupon-detail .block-coupon .title {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.coupon-detail .block-coupon .box {
+  padding-top: 5px;
+}
+
+.coupon-detail .block-coupon .box .store-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.coupon-detail .block-coupon .box .campaign-title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.coupon-detail .block-coupon .box .message {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.coupon-detail .block-coupon .box .item {
+  margin-top: 5px;
+}
+
+.coupon-detail .block-coupon .box .item.coupon-code {
+  margin-top: 37px;
+}
+
+.coupon-detail .block-coupon .box .item-label {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.coupon-detail .block-coupon .box .item-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding-top: 1px;
+  text-align: center;
+}
+
+.coupon-detail .block-coupon .box .item-value .suffix {
+  font-size: 1rem;
+  font-weight: 400;
+  display: block;
+  padding-top: 4px;
+}
+
+.coupon-detail .block-coupon .box .coupon-code .item-value {
+  font-size: 3rem;
+  letter-spacing: 0.05em;
+}
+
+.coupon-detail .block-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.coupon-detail .block-button .button-primary {
+  border: 2px solid var(--color-button-primary-border);
+  max-width: 209px;
+  width: 100%;
+  text-align: center;
+  padding: 0.375rem 10px;
+}
+
+.coupon-detail .block-button .form {
+  max-width: 209px;
+  width: 100%;
+}
+
+/* ========================================================== */
+/* レスポンシブ */
+
+@media screen and (max-width: 767px) {
+  .coupon-detail .block-coupon {
+    padding: 21px 15px 42px;
+  }
+
+  .coupon-detail .block-coupon .box {
+    padding-top: 16px;
+  }
+
+  .coupon-detail .block-coupon .box .coupon-code .item-value {
+    font-size: 2.625rem;
+  }
+
+  .coupon-detail .block-button {
+    width: 100%;
+    flex-direction: column-reverse;
+    margin-top: 0;
+  }
+
+  .coupon-detail .block-button .form {
+    max-width: 13.0625rem;
+  }
+
+  .coupon-detail .block-button .button-primary {
+    margin-top: 30px;
+    max-width: 13.0625rem;
+  }
+}

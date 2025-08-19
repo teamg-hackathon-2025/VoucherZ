@@ -3,13 +3,14 @@
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.6;
   letter-spacing: 0.05em;
   color: var(--color-main-text-primary);
   background-color: var(--color-main-background-primary);
   box-sizing: border-box;
   min-height: 100vh;
+  overflow-wrap: break-word;
 }
 
 li {
@@ -73,5 +74,6 @@ button {
 @media screen and (max-width: 767px) {
   .is-authenticated .main {
     width: 100%;
+    padding-top: 68px;
   }
 }

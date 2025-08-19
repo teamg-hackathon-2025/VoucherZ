@@ -1,5 +1,6 @@
 {% load static %}
 <header class="header">
+  <div class="header-overlay"></div>
   <div class="container">
     <h1 class="logo">VoucherZ</h1>
     <button id="burger-icon" class="burger-icon">
@@ -9,14 +10,17 @@
       <img class="image" src="{% static 'img/close.png' %}" alt="メニューを閉じる">
     </button>
     <nav id="mobile-header" class="mobile-header">
-      <div class="background-overlay"></div>
+      <div class="mobile-menu-overlay"></div>
       <div class="list">
         <a href="{% url 'coupon:coupon_verify_manual'}" class="button-primary">クーポンを認証</a>
         <a href="{% url 'coupon:coupon_list'}" class="link">ホーム</a>
         <a href="javascript:void(0)" class="link is-disabled" aria-disabled="true">アカウント情報</a>
         <a href="javascript:void(0)" class="link is-disabled" aria-disabled="true">クーポン利用状況</a>
         <a href="javascript:void(0)" class="link is-disabled" aria-disabled="true">お問い合わせ</a>
-        <a href="{% url 'account:logout'}" class="link">ログアウト</a>
+        <form action="{% url 'account:logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="link">ログアウト</button>
+        </form>
       </div>
     </nav>
   </div>
