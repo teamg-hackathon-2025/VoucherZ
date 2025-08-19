@@ -16,7 +16,7 @@
 }
 
 .coupon-create .block-create .title {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
 }
@@ -48,6 +48,7 @@
 .coupon-create .block-create .form-item .label {
   display: block;
   width: 100%;
+  font-weight: 600;
 }
 
 .coupon-create .block-create .form-field .input,
