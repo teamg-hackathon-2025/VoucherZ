@@ -41,9 +41,6 @@
   padding-top: 16px;
 }
 
-.coupon-create-confirm .block-coupon .table {
-}
-
 .coupon-create-confirm .block-coupon .table .row {
   width: 100%;
   display: flex;
@@ -63,11 +60,6 @@
   width: calc(100% - 150px);
 }
 
-.coupon-create-confirm .block-coupon .table .label-text,
-.coupon-create-confirm .block-coupon .table .value-text {
-  
-}
-
 .coupon-create-confirm .block-coupon .box .store-name {
   font-size: 1.25rem;
   font-weight: 700;
@@ -84,12 +76,24 @@
   text-align: center;
 }
 
+.coupon-create-confirm .block-coupon .box .qr-code {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.coupon-create-confirm .block-coupon .box .qr-code-img {
+  object-fit: cover;
+  width: 100%;
+  max-width: 250px;
+  vertical-align: bottom;
+}
+
 .coupon-create-confirm .block-coupon .box .item {
   margin-top: 5px;
 }
 
 .coupon-create-confirm .block-coupon .box .item.coupon-code {
-  margin-top: 37px;
+  margin-top: 27px;
 }
 
 .coupon-create-confirm .block-coupon .box .item-label {

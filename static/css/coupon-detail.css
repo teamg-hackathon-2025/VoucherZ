@@ -40,12 +40,24 @@
   text-align: center;
 }
 
+.coupon-detail .block-coupon .box .qr-code {
+  text-align: center;
+  margin-top: 35px;
+}
+
+.coupon-detail .block-coupon .box .qr-code-img {
+  object-fit: cover;
+  width: 100%;
+  max-width: 250px;
+  vertical-align: bottom;
+}
+
 .coupon-detail .block-coupon .box .item {
   margin-top: 5px;
 }
 
 .coupon-detail .block-coupon .box .item.coupon-code {
-  margin-top: 37px;
+  margin-top: 27px;
 }
 
 .coupon-detail .block-coupon .box .item-label {
