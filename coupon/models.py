@@ -37,6 +37,45 @@ class Coupon(models.Model):
         return f"{self.title} ({self.store.store_name})"
 
     @classmethod
+    def create(cls, store_id, title, discount, target_product, message, expiration_date, max_issuance):
+        """
+        新しいクーポンを作成する
+        Args:
+            store_id(int): クーポンを紐づける店舗ID
+            title(str): クーポン名のタイトル
+            discount(str): 割引率
+            target_product(str): 割引対象商品の識別情報
+            message(str): メッセージ
+            expiration_date(date): クーポンの有効期限
+            max_issuance(int): 発行数の上限
+        Returns:
+            Coupon: 正常に作成された場合、作成した Coupon インスタンス
+            raise: 作成に失敗した場合（DBエラー、例外発生など）
+        """
+        try:
+            with transaction.atomic():
+                coupon = cls.objects.create(
+                    store_id=store_id,
+                    title=title,
+                    discount=discount,
+                    target_product=target_product,
+                    message=message,
+                    expiration_date=expiration_date,
+                    max_issuance=max_issuance,
+                )
+            return coupon
+        except DatabaseError as e:
+            logger.error(
+                f"[Coupon][create] DatabaseError: Error: {e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Coupon][create] Unexpected error: Error: {e}"
+            )
+            raise
+
+    @classmethod
     def get_store_user_id(cls, coupon_id):
         """
         指定されたクーポンIDに紐づく店舗ユーザーのIDを取得する
@@ -58,17 +97,17 @@ class Coupon(models.Model):
             return user_id
         except cls.DoesNotExist:
             logger.warning(
-                f"[Coupon][StoreUserIdFetch] Not found: id={coupon_id}"
+                f"[Coupon][StoreUserIdFetch] Not found: coupon_id={coupon_id}"
             )
             return None
         except DatabaseError as e:
             logger.error(
-                f"[Coupon][StoreUserIdFetch] Database error: id={coupon_id}, error={e}"
+                f"[Coupon][StoreUserIdFetch] Database error: coupon_id={coupon_id}, error={e}"
             )
             raise
         except Exception as e:
             logger.exception(
-                f"[Coupon][StoreUserIdFetch] Unexpected error: id={coupon_id}, error={e}"
+                f"[Coupon][StoreUserIdFetch] Unexpected error: coupon_id={coupon_id}, error={e}"
             )
             raise
 
@@ -95,17 +134,17 @@ class Coupon(models.Model):
             return coupon_for_check
         except cls.DoesNotExist:
             logger.warning(
-                f"[Coupon][StatusCheck] Not found: id={coupon_id}"
+                f"[Coupon][StatusCheck] Not found: coupon_id={coupon_id}"
             )
             return None
         except DatabaseError as e:
             logger.error(
-                f"[Coupon][StatusCheck] Database error: id={coupon_id}, error={e}"
+                f"[Coupon][StatusCheck] Database error: coupon_id={coupon_id}, error={e}"
             )
             raise
         except Exception as e:
             logger.exception(
-                f"[Coupon][StatusCheck] Unexpected error: id={coupon_id}, error={e}"
+                f"[Coupon][StatusCheck] Unexpected error: coupon_id={coupon_id}, error={e}"
             )
             raise
 
@@ -131,17 +170,17 @@ class Coupon(models.Model):
             return coupon
         except cls.DoesNotExist:
             logger.warning(
-                f"[Coupon][DetailFetch] Not found: id={coupon_id}"
+                f"[Coupon][DetailFetch] Not found: coupon_id={coupon_id}"
             )
             return None
         except DatabaseError as e:
             logger.error(
-                f"[Coupon][DetailFetch] Database error: id={coupon_id}, error={e}"
+                f"[Coupon][DetailFetch] Database error: coupon_id={coupon_id}, error={e}"
             )
             raise
         except Exception as e:
             logger.exception(
-                f"[Coupon][DetailFetch] Unexpected error: id={coupon_id}, error={e}"
+                f"[Coupon][DetailFetch] Unexpected error: coupon_id={coupon_id}, error={e}"
             )
             raise
 
