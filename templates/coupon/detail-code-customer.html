@@ -1,0 +1,54 @@
+{% extends 'account/base.html' %}
+{% load static %}
+{% block title %}{{ coupon.title }} - {{ coupon.store.store_name }}{% endblock %}
+{% block extra_css %}
+<link href="{% static 'css/coupon-detail-code-customer.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<section class="coupon-detail-code-customer">
+  <div class="container">
+    <div class="block-coupon">
+      <div class="box">
+        {% if coupon.expiration_date is not None and coupon.expiration_date < today %}
+        <p class="expired">有効期限が切れています</p>
+        {% endif %}
+        <p class="store-name">{{ coupon.store.store_name }}</p>
+        <h2 class="campaign-title">{{ coupon.title }}</h2>
+        {% if coupon.message %}
+        <p class="message">{{ coupon.message|linebreaksbr }}</p>
+        {% endif %}
+        <div class="qr-code" id="qrCode" data-mode="uuid" data-uuid="{{ coupon_code.coupon_uuid }}" data-size="250"></div>
+        <div class="item coupon-code">
+          <h3 class="item-label">クーポンコード:</h3>
+          <p class="item-value">{{ coupon_code.coupon_code }}</p>
+        </div>
+        <div class="item">
+          <h3 class="item-label">対象商品:</h3>
+          <p class="item-value">{{ coupon.target_product }}</p>
+        </div>
+        <div class="item">
+          <h3 class="item-label">割引内容:</h3>
+          <p class="item-value">{{ coupon.discount }}</p>
+        </div>
+        <div class="item">
+          <h3 class="item-label">有効期限:</h3>
+          <p class="item-value">
+            {% if coupon.expiration_date %}
+              {{ coupon.expiration_date|date:"Y/m/d" }}<br><span class="suffix">まで</span>
+            {% else %}
+              無期限
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script
+  src="{% static 'js/qr-generator.js' %}"
+  type="text/javascript"
+></script>
+{% endblock %}

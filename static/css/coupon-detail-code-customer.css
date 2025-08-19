@@ -1,0 +1,92 @@
+.coupon-detail-code-customer {
+  padding: 55px 0;
+}
+
+.coupon-detail-code-customer .container {
+  padding: 0 10px;
+  max-width: 892px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.coupon-detail-code-customer .block-coupon {
+  background-color: var(--color-card-background-primary);
+  border-radius: 10px;
+  padding: 30px 25px 24px;
+}
+
+.coupon-detail-code-customer .block-coupon .box .expired {
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  color: #B00000;
+  margin-bottom: 20px;
+}
+
+.coupon-detail-code-customer .block-coupon .box .store-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.coupon-detail-code-customer .block-coupon .box .campaign-title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.coupon-detail-code-customer .block-coupon .box .message {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.coupon-detail-code-customer .block-coupon .box .qr-code {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+}
+
+.coupon-detail-code-customer .block-coupon .box .item {
+  margin-top: 5px;
+}
+
+.coupon-detail-code-customer .block-coupon .box .item.coupon-code {
+  margin-top: 27px;
+}
+
+.coupon-detail-code-customer .block-coupon .box .item-label {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.coupon-detail-code-customer .block-coupon .box .item-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding-top: 1px;
+  text-align: center;
+}
+
+.coupon-detail-code-customer .block-coupon .box .item-value .suffix {
+  font-size: 1rem;
+  font-weight: 400;
+  display: block;
+  padding-top: 4px;
+}
+
+.coupon-detail-code-customer .block-coupon .box .coupon-code .item-value {
+  font-size: 3rem;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================================== */
+/* レスポンシブ */
+
+@media screen and (max-width: 767px) {
+  .coupon-detail-code-customer .block-coupon {
+    padding: 30px 15px 24px;
+  }
+
+  .coupon-detail-code-customer .block-coupon .box .coupon-code .item-value {
+    font-size: 2.625rem;
+  }
+}

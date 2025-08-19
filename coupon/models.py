@@ -280,6 +280,42 @@ class CouponCode(models.Model):
             raise
 
     @classmethod
+    def get_coupon_id_by_code_uuid(cls, coupon_code_uuid):
+        """
+        指定されたクーポンコードのUUIDに対応するクーポンIDを取得
+        Args:
+            coupon_code_uuid (uuid): 取得対象のクーポンコードのUUID
+        Returns:
+            coupon_id: 存在する場合、クーポンID
+            None: 存在しない場合。
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
+        """
+        try:
+            coupon_id = (
+                cls.objects
+                .values_list("coupon", flat=True)
+                .get(coupon_uuid=coupon_code_uuid)
+            )
+            return coupon_id
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[CouponCode][RelationFetch] Not found: coupon_code_uuid={coupon_code_uuid}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[CouponCode][RelationFetch] Database error: coupon_code_uuid={coupon_code_uuid}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[CouponCode][RelationFetch] Unexpected error: coupon_code_uuid={coupon_code_uuid}, error={e}"
+            )
+            raise
+
+    @classmethod
     def get_coupon_code(cls, coupon_code_id):
         """
         指定されたクーポンコードIDに対応するクーポンコード情報を取得する
@@ -308,5 +344,37 @@ class CouponCode(models.Model):
         except Exception as e:
             logger.exception(
                 f"[CouponCode][DetailFetch] Unexpected error: coupon_code_id={coupon_code_id}, error={e}"
+            )
+            raise
+
+    @classmethod
+    def get_coupon_code_by_code_uuid(cls, coupon_code_uuid):
+        """
+        指定されたクーポンコードUUIDに対応するクーポンコード情報を取得する
+        Args:
+            coupon_code_uuid (uuid): 取得対象のクーポンUUID
+        Returns:
+            coupon_code: 存在する場合、CouponCodeインスタンス。
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
+        """
+        try:
+            coupon_code = cls.objects.get(coupon_uuid=coupon_code_uuid)
+            return coupon_code
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[CouponCode][DetailFetch] Not found: coupon_code_uuid={coupon_code_uuid}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[CouponCode][DetailFetch] Database error: coupon_code_uuid={coupon_code_uuid}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[CouponCode][DetailFetch] Unexpected error: coupon_code_uuid={coupon_code_uuid}, error={e}"
             )
             raise
