@@ -28,6 +28,10 @@
   margin-top: 25px;
 }
 
+.coupon-create-confirm .block-coupon:first-child {
+  margin-top: 10px;
+}
+
 .coupon-create-confirm .block-coupon .block-title {
   font-size: 1.5rem;
   font-weight: 400;
