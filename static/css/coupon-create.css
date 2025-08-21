@@ -1,0 +1,118 @@
+.coupon-create {
+  padding: 35px 0;
+}
+
+.coupon-create .container {
+  padding: 0 10px;
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.coupon-create .block-create {
+  padding: 27px 20px 20px;
+  background-color: var(--color-card-background-primary);
+  border-radius: 10px;
+}
+
+.coupon-create .block-create .title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.coupon-create .block-create .form {
+  margin-top: 10px;
+}
+
+.coupon-create .block-create .form-field {
+  margin-top: 24px;
+}
+
+.coupon-create .block-create .form-field:first-of-type {
+  margin-top: 0;
+}
+
+.coupon-create .block-create .input {
+  border: 1px solid #222222;
+  border-radius: 10px;
+  padding: 6px 15px;
+}
+
+.coupon-create .block-create .input::placeholder {
+  color: var(--color-main-text-primary);
+  letter-spacing: 0.05em;
+}
+
+.coupon-create .block-create .form-field .label,
+.coupon-create .block-create .form-item .label {
+  display: block;
+  width: 100%;
+  font-weight: 600;
+}
+
+.coupon-create .block-create .form-field .input,
+.coupon-create .block-create .form-item .input {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.coupon-create .block-create .form-error {
+  margin-top: 3px;
+  color: #b00020;
+}
+
+.coupon-create .block-create .form-group {
+  margin-top: 24px;
+}
+
+.coupon-create .block-create .form-control-group {
+  display: flex;
+  align-items: end;
+}
+
+.coupon-create .block-create .form-group .form-item {
+  width: 48%;
+  max-width: 193px;
+}
+
+.coupon-create .block-create .form-item-sub {
+  margin: 0 0 7px 15%;
+}
+
+.coupon-create .block-create .form-item-sub .label {
+  margin-left: 7px;
+}
+
+.coupon-create .block-create .form-button {
+  margin: 30px auto 0;
+  text-align: center;
+}
+
+.coupon-create .block-create .form .button-primary {
+  padding: 0.4375rem 65px;
+}
+
+/* ========================================================== */
+/* レスポンシブ */
+
+@media screen and (max-width: 767px) {
+  .coupon-create .block-create {
+    padding: 27px 10px 20px;
+  }
+
+  .coupon-create .block-create .form-control-group {
+    flex-direction: column;
+    align-items: unset;
+  }
+
+  .coupon-create .block-create .form-item-sub {
+    margin: 15px 0 0;
+  }
+
+  .coupon-create .block-create .form-group .form-item {
+    width: 100%;
+    max-width: unset;
+  }
+}
