@@ -1,4 +1,5 @@
 from .customer_views import CouponCodeCustomerView
+from .delete_views import CouponDeleteView
 from .detail_views import CouponDetailView
 from .create_views import CouponCreateView, CouponCreateConfirmView
 from .issue_views import CouponIssueView
