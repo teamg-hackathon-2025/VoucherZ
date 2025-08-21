@@ -58,11 +58,11 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
                 raise PermissionDenied()
 
             # 有効期限切れの場合は一覧へリダイレクト
-            coupon_for_check = Coupon.get_for_status_check(coupon_id)
-            if coupon_for_check is None:
+            coupon_for_expiration_date = Coupon.get_for_expiration_check(coupon_id)
+            if coupon_for_expiration_date is None:
                 raise Http404()
 
-            expiration_date = coupon_for_check.expiration_date
+            expiration_date = coupon_for_expiration_date.expiration_date
             today = timezone.localdate()
             if expiration_date is not None and expiration_date < today:
                 return redirect(reverse("coupon:coupon_list"))

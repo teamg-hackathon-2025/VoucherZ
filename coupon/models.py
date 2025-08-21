@@ -112,39 +112,76 @@ class Coupon(models.Model):
             raise
 
     @classmethod
-    def get_for_status_check(cls, coupon_id):
+    def get_for_expiration_check(cls, coupon_id):
         """
-        指定されたクーポンIDに対応するクーポン情報（有効期限・発行数チェック用のみフィールド取得）
+        指定されたクーポンIDに対応するクーポン情報（有効期限のみフィールド取得）
         Args:
             coupon_id (int): 取得対象のクーポンID
         Returns:
             coupon: 存在する場合、Couponインスタンス
-                （expiration_date, max_issuance, issued_countのみ）。
+                （expiration_dateのみ）。
             None: 存在しない場合
         Raises:
             DatabaseError: データベース操作中にエラーが発生した場合
             Exception: その他の予期しないエラーが発生した場合
         """
         try:
-            coupon_for_check = (
+            coupon_for_expiration_date = (
                 cls.objects
-                .only("expiration_date", "max_issuance", "issued_count")
+                .only("expiration_date")
                 .get(id=coupon_id)
             )
-            return coupon_for_check
+            return coupon_for_expiration_date
         except cls.DoesNotExist:
             logger.warning(
-                f"[Coupon][StatusCheck] Not found: coupon_id={coupon_id}"
+                f"[Coupon][ExpirationCheck] Not found: coupon_id={coupon_id}"
             )
             return None
         except DatabaseError as e:
             logger.error(
-                f"[Coupon][StatusCheck] Database error: coupon_id={coupon_id}, error={e}"
+                f"[Coupon][ExpirationCheck] Database error: coupon_id={coupon_id}, error={e}"
             )
             raise
         except Exception as e:
             logger.exception(
-                f"[Coupon][StatusCheck] Unexpected error: coupon_id={coupon_id}, error={e}"
+                f"[Coupon][ExpirationCheck] Unexpected error: coupon_id={coupon_id}, error={e}"
+            )
+            raise
+
+    @classmethod
+    def get_for_issuance_check(cls, coupon_id):
+        """
+        指定されたクーポンIDに対応するクーポン情報（発行数チェック用のみフィールド取得）
+        Args:
+            coupon_id (int): 取得対象のクーポンID
+        Returns:
+            coupon: 存在する場合、Couponインスタンス
+                （max_issuance, issued_countのみ）。
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作中にエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
+        """
+        try:
+            coupon_for_issuance_check = (
+                cls.objects
+                .only("max_issuance", "issued_count")
+                .get(id=coupon_id)
+            )
+            return coupon_for_issuance_check
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Coupon][IssuanceCheck] Not found: coupon_id={coupon_id}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[Coupon][IssuanceCheck] Database error: coupon_id={coupon_id}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Coupon][IssuanceCheck] Unexpected error: coupon_id={coupon_id}, error={e}"
             )
             raise
 
