@@ -163,7 +163,7 @@ class Store(models.Model):
         Returns:
             store_id: 該当ユーザーに紐づく店舗ID
             None: 存在しない場合
-            raise: 複数件見つかった、DBエラー、予期しないエラーの場合
+            raise: DBエラー、予期しないエラーの場合
         """
         try:
             store_id = (
