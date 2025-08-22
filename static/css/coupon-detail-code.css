@@ -31,12 +31,18 @@
   text-align: center;
 }
 
+.coupon-detail-code .block-coupon .box .qr-code {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
 .coupon-detail-code .block-coupon .box .item {
   margin-top: 5px;
 }
 
 .coupon-detail-code .block-coupon .box .item.coupon-code {
-  margin-top: 37px;
+  margin-top: 27px;
 }
 
 .coupon-detail-code .block-coupon .box .item-label {
