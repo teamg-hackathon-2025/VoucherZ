@@ -177,11 +177,6 @@ class Store(models.Model):
                 f"[Store][GetStoreId] Not found: user_id={user_id}"
             )
             return None
-        except cls.MultipleObjectsReturned as e:
-            logger.error(
-                f"[Store][GetStoreId] Multiple stores found: user_id={user_id}, error={e}"
-            )
-            raise
         except DatabaseError as e:
             logger.error(
                 f"[Store][GetStoreId] Database error: user_id={user_id}, error={e}"
