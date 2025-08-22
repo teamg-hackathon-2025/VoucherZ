@@ -17,7 +17,7 @@
         {% if coupon.message %}
         <p class="message">{{ coupon.message|linebreaksbr }}</p>
         {% endif %}
-        <div class="qr-code" id="qrCode" data-mode="uuid" data-uuid="{{ coupon_code.coupon_uuid }}" data-size="250"></div>
+        <div class="qr-code" id="qrCode" data-mode="uuid" data-uuid="{{ coupon_code.coupon_uuid }}" data-size="150"></div>
         <div class="item coupon-code">
           <h3 class="item-label">クーポンコード:</h3>
           <p class="item-value">{{ coupon_code.coupon_code }}</p>
