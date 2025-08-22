@@ -135,10 +135,10 @@ class User(AbstractBaseUser):
 
 
 class Store(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         'User',
         on_delete=models.CASCADE,
-        related_name='stores',
+        related_name='store',
         db_column='user_id',
     )
 
