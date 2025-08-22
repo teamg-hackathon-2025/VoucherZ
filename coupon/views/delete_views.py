@@ -39,7 +39,7 @@ class CouponDeleteView(LoginRequiredMixin, DeleteView):
 
         coupon_for_issuance_check = Coupon.get_for_issuance_check(coupon_id)
         if coupon_for_issuance_check is None:
-            raise Http404()
+            return redirect(reverse("coupon:coupon_list"))
 
         expiration_date = coupon_for_expiration_date.expiration_date
         today = timezone.localdate()
@@ -56,6 +56,12 @@ class CouponDeleteView(LoginRequiredMixin, DeleteView):
         return self.delete(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
+        """
+        論理削除処理を実行する
+
+        Returns:
+            削除後にホーム画面にリダイレクト
+        """
         coupon_id = self.kwargs.get("coupon_id")
         Coupon.logical_delete(coupon_id)
         return redirect(self.success_url)
