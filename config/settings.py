@@ -22,17 +22,17 @@ pymysql.install_as_MySQLdb()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 環境変数を読み込む
-env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# env = environ.Env()
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY =  os.getenv("DJANGO_SECRET_KEY", "dummyValue")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DJANGO_ENV") == "development"
+DEBUG = os.getenv("DJANGO_ENV", "dummyValue") == "development"
 #DEBUG = True
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
@@ -60,17 +60,18 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'account.User'
 
 # ログイン時のURL名
-LOGIN_URL = 'account:login/'
+LOGIN_URL = 'account:login'
 # ログイン後の遷移先のURL名
 LOGIN_REDIRECT_URL = 'coupon:coupon_list'
 # ログアウト後のリダイレクト先URL名
-LOGOUT_REDIRECT_URL = 'account:login' 
+LOGOUT_REDIRECT_URL = 'account:login'
 
 MIDDLEWARE = [ 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    "coupon.middleware.ClearFlowSessionOnLeaveMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -102,10 +103,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
         'default': {
                     'ENGINE': 'django.db.backends.mysql',
-                    'NAME': env('MYSQL_DATABASE'),
-                    'USER': env('MYSQL_USER'),
-                    'PASSWORD': env('MYSQL_PASSWORD'),
-                    'HOST': env('MYSQL_CONTAINER_NAME'),
+                    'NAME': os.getenv("MYSQL_DATABASE", "dummyValue"),
+                    'USER': os.getenv("MYSQL_USER", "dummyValue"),
+                    'PASSWORD': os.getenv("MYSQL_PASSWORD", "dummyValue"),
+                    'HOST': os.getenv("MYSQL_CONTAINER_NAME", "dummyValue"),
                     'PORT': '3306',
                     'OPTIONS': {
                         'charset': 'utf8mb4',
@@ -169,16 +170,24 @@ INTERNAL_IPS = [
     '172.17.0.1',  # ホストのゲートウェイIP
 ]
 
-
 # 開発環境の場合
-if DEBUG and os.environ.get("DJANGO_ENV") == "development":
+if DEBUG and  os.getenv("DJANGO_ENV", "dummyValue") == "development":
     INSTALLED_APPS += ["debug_toolbar"]
     MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
 
 
-# settings.py
 CSRF_TRUSTED_ORIGINS = [
     "https://voucherz.jp",
     "https://www.voucherz.jp",
+]
+FLOW_GUARDS = [
+    {
+        "session_key": "coupon_data",
+        "ignore_prefixes": ("/static/", "/media/"),
+        "allow": [
+            ("coupon", "coupon_create"),
+            ("coupon", "coupon_create_confirm"),
+        ],
+    },
 ]
