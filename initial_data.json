@@ -83,7 +83,7 @@
       "target_product": "全品",
       "message": null,
       "expiration_date": "2025-09-01",
-      "max_issuance": null,
+      "max_issuance": 15,
       "redeemed_count": 0,
       "issued_count": 0,
       "deleted_at": null,
