@@ -164,17 +164,17 @@ class Coupon(models.Model):
             return coupon_for_delete
         except cls.DoesNotExist:
             logger.warning(
-                f"[Coupon][ExpirationCheck] Not found: coupon_id={coupon_id}"
+                f"[Coupon][DeleteCheck] Not found: coupon_id={coupon_id}"
             )
             return None
         except DatabaseError as e:
             logger.error(
-                f"[Coupon][ExpirationCheck] Database error: coupon_id={coupon_id}, error={e}"
+                f"[Coupon][DeleteCheck] Database error: coupon_id={coupon_id}, error={e}"
             )
             raise
         except Exception as e:
             logger.exception(
-                f"[Coupon][ExpirationCheck] Unexpected error: coupon_id={coupon_id}, error={e}"
+                f"[Coupon][DeleteCheck] Unexpected error: coupon_id={coupon_id}, error={e}"
             )
             raise
 
