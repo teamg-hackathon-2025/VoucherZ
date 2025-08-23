@@ -16,7 +16,6 @@ class CouponListView(LoginRequiredMixin, ListView):
         user_id = self.request.user.id
         store_id = Store.get_store_id_for_user(user_id)
         coupon_list = Coupon.get_coupon_list(store_id)
-        store_name = Store.get_store_name(store_id)
 
         # 計算処理: 利用率（%）
         for coupon in coupon_list:
@@ -35,6 +34,7 @@ class CouponListView(LoginRequiredMixin, ListView):
         )
 
     def get_context_data(self, **kwargs):
+        store_name = Store.get_store_name(store_id)
         context = super().get_context_data(**kwargs)
         context["today"] = timezone.localdate()
         return context

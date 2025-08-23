@@ -189,7 +189,7 @@ class Coupon(models.Model):
         try:
             coupon = (
                 cls.objects
-                .filter(id=store_id)
+                .filter(store=store_id)
             )
             return coupon
         except cls.DoesNotExist:
