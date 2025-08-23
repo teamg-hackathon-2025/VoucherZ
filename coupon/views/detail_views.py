@@ -50,17 +50,21 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
                 raise PermissionDenied()
 
             # 有効期限切れまたは発行数上限に達している場合は一覧へリダイレクト
-            coupon_for_check = Coupon.get_for_status_check(coupon_id)
-            if coupon_for_check is None:
+            coupon_for_expiration_date = Coupon.get_for_expiration_check(coupon_id)
+            if coupon_for_expiration_date is None:
                 raise Http404()
 
-            expiration_date = coupon_for_check.expiration_date
+            expiration_date = coupon_for_expiration_date.expiration_date
             today = timezone.localdate()
             if expiration_date is not None and expiration_date < today:
                 return redirect(reverse("coupon:coupon_list"))
 
-            max_issuance = coupon_for_check.max_issuance
-            issued_count = coupon_for_check.issued_count
+            coupon_for_issuance_check = Coupon.get_for_issuance_check(coupon_id)
+            if coupon_for_issuance_check is None:
+                raise Http404()
+
+            max_issuance = coupon_for_issuance_check.max_issuance
+            issued_count = coupon_for_issuance_check.issued_count
             if max_issuance is not None and max_issuance <= issued_count:
                 return redirect(reverse("coupon:coupon_list"))
 
