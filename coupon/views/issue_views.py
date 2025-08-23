@@ -33,7 +33,16 @@ class CouponIssueView(LoginRequiredMixin, View):
             if store_user_id != request.user.id:
                 raise PermissionDenied()
 
-            # 有効期限切れまたは発行数上限に達している場合は一覧へリダイレクト
+            # 削除済みの場合はホーム画面へリダイレクト
+            coupon_for_deleted_at = Coupon.get_for_delete_check(coupon_id)
+            if coupon_for_deleted_at is None:
+                return redirect(reverse("coupon:coupon_list"))
+
+            deleted_at = coupon_for_deleted_at.deleted_at
+            if deleted_at is not None:
+                return redirect(reverse("coupon:coupon_list"))
+
+            # 有効期限切れの場合はホーム画面へリダイレクト
             coupon_for_expiration_date = Coupon.get_for_expiration_check(coupon_id)
             if coupon_for_expiration_date is None:
                 return redirect(reverse("coupon:coupon_list"))
@@ -43,6 +52,7 @@ class CouponIssueView(LoginRequiredMixin, View):
             if expiration_date is not None and expiration_date < today:
                 return redirect(reverse("coupon:coupon_list"))
 
+            # 発行数上限に達している場合はホーム画面へリダイレクト
             coupon_for_issuance_check = Coupon.get_for_issuance_check(coupon_id)
             if coupon_for_issuance_check is None:
                 return redirect(reverse("coupon:coupon_list"))
