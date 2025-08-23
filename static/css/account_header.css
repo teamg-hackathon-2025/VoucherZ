@@ -1,0 +1,10 @@
+.header {
+    padding: 6px 0;
+}
+
+/* ロゴ配置 */
+.logo--custom {
+    width: 100%;
+    padding-left: 20px;
+    text-align: left;
+}

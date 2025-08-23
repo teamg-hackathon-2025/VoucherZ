@@ -1,20 +1,23 @@
-{% extends 'base.html' %}
+{% extends 'account/base.html' %}
 {% load static %}
-{% block title %}{{ coupon.title }} - クーポンコード詳細{% endblock %}
+{% block title %}{{ coupon.title }} - {{ coupon.store.store_name }}{% endblock %}
 {% block extra_css %}
-<link href="{% static 'css/coupon-detail-code.css' %}" rel="stylesheet">
+<link href="{% static 'css/coupon-detail-code-customer.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-<section class="coupon-detail-code">
+<section class="coupon-detail-code-customer">
   <div class="container">
     <div class="block-coupon">
       <div class="box">
+        {% if coupon.expiration_date is not None and coupon.expiration_date < today %}
+        <p class="expired">有効期限が切れています</p>
+        {% endif %}
         <p class="store-name">{{ coupon.store.store_name }}</p>
         <h2 class="campaign-title">{{ coupon.title }}</h2>
         {% if coupon.message %}
         <p class="message">{{ coupon.message|linebreaksbr }}</p>
         {% endif %}
-        <div class="qr-code" id="qrCode" data-mode="url" data-url="https://voucher.jp{% url 'coupon:coupon_customer_view' coupon_code.coupon_uuid %}" data-size="180"></div>
+        <div class="qr-code" id="qrCode" data-mode="uuid" data-uuid="{{ coupon_code.coupon_uuid }}" data-size="150"></div>
         <div class="item coupon-code">
           <h3 class="item-label">クーポンコード:</h3>
           <p class="item-value">{{ coupon_code.coupon_code }}</p>
@@ -38,17 +41,6 @@
           </p>
         </div>
       </div>
-    </div>
-    <div class="block-button">
-      <a class="link button-primary" href="{% url 'coupon:coupon_list' %}">ホームに戻る</a>
-      {% if coupon.max_issuance is not None and coupon.issued_count < coupon.max_issuance %}
-      <form class="form" method="POST" action="{% url 'coupon:coupon_issue' coupon.id %}">
-        {% csrf_token %}
-        <button class="button-primary" type="submit">クーポンを続けて発行</button>
-      </form>
-      {% else %}
-      <p class="button-secondary">発行上限に達しました</p>
-      {% endif %}
     </div>
   </div>
 </section>
