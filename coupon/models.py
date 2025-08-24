@@ -288,6 +288,30 @@ class Coupon(models.Model):
             )
             raise
 
+    @classmethod
+    def get_coupon_list(cls, store_id):
+        try:
+            coupon = (
+                cls.objects
+                .filter(store=store_id)
+            )
+            return coupon
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Coupon][ListFetch] Not found: store_id={store_id}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[Coupon][ListFetch] Database error: store_id={store_id}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Coupon][ListFetch] Unexpected error: store_id={store_id}, error={e}"
+            )
+            raise
+
 
 class CouponCode(models.Model):
     store_id = models.BigIntegerField()
