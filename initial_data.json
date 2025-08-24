@@ -161,5 +161,83 @@
       "updated_at": "2025-07-28T00:00:00Z",
       "coupon": 3
     }
+  },
+  {
+    "model": "coupon.couponcode",
+    "pk": 5,
+    "fields": {
+      "store_id": 1,
+      "coupon_code": "HEZQ2D",
+      "coupon_uuid": "550e8400-e29b-41d4-a716-446655440999",
+      "redeemed_at": "2025-08-19T12:30:00Z",
+      "created_at": "2025-08-15T12:00:00Z",
+      "updated_at": "2025-08-19T12:30:00Z",
+      "coupon": 1
+    }
+  },
+  {
+    "model": "account.user",
+    "pk": "2b7a3d2e-4b9c-47a6-b9f2-8a1c4f2a1234",
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$gOwuuQf3UaoF9lOL3VHcZY$+IOpRGkFf6rBqUMZ5CFfQYvlrriEhsm2oVLzo15tcpI=",
+      "email": "tanaka@example.com",
+      "user_name": "田中",
+      "created_at": "2025-03-10T00:00:00Z",
+      "updated_at": "2025-03-10T00:00:00Z"
+    }
+  },
+  {
+    "model": "account.store",
+    "pk": 2,
+    "fields": {
+      "store_name": "カフェ・タナカ",
+      "created_at": "2025-03-10T00:00:00Z",
+      "updated_at": "2025-03-10T00:00:00Z",
+      "user": "2b7a3d2e-4b9c-47a6-b9f2-8a1c4f2a1234"
+    }
+  },
+  {
+    "model": "coupon.coupon",
+    "pk": 6,
+    "fields": {
+      "title": "新規オープン記念",
+      "discount": "50％OFF",
+      "target_product": "ドリンク全品",
+      "message": "カフェ・ド・ルナのオープンを記念して、特別割引をご提供！",
+      "expiration_date": "2025-12-31",
+      "max_issuance": 30,
+      "redeemed_count": 0,
+      "issued_count": 0,
+      "deleted_at": null,
+      "created_at": "2025-08-20T00:00:00Z",
+      "updated_at": "2025-08-20T00:00:00Z",
+      "store": 2
+    }
+  },
+  {
+    "model": "coupon.couponcode",
+    "pk": 6,
+    "fields": {
+      "store_id": 2,
+      "coupon_code": "LUNA01",
+      "coupon_uuid": "660e8400-e29b-41d4-a716-446655440aaa",
+      "redeemed_at": null,
+      "created_at": "2025-08-20T00:00:00Z",
+      "updated_at": "2025-08-20T00:00:00Z",
+      "coupon": 6
+    }
+  },
+  {
+    "model": "coupon.couponcode",
+    "pk": 7,
+    "fields": {
+      "store_id": 2,
+      "coupon_code": "LUNA02",
+      "coupon_uuid": "660e8400-e29b-41d4-a716-446655440aab",
+      "redeemed_at": "2025-08-22T15:00:00Z",
+      "created_at": "2025-08-20T00:00:00Z",
+      "updated_at": "2025-08-22T15:00:00Z",
+      "coupon": 6
+    }
   }
 ]
