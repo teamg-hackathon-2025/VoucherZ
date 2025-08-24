@@ -80,11 +80,18 @@ jobs:
       # --- Remove lock file locally ---
       - name: Remove Terraform lock
         run: |
-          gh run delete --name terraform-lock --repo teamg-hackathon-2025/VoucherZ
-
+          gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
+          | jq -r '.artifacts[] | select(.name=="terraform-lock") | .id' \
+          | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          
       # --- Remove lock file locally ---
       - name: Remove Terraform state
         run: |
-          gh run delete --name terraform-tfstate --repo teamg-hackathon-2025/VoucherZ
-
-
+          gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
+          | jq -r '.artifacts[] | select(.name=="terraform-tfstate") | .id' \
+          | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
+        env:
+          GH_TOKEN: ${{ github.token }}
+         
