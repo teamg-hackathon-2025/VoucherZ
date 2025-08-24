@@ -10,7 +10,7 @@
   margin-bottom: 32px;
   letter-spacing: 1px;
 }
-.coupon-panel {
+.coupon-list .coupon-panel {
   display: flex;
   gap: 24px;
   width: 88%;
@@ -23,8 +23,8 @@
 
 /* Coupon Card */
 
-.coupon-card,
-.coupon-add-card {
+.coupon-list .coupon-card,
+.coupon-list .coupon-add-card {
   min-width: 350px;
   min-height: 350px;
   background: var(--color-card-background-primary);
@@ -36,7 +36,7 @@
   justify-content: space-between;
   position: relative;
 }
-.coupon-add-card {
+.coupon-list .coupon-add-card {
   background: #f0f0f0;
   align-items: center;
   justify-content: center;
@@ -46,10 +46,10 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-.coupon-add-card:hover {
+.coupon-list .coupon-add-card:hover {
   background: #d0d0d0;
 }
-.coupon-add-icon {
+.coupon-list .coupon-add-icon {
   font-size: 2rem; /* 小さく */
   line-height: 48px; /* 高さに合わせる */
   margin: 16px 0 0 0;
@@ -63,37 +63,37 @@
   box-sizing: border-box;
   overflow: hidden; /* はみ出し防止 */
 }
-.coupon-title {
-  font-size: 1.25rem;
-  font-weight: bold;
+.coupon-list .coupon-title {
   margin-bottom: 8px;
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
 }
-.coupon-delete {
-  background: none;
-  border: none;
-  color: #444;
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin-left: 8px;
-  transition: color 0.2s;
+.coupon-list .coupon-title .title {
+  font-size: 1.25rem;
+  font-weight: bold;
 }
-.coupon-delete:hover {
-  color: #e53935;
+.coupon-list .delete-button {
+  display: block;
+  flex: 0 0 40px;
+  padding: 5px;
+  height: 40px;
 }
-.coupon-info {
+.coupon-list .delete-image {
+  object-fit: cover;
+  width: 30px;
+}
+.coupon-list .coupon-info {
   font-size: 1rem;
   margin-bottom: 12px;
   color: var(--color-main-text-primary);
 }
-.coupon-meta {
+.coupon-list .coupon-meta {
   font-size: 1rem;
   color: var(--color-layout-text-secondary);
   margin-bottom: 16px;
 }
-.coupon-action {
+.coupon-list .coupon-action {
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
@@ -132,16 +132,16 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.coupon-action button:hover {
+.coupon-list .coupon-action button:hover {
   background: #333;
 }
-.coupon-action .icon {
+.coupon-list .coupon-action .icon {
   font-size: 1rem;
 }
 
 /* Responsive styles */
 @media (max-width: 767px) {
-  .coupon-panel {
+  .coupon-list .coupon-panel {
     gap: 16px;
     overflow-x: unset;
     overflow-y: hidden;
@@ -164,8 +164,8 @@
     gap: 6px;
     font-size: 1rem;
   }
-  .coupon-card,
-  .coupon-add-card {
+  .coupon-list .coupon-card,
+  .coupon-list .coupon-add-card {
     min-width: 0;
     width: 100%;
     max-width: 100%;

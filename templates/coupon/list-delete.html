@@ -1,0 +1,14 @@
+{% load static %}
+<div class="delete-modal" id="deleteCouponListModal">
+  <div class="container">
+    <div class="alert">
+      <img class="alert-image" src="{% static 'img/alert.png' %}" alt="">
+    </div>
+    <p class="title">本当に削除してよろしいですか？</p>
+    <form class="delete-form" id="deleteCouponListForm" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="button-secondary">はい</button>
+      <button type="button" id="closeDeleteCouponListModal" class="button-primary">いいえ</button>
+    </form>
+  </div>
+</div>

@@ -260,7 +260,7 @@ class Coupon(models.Model):
             coupon_id (int): 取得対象のクーポンID
         Returns:
             coupon: 存在する場合、Couponインスタンス（store情報付き）。
-            None: 存在しない、複数件見つかった、またはDBエラーの場合
+            None: 存在しない場合
         Raises:
             DatabaseError: データベース操作でエラーが発生した場合
             Exception: 上記以外の予期しないエラーが発生した場合
@@ -290,10 +290,21 @@ class Coupon(models.Model):
 
     @classmethod
     def get_coupon_list(cls, store_id):
+        """
+        指定されたクーポンIDに対応する削除されていないクーポン情報（店舗名付き）を取得する
+        Args:
+            coupon_id (int): 取得対象のクーポンID
+        Returns:
+            coupon: 存在する場合、Couponインスタンス。
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: 上記以外の予期しないエラーが発生した場合
+        """
         try:
             coupon = (
                 cls.objects
-                .filter(store=store_id)
+                .filter(store=store_id, deleted_at__isnull=True)
             )
             return coupon
         except cls.DoesNotExist:

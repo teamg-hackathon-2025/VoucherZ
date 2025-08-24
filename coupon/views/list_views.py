@@ -56,12 +56,18 @@ class CouponListView(LoginRequiredMixin, ListView):
             )
         ).order_by("sort_priority", "-expiration_date")
 
-        # 計算処理: 利用率（%）
         for coupon in queryset:
+            # 計算処理: 利用率（%）
             if coupon.issued_count > 0:
                 coupon.usage_rate = round((coupon.redeemed_count / coupon.issued_count) * 100)
             else:
-                coupon.usage_rate = 0  # max_issuanceがない場合は利用率なし
+                coupon.usage_rate = 0
+
+            # 削除可能の場合に True をセット（未発行のクーポン または 期限切れのクーポン）
+            coupon.can_delete = (
+                coupon.issued_count == 0
+                or coupon.expiration_date is not None and coupon.expiration_date < today
+            )
 
         return queryset
 
@@ -70,5 +76,3 @@ class CouponListView(LoginRequiredMixin, ListView):
         context["store_name"] = Store.get_store_name(self.store_id)
         context["today"] = timezone.localdate()
         return context
-    
-    

@@ -1,0 +1,58 @@
+.delete-modal {
+  display: none;
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-modal .container {
+  background-color: var(--color-modal-background-primary);
+  max-width: 515px;
+  width: 100%;
+  border-radius: 10px;
+  padding: 50px 10px 40px;
+}
+
+.delete-modal .alert {
+  text-align: center;
+}
+
+.delete-modal .alert-image {
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
+.delete-modal .title {
+  margin-top: 17px;
+  text-align: center;
+}
+
+.delete-modal .delete-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.delete-modal .button-primary,
+.delete-modal .button-secondary {
+  margin-top: 30px;
+  max-width: 241px;
+  width: 100%;
+  text-align: center;
+}
+
+.delete-modal .button-primary {
+  padding: 0.4375rem 10px;
+}
+
+.delete-modal .button-secondary {
+  padding: 0.3125rem 10px;
+}
