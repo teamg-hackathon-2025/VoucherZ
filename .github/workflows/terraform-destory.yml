@@ -65,6 +65,8 @@ jobs:
       - name: Download tfstate
         run: |
           gh run download --name terraform-tfstate --dir . --repo teamg-hackathon-2025/VoucherZ
+        env:
+          GH_TOKEN: ${{ github.token }}
  
 
       - name: Terraform Init
