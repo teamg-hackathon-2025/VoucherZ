@@ -15,10 +15,10 @@
   </div>
 
   <div class="coupon-panel">
-    <div class="coupon-add-card">
+    <a href="{% url 'coupon:coupon_create' %}" class="coupon-add-card">
       <p>新しいクーポンの種類を作成</p>
       <span class="coupon-add-icon">＋</span>
-    </div>
+    </a>
 
     <!-- クーポン一覧 -->
     {% for coupon in coupon_list %}
@@ -53,7 +53,7 @@
         {% elif coupon.max_issuance and coupon.issued_count >= coupon.max_issuance %}
           <p class="coupon-list-button-secondary">発行上限に達しました</p>
         {% else %}
-          <a href="" class="coupon-list-button-primary">
+          <a href="{% url 'coupon:coupon_detail' coupon.id %}" class="coupon-list-button-primary">
             <span class="icon">&#9654;</span> クーポンを発行
           </a>
         {% endif %}
