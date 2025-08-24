@@ -19,13 +19,15 @@
   padding: 120px 0 20px 0;
   scrollbar-width: thin;
   scrollbar-color: #bbb #e0e0e0;
-  align-items: stretch; /* stretchで高さ揃え */
+  align-items: center; /* Position in the middle */
 }
 
 /* Coupon Card */
 
 .coupon-card,
 .coupon-add-card {
+  min-width: 350px;
+  min-height: 350px;
   background: var(--color-card-background-primary);
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -102,26 +104,35 @@
   color: var(--color-layout-text-primary);
   border: none;
   border-radius: 8px;
+  padding: 8px 24px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   display: flex;
+  align-items: center;
   gap: 6px;
+  width: 100%;            /* 横幅を最大に */
   transition: background 0.2s;
+  justify-content: center; /* 追加：中央揃え */
 }
 .coupon-list-button-secondary {
   background: red;
   color: var(--color-layout-text-primary);
   border: none;
   border-radius: 8px;
-  padding: 8px 80px;
+  padding: 8px 24px;      /* 横paddingを減らす */
   font-size: 1rem;
   font-weight: 500;
-  cursor: not-allowed; /* Makes the cursor unclickable */
+  cursor: not-allowed;
   display: flex;
   align-items: center;
-  justify-content: center; /* Aligns text in the center */
+  justify-content: center;
   gap: 6px;
+  width: 100%;            /* 横幅を最大に */
+  box-sizing: border-box;
+  white-space: nowrap;    /* 改行防止 */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .coupon-action button:hover {
   background: #333;
