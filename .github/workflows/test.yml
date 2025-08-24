@@ -9,4 +9,7 @@ jobs:
     steps:
       - name: delete file
         run: |
-          gh artifact delete terraform-tfstate --repo teamg-hackathon-2025/VoucherZ
+          gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
+          | jq -r '.artifacts[] | select(.name=="terraform-tfstate") | .id' \
+          | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
+
