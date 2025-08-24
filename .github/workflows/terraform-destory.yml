@@ -80,5 +80,11 @@ jobs:
       # --- Remove lock file locally ---
       - name: Remove Terraform lock
         run: |
-          rm -f .terraform-lock/main
+          gh run delete --name terraform-lock --repo teamg-hackathon-2025/VoucherZ
+
+      # --- Remove lock file locally ---
+      - name: Remove Terraform state
+        run: |
+          gh run delete --name terraform-tfstate --repo teamg-hackathon-2025/VoucherZ
+
 
