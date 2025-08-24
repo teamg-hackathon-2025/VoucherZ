@@ -35,6 +35,9 @@ jobs:
           set +e  # エラーで止めない
           echo "Attempting to download terraform lock..."
           gh run download --name terraform-lock --dir .terraform-lock --repo teamg-hackathon-2025/VoucherZ || echo "No previous lock found, continue."
+        env:
+          GH_TOKEN: ${{ github.token }}
+
 
 
 
