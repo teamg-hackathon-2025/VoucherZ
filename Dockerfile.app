@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS voucherz-app
+FROM --platform=linux/arm64 python:3.12-slim AS voucherz-app
 
 WORKDIR /app
 
