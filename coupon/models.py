@@ -454,3 +454,43 @@ class CouponCode(models.Model):
                 f"[CouponCode][DetailFetch] Unexpected error: coupon_code_uuid={coupon_code_uuid}, error={e}"
             )
             raise
+
+    @classmethod
+    def get_coupon_code(cls, store_id, code=None, uuid=None):
+        """
+        指定されたstore_id,coupon_codeまたはuuidに対応するクーポンコード情報を取得する
+        Args:
+            store_id（int）,coupon_code (str),uuid(int): 取得対象のクーポン情報
+        Returns:
+            coupon_code: 存在する場合、CouponCodeインスタンス。
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
+        """
+        if not uuid and not code:
+            raise ValueError("uuidまたはcodeのいずれかを指定してください")
+        
+        filters = {"store_id": store_id}
+        if uuid:
+            filters["coupon_uuid"] = uuid
+        if code:
+            filters["coupon_code"] = code
+
+        try:
+            return cls.objects.get(**filters)
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[CouponCode][GetByCode] not found: store_id={store_id}, code={code}, uuid={uuid}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[CouponCode][GetByCode] Unexpected error: store_id={store_id}, code={code}, uuid={uuid}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[CouponCode][GetByCode] Unexpected error: store_id={store_id}, error={e}"
+            )
+            raise

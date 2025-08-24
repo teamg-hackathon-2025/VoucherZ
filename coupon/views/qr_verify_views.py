@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.db import DatabaseError
 from django.utils import timezone
-
 import logging
 
 from coupon.models import Coupon, CouponCode
@@ -11,10 +10,10 @@ from account.models import Store
 logger = logging.getLogger(__name__)
 
 
-class CouponManualVerifyView(LoginRequiredMixin, View):
+class CouponQrVerifyView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
-        # 1. JSからクーポンコードを取得
-        code = kwargs.get('code')
+        # 1. JSからQRコードを取得
+        code = kwargs.get('coupon_uuid')
         if not code:
             return JsonResponse({'error':'クーポンコードが指定されていません'}, status=400)
 
@@ -27,17 +26,15 @@ class CouponManualVerifyView(LoginRequiredMixin, View):
         try:
             store = Store.objects.get(id=store_id)
         except Store.DoesNotExist:
-            return JsonResponse({'error': '該当店舗が存在しません'}, status=400)
+            return JsonResponse({'error': '該当する店舗が存在しません'}, status=400)
         except DatabaseError:
             return JsonResponse({'error': 'システムエラーが発生しました'}, status=500)
         except Exception:
             return JsonResponse({'error': '予期せぬエラー'}, status=500)
 
-        print(f"これが{request.user}と{store}", flush=True) # デバッグ用
-    
         # 4. store_id,クーポンコード・UUIDを引数にクーポン情報を取得する
         try:
-            coupon_code = CouponCode.get_coupon_code(store_id, code=code, uuid=None)
+            coupon_code = CouponCode.get_coupon_code(store_id, code=None, uuid=code)
         except DatabaseError:
             return JsonResponse({'error': 'システムエラーが発生しました'}, status=500)
         except Exception:

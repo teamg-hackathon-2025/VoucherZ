@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
 }
 
 .verification-form {
@@ -28,6 +27,7 @@
   display: block;
   margin-bottom: 10px;
   font-size: 1rem;
+  font-weight: bold;
   color: var(--color-main-text-primary);
 }
 
@@ -35,16 +35,17 @@
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
+  border: 1px solid #222222;
+  border-radius: 8px;
   font-size: 1rem;
 }
 
 .verification-form input::placeholder{
   font-size: 1rem;
+  color: #222222;
 }
 
-.verification-form button {
+.verification-form button:not(.camera-button) {
   max-width: 9rem;
   width: 100%;
   padding: 10px;
@@ -62,13 +63,16 @@
   background-color: #333;
 }
 
+.verification-form button:active {
+    transform: scale(0.95);
+}
 
 /* ===== QRコード用追記  ===== */
 .camera-wrapper {
   position: relative;
   max-width: 450px;
   width: 100%;
-  aspect-ratio: 1 / 1; /* 枠を正方形にする */
+  aspect-ratio: 1 / 1;
   margin: 0 auto 30px auto;
 }
 
@@ -99,7 +103,7 @@
 }
 
 .close-button {
-  background-image: url('/static/img/close.png');
+  background-image: url('/static/img/camera-close.svg');
   position:absolute;
   z-index: 20;
   top: 10px;
@@ -108,6 +112,10 @@
   height: 40px;
   cursor: pointer;
   display: none;
+}
+
+.close-button:active {
+  transform: scale(0.95);
 }
 
 .start-container {
@@ -120,13 +128,57 @@
 
 .camera-button {
   background-image: url('/static/img/camera.svg');
-  width: 50px;
   aspect-ratio: 1 / 1;
   background-size: cover;
   background-position: center;
   cursor: pointer;
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 8px;    
+}
+
+.camera-button:active {
+  transform: scale(0.9);
 }
 
 .camera-guide {
   font-weight: bold;
+}
+
+
+/* ===== 認証非同期処理 ===== */
+.error-message {
+  background-color: #fee;
+  color: #b00020;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.result-text {
+  padding: 10px 0;
+}
+
+.result-label {
+  font-weight: bold;
+}
+
+.result-item {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 30px;
+  width: 100%;
+}
+
+.result-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 0;
 }
