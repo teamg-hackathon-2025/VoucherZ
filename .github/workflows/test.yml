@@ -3,8 +3,8 @@ name: Test Artifact
 on:
   workflow_dispatch:
 
-permissions:
-  actions: write
+#permissions:
+#  actions: write
 
 jobs:
   build:
@@ -15,4 +15,6 @@ jobs:
           gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
           | jq -r '.artifacts[] | select(.name=="terraform-tfstate") | .id' \
           | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
+        env:
+          GH_TOKEN: ${{ github.token }}
 
