@@ -13,7 +13,7 @@ jobs:
       - name: delete file
         run: |
           gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
-          | jq -r '.artifacts[] | select(.name=="terraform-tfstate") | .id' \
+          | jq -r '.artifacts[] | select(.name=="terraform-lock") | .id' \
           | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
         env:
           GH_TOKEN: ${{ github.token }}
