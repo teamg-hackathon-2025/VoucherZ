@@ -120,7 +120,7 @@
   color: var(--color-layout-text-primary);
   border: none;
   border-radius: 8px;
-  padding: 8px 24px;      /* 横paddingを減らす */
+  padding: 8px 8px;      /* 横paddingを減らす */
   font-size: 1rem;
   font-weight: 500;
   cursor: not-allowed;
