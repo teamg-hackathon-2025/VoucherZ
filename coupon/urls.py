@@ -9,7 +9,6 @@ from .views import (
     CouponVerifyPageView,
     CouponManualVerifyView,
     CouponQrVerifyView,
-    CouponListView,
 )
 app_name = "coupon"
 
@@ -23,6 +22,5 @@ urlpatterns = [
     path('verify/', CouponVerifyPageView.as_view(), name='coupon_verify'),
     path('api/verify/manual/<str:code>/', CouponManualVerifyView.as_view(), name='coupon_verify_manual'),
     path('api/verify/uuid/<uuid:coupon_uuid>/', CouponQrVerifyView.as_view(), name='coupon_verify_qr'),
-    path('', CouponListView.as_view(), name='coupon_list'),
     
 ]
