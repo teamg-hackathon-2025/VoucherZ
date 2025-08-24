@@ -9,4 +9,4 @@ jobs:
     steps:
       - name: delete file
         run: |
-          gh run artifact delete terraform-lock --repo teamg-hackathon-2025/VoucherZ
+          gh artifact delete terraform-tfstate --repo teamg-hackathon-2025/VoucherZ
