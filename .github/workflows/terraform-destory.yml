@@ -63,10 +63,9 @@ jobs:
 
        # state を復元
       - name: Download tfstate
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-tfstate
-          path: .         
+        run: |
+          gh run download --name terraform-tfstate --dir . --repo teamg-hackathon-2025/VoucherZ
+ 
 
       - name: Terraform Init
         run: terraform init
