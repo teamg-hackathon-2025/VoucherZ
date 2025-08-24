@@ -34,7 +34,7 @@ jobs:
         run: |
           set +e  # エラーで止めない
           echo "Attempting to download terraform lock..."
-          gh run download-artifact terraform-lock --path .terraform-lock || echo "No previous lock found, continue."
+          gh run download --name terraform-lock --dir .terraform-lock --repo teamg-hackathon-2025/VoucherZ || echo "No previous lock found, continue."
 
 
 
