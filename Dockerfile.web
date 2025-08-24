@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM --platform=linux/arm64 nginx:latest
 
 COPY --from=voucherz-app /app/staticfiles /staticfiles
 
