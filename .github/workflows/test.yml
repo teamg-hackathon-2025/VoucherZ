@@ -3,6 +3,9 @@ name: Test Artifact
 on:
   workflow_dispatch:
 
+permissions:
+  actions: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,6 +13,6 @@ jobs:
       - name: delete file
         run: |
           gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
-          | jq -r '.artifacts[] | select(.name=="terraform-lock") | .id' \
+          | jq -r '.artifacts[] | select(.name=="terraform-tfstate") | .id' \
           | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
 
