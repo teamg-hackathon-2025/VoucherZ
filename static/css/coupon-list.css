@@ -129,7 +129,6 @@
   gap: 6px;
   width: 100%;            /* 横幅を最大に */
   box-sizing: border-box;
-  white-space: nowrap;    /* 改行防止 */
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -157,7 +156,6 @@
     min-width: 0;        /* はみ出し防止 */
     padding: 8px 8px;    /* 横paddingを減らす */
     box-sizing: border-box;
-    white-space: nowrap; /* 改行防止 */
     overflow: hidden;
     text-overflow: ellipsis;
     display: flex;
