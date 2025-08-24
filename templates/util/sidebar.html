@@ -7,7 +7,7 @@
       <p class="name">{{ request.user.user_name }}</p>
     </div>
     <nav class="nav">
-      {% comment %}<a href="{% url 'coupon:coupon_verify_manual' %}" class="button-primary">クーポンを認証</a>  {% endcomment %}
+      <a href="{% url 'coupon:coupon_verify' %}" class="button-primary">クーポンを認証</a>
       <div class="nav-links">
         <a href="{% url 'coupon:coupon_list' %}" class="link">ホーム</a>
         <a href="javascript:void(0)" class="link is-disabled" aria-disabled="true">アカウント情報</a>
