@@ -19,15 +19,13 @@
   padding: 120px 0 20px 0;
   scrollbar-width: thin;
   scrollbar-color: #bbb #e0e0e0;
-  align-items: center; /* Position in the middle */
+  align-items: stretch; /* stretchで高さ揃え */
 }
 
 /* Coupon Card */
 
 .coupon-card,
 .coupon-add-card {
-  min-width: 350px;
-  min-height: 350px;
   background: var(--color-card-background-primary);
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -41,7 +39,7 @@
   background: #f0f0f0;
   align-items: center;
   justify-content: center;
-  color: #222;
+  color: var(--color-layout-text-secondary);
   font-size: 1.25rem;
   font-weight: 500;
   cursor: pointer;
@@ -51,7 +49,8 @@
   background: #d0d0d0;
 }
 .coupon-add-icon {
-  font-size: 3rem;
+  font-size: 2rem; /* 小さく */
+  line-height: 48px; /* 高さに合わせる */
   margin: 16px 0 0 0;
   border: 2px solid #222;
   border-radius: 50%;
@@ -60,6 +59,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden; /* はみ出し防止 */
 }
 .coupon-title {
   font-size: 1.25rem;
@@ -88,7 +89,7 @@
 }
 .coupon-meta {
   font-size: 1rem;
-  color: #666;
+  color: var(--color-layout-text-secondary);
   margin-bottom: 16px;
 }
 .coupon-action {
@@ -101,12 +102,10 @@
   color: var(--color-layout-text-primary);
   border: none;
   border-radius: 8px;
-  padding: 8px 80px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   display: flex;
-  align-items: center;
   gap: 6px;
   transition: background 0.2s;
 }
@@ -138,8 +137,24 @@
     overflow-x: unset;
     overflow-y: hidden;
     margin-left: 6%;
+    margin-right: 6%;
     padding: 10px 0 0 0;
     flex-direction: column;
+  }
+    .coupon-list-button-primary {
+    margin: 0 auto;
+    width: 100%;         /* 横幅を最大に */
+    min-width: 0;        /* はみ出し防止 */
+    padding: 8px 8px;    /* 横paddingを減らす */
+    box-sizing: border-box;
+    white-space: nowrap; /* 改行防止 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
   }
   .coupon-card,
   .coupon-add-card {
