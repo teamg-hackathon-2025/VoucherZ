@@ -39,6 +39,13 @@ data "aws_route_table" "private_rtb" {
   }
 }
 
+data "aws_route_table" "private_rtb_1c" {
+  filter {
+    name   = "tag:Name"
+    values = ["fargate-voucherz-test-rtb-private2-ap-northeast-1c"]
+  }
+}
+
 # NAT Gatewayへのルートを追加
 resource "aws_route" "private_nat_route" {
   route_table_id         = data.aws_route_table.private_rtb.id
@@ -46,7 +53,11 @@ resource "aws_route" "private_nat_route" {
   nat_gateway_id         = aws_nat_gateway.nat.id
 }
 
-
+resource "aws_route" "private_nat_route_1c" {
+  route_table_id         = data.aws_route_table.private_rtb_1c.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat.id
+}
 ## ALB作成
 # ==============================
 # VPC
@@ -164,6 +175,12 @@ data "aws_subnet" "private_subnet" {
   }
 }
 
+data "aws_subnet" "private_subnet_1c" {
+filter {
+  name   = "tag:Name"
+  values = ["fargate-voucherz-test-subnet-private2-ap-northeast-1c"]
+}
+}
 
 # セキュリティグループ
 data "aws_security_group" "fargate_sg" {
@@ -222,11 +239,14 @@ resource "aws_ecs_service" "django" {
   name            = "voucherz-test-django-service"
   cluster         = data.aws_ecs_cluster.this.id
   task_definition = data.aws_ecs_task_definition.django.arn
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [data.aws_subnet.private_subnet.id]
+    subnets         = [
+      data.aws_subnet.private_subnet.id,
+      data.aws_subnet.private_subnet_1c.id
+    ]
     security_groups = [data.aws_security_group.fargate_sg.id]
     assign_public_ip = false
   }
@@ -241,11 +261,14 @@ resource "aws_ecs_service" "nginx" {
   name            = "voucherz-test-nginx-service"
   cluster         = data.aws_ecs_cluster.this.id
   task_definition = data.aws_ecs_task_definition.nginx.arn
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [data.aws_subnet.private_subnet.id]
+    subnets         = [
+      data.aws_subnet.private_subnet.id,
+      data.aws_subnet.private_subnet_1c.id
+    ]
     security_groups = [data.aws_security_group.fargate_sg.id]
     assign_public_ip = false
   }
