@@ -33,13 +33,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # --- 前回のロック取得 ---
+      # --- 前回のロック取得 --- 
       - name: Download previous terraform lock
-        uses: actions/download-artifact@v3
-        with:
-          name: terraform-lock
-          path: .terraform-lock
-          if-no-files-found: ignore
+        run: |
+          set +e  # エラーで止めない
+          echo "Attempting to download terraform lock..."
+          gh run download-artifact terraform-lock --path .terraform-lock || echo "No previous lock found, continue."
 
       # --- ロック確認 ---
       - name: Check Terraform lock
