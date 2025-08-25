@@ -1,1 +1,60 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ホーム{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/coupon-list.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+<div class="coupon-list">
+  <div class="coupon-list-header">
+    <!-- DB情報：お店の名前 -->
+    <h2>{{ store_name }}</h2>
+  </div>
+
+  <div class="coupon-panel">
+    <a href="{% url 'coupon:coupon_create' %}" class="coupon-add-card">
+      <p>新しいクーポンの種類を作成</p>
+      <span class="coupon-add-icon">＋</span>
+    </a>
+
+    <!-- クーポン一覧 -->
+    {% for coupon in coupon_list %}
+      <div class="coupon-card">
+        <div class="coupon-title">
+          <p>{{ coupon.title }}</p>
+        </div>
+        <div class="coupon-info">
+          <p>対象商品：{{ coupon.target_product }}</p>
+          <p>割引内容：{{ coupon.discount }}</p>
+          {% if coupon.expiration_date %}
+            <p>有効期限：～{{ coupon.expiration_date }}</p>
+          {% else %}
+            <p>有効期限：無期限</p>
+          {% endif %}
+        </div>
+        <div class="coupon-meta">
+          <p>利用率：{{ coupon.usage_rate }}%</p>
+          {% if coupon.max_issuance is not None %}
+            <p>発行済：{{ coupon.issued_count }}/{{ coupon.max_issuance }}</p>
+          {% else %}
+            <p>発行済：{{ coupon.issued_count }} </p>
+          {% endif %}
+        </div>
+
+        {% if coupon.expiration_date and today > coupon.expiration_date %}
+          <p class="coupon-list-button-secondary">期限切れ</p>
+        {% elif coupon.max_issuance and coupon.issued_count >= coupon.max_issuance %}
+          <p class="coupon-list-button-secondary">発行上限に達しました</p>
+        {% else %}
+          <a href="{% url 'coupon:coupon_detail' coupon.id %}" class="coupon-list-button-primary">
+            <span class="icon">&#9654;</span> クーポンを発行
+          </a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,174 @@
+.coupon-list-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-layout-text-primary);
+  margin-top: 24px;
+  margin-left: 48px;
+  margin-bottom: 32px;
+  letter-spacing: 1px;
+}
+.coupon-panel {
+  display: flex;
+  gap: 24px;
+  width: 88%;
+  overflow-x: auto;
+  margin-left: 100px;
+  padding: 120px 0 20px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #bbb #e0e0e0;
+}
+
+/* Coupon Card */
+
+.coupon-card,
+.coupon-add-card {
+  min-width: 350px;
+  min-height: 350px;
+  background: var(--color-card-background-primary);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 24px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.coupon-add-card {
+  background: #f0f0f0;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-layout-text-secondary);
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.coupon-add-card:hover {
+  background: #d0d0d0;
+}
+.coupon-add-icon {
+  font-size: 2rem; /* 小さく */
+  line-height: 48px; /* 高さに合わせる */
+  margin: 16px 0 0 0;
+  border: 2px solid #222;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden; /* はみ出し防止 */
+}
+.coupon-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.coupon-delete {
+  background: none;
+  border: none;
+  color: #444;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: color 0.2s;
+}
+.coupon-delete:hover {
+  color: #e53935;
+}
+.coupon-info {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: var(--color-main-text-primary);
+}
+.coupon-meta {
+  font-size: 1rem;
+  color: var(--color-layout-text-secondary);
+  margin-bottom: 16px;
+}
+.coupon-action {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+.coupon-list-button-primary {
+  background: var(--color-button-primary-background);
+  color: var(--color-layout-text-primary);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;            /* 横幅を最大に */
+  transition: background 0.2s;
+  justify-content: center; /* 追加：中央揃え */
+}
+.coupon-list-button-secondary {
+  background: red;
+  color: var(--color-layout-text-primary);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 8px;      /* 横paddingを減らす */
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;            /* 横幅を最大に */
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.coupon-action button:hover {
+  background: #333;
+}
+.coupon-action .icon {
+  font-size: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+    .coupon-list-header {
+        margin-left: 6%;
+        margin-right: 6%;
+    }
+    .coupon-panel {
+        gap: 16px;
+        overflow-x: unset;
+        overflow-y: hidden;
+        margin-left: 6%;
+        margin-right: 6%;
+        padding: 10px 0 0 0;
+        flex-direction: column;
+    }
+    .coupon-list-button-primary {
+        margin: 0 auto;
+        width: 100%;         /* 横幅を最大に */
+        min-width: 0;        /* はみ出し防止 */
+        padding: 8px 8px;    /* 横paddingを減らす */
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        font-size: 1rem;
+    }
+    .coupon-card,
+    .coupon-add-card {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+}
