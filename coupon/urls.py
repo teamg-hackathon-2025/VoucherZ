@@ -5,8 +5,10 @@ from .views import (
     CouponCreateConfirmView,
     CouponDetailView,
     CouponIssueView,
+    CouponListView,
     CouponCodeDetailView
 )
+
 app_name = "coupon"
 
 urlpatterns = [

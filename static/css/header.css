@@ -1,6 +1,5 @@
 /* 共通部分 */
 
-
 /* ログイン後 */
 .is-authenticated .header {
   display: flex;
@@ -103,14 +102,12 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-
 /* ログイン前 */
-
 
 /* ========================================================== */
 /* レスポンシブ */
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 767px) {
   .is-authenticated .header {
     display: none;
   }
