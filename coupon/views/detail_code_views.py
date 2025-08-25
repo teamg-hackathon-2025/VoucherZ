@@ -57,7 +57,7 @@ class CouponCodeDetailView(LoginRequiredMixin, DetailView):
             if store_user_id != request.user.id:
                 raise PermissionDenied()
 
-            # 有効期限切れの場合は一覧へリダイレクト
+            # 有効期限切れの場合はホーム画面へリダイレクト
             coupon_for_expiration_date = Coupon.get_for_expiration_check(coupon_id)
             if coupon_for_expiration_date is None:
                 raise Http404()
