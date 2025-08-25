@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 半透明黒の円 -->
+  <circle cx="256" cy="256" r="256" fill="rgba(0,0,0,0.5)"/>
+  
+  <!-- 白い× -->
+  <path d="M167 167l178 178M345 167L167 345" stroke="white" stroke-width="50" stroke-linecap="round"/>
+</svg>
