@@ -36,7 +36,7 @@
           {% endif %}
         </div>
         <div class="coupon-meta">
-            <p>利用率：{{ coupon.usage_rate }}%</p>
+          <p>利用率：{{ coupon.usage_rate }}%</p>
           {% if coupon.max_issuance is not None %}
             <p>発行済：{{ coupon.issued_count }}/{{ coupon.max_issuance }}</p>
           {% else %}

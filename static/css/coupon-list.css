@@ -140,7 +140,7 @@
 @media (max-width: 767px) {
     .coupon-list-header {
         margin-left: 6%;
-        margin-left: 6%;
+        margin-right: 6%;
     }
     .coupon-panel {
         gap: 16px;
