@@ -2,8 +2,8 @@
 name: Terraform Apply (on main)
 
 on:
-  push:
-    branches: [ "main" ] # mainブランチにpushされたときに実行
+  #push:
+    #    branches: [ "main" ] # mainブランチにpushされたときに実行
   workflow_dispatch: # 手動実行も可能にする
 
 permissions:
