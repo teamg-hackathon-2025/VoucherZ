@@ -15,7 +15,8 @@
 
 
 ### 環境の削除
-1. 下図①-③を実施。ブランチはmainにすること。\
+1. テスト実施後は速やかに環境を削除してください。（節約のために）\
+   下図①-③を実施。ブランチはmainにすること。\
    AWS上のインフラ環境が削除される（5分くらいかかる）。
 
 <img width="1672" height="587" alt="Image" src="https://github.com/user-attachments/assets/9c06437a-7a06-49f9-a1e3-124add20a3eb" />
