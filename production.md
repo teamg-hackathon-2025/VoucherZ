@@ -1,72 +1,22 @@
-# Hackathon2025sumTeamG
-
-
-## 本番環境でのテスト方法
+## 本番環境で動作確認方法
 ### 事前準備
-1. mainブランチにdevelopブランチをマージ \
+1. mainブランチにdevelopブランチをマージ 
+
+### 環境構築
+1. Actionsタブを開き、Terraform Apply (on main)とTerraform Destroy (manual)のworkflow runsを見て、\
+   実行中のworkflow runがないことを確認後、下図①-③を実施。ブランチはmainにすること。\
+   AWS上にインフラ環境が構築される（5分くらいかかる）。\
+   他の人がすで構築済みの場合は、エラーになる。その場合、他の人が後述するterraform destroy後に再度実行。
+ 
+<img width="1672" height="587" alt="Image" src="https://github.com/user-attachments/assets/8892c568-583f-495b-b441-93460ab74fb0" />
+
+2. 対象のworkflow runが正常に終了し、**数分後**（コンテナが起動後）、\
+   [https://voucherz.jp](https://voucherz.jp) にアクセスし、動作確認。
 
 
-### 本番環境の起動方法
-2. 起動 
-     ```bash
-     docker compose -f docker-compose.dev.yml up --build
-     ```
-3. 以下のURLにアクセス。\
-    [http://127.0.0.1:8000/account/](http://127.0.0.1:8000/account/)
+### 環境の削除
+1. 下図①-③を実施。ブランチはmainにすること。\
+   AWS上のインフラ環境が削除される（5分くらいかかる）。
 
-### デバックツール
-1. Django Debug Toolbar\
-   Django ウェブアプリケーションのデバッグに役立つツール。\
-   現在のリクエストとレスポンスに関するデバッグ情報を提供するパネルを表示。\
-    [公式ドキュメント](https://django-debug-toolbar.readthedocs.io/en/latest/index.html)
+<img width="1672" height="587" alt="Image" src="https://github.com/user-attachments/assets/9c06437a-7a06-49f9-a1e3-124add20a3eb" />
 
-2. django-extensions\
-    一つの機能として、 shell_plusが使用できる。\
-    shell_plusは開発環境を起動してから、下記コマンドを実行。
-    ```bash
-    docker exec -it django_app python manage.py shell_plus
-    ```
-    shellモードになり、以下のようにモデル操作や環境確認等ができる。\
-    \
-    **[使用例]**
-    - モデル操作
-    ```python
-    # 全ユーザー一覧
-    User.objects.all()
-    # 新しいユーザー作成
-    User.objects.create(username='testuser', password='pass')
-    # フィルタ
-    Order.objects.filter(status='pending')
-    ```
-    - 環境確認
-    ```python
-    settings.DEBUG
-    settings.DATABASES
-    ```
-    
-    > shell_plusとは\
-    > 標準の Django シェル（python manage.py shell）の上位互換。\
-    > 主な特徴：\
-    > 全てのモデルが自動でインポートされている。\
-    > いちいち from app.models import MyModel と書く必要なし。\
-    > 環境変数や settings もロード済み。\
-    > ORM がそのまま使える。\
-    > IPython や bpython にも対応（補完やシンタックスハイライト付き）\
-    > 簡易 DB 操作やテストコードの実行がしやすい。\
-    
-    [公式ドキュメント](https://django-extensions.readthedocs.io/en/latest/#)
-    
-3. Werkzeug\
-    ブラウザ上で使える高機能なデバッガー。エラー発生時に、ブラウザ上で詳細なトレースバックと「インタラクティブなデバッグコンソール」が表示される。\
-    [django-extensionsをインストールしてrunserverより便利なrunserver_plusを使う](https://qiita.com/komiya_____/items/72b543fdaddab47a6449)
-
-
-4. phpmyadmin\
-   Web経由でMySQLを管理できるツール。頻繁に使用する操作（データベース、テーブル、列、リレーション、インデックス、ユーザー、権限などの管理）はユーザーインターフェースから実行できる。また、任意のSQL文を直接実行することも可能である。\
-   \
-   開発環境を起動後、以下のURLにアクセスすることで使用できる。\
-   [http://127.0.0.1:8080/](http://127.0.0.1:8080/)\
-   \
-   [公式ドキュメント](https://docs.phpmyadmin.net/ja/latest/)
-
-   
