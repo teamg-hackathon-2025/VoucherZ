@@ -39,6 +39,8 @@ class SignUpView(FormView):
                 user = User.objects.create_user(email=email, password=password, user_name=user_name)
                 Store.objects.create(user=user, store_name=store_name)
                 login(self.request, user)
+                store = user.store
+                self.request.session['store_id'] = store.id
 
             return super().form_valid(form)
         except IntegrityError:

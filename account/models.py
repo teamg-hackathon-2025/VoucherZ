@@ -135,10 +135,10 @@ class User(AbstractBaseUser):
 
 
 class Store(models.Model):
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         'User',
         on_delete=models.CASCADE,
-        related_name='stores',
+        related_name='store',
         db_column='user_id',
     )
 
@@ -163,7 +163,7 @@ class Store(models.Model):
         Returns:
             store_id: 該当ユーザーに紐づく店舗ID
             None: 存在しない場合
-            raise: 複数件見つかった、DBエラー、予期しないエラーの場合
+            raise: DBエラー、予期しないエラーの場合
         """
         try:
             store_id = (
@@ -177,11 +177,6 @@ class Store(models.Model):
                 f"[Store][GetStoreId] Not found: user_id={user_id}"
             )
             return None
-        except cls.MultipleObjectsReturned as e:
-            logger.error(
-                f"[Store][GetStoreId] Multiple stores found: user_id={user_id}, error={e}"
-            )
-            raise
         except DatabaseError as e:
             logger.error(
                 f"[Store][GetStoreId] Database error: user_id={user_id}, error={e}"

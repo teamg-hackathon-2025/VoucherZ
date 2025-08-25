@@ -1,0 +1,128 @@
+
+name: Terraform Apply (on main)
+
+on:
+  push:
+    branches: [ "main" ] # mainブランチにpushされたときに実行
+  workflow_dispatch: # 手動実行も可能にする
+
+permissions:
+  contents: read # リポジトリのコードを読む権限（actions/checkout用）。runnerにコードを持ってくるために必要
+  id-token: write   # OIDC(OpenID Connect)で認証するために必要。Jobsからid-tokenを発行可能になる。
+
+concurrency: # 同じグループに属するワークフローが並列実行されないようにする仕組み。
+  group: terraform-${{ github.ref_name }} # 制御対象のグループ名。github.ref_nameにはブランチ名が入る。このグループに所属するワークフローは並列実行されない。
+  cancel-in-progress: false # false: 同じブランチ上では新しいジョブが待機して、前のジョブが終わってから実行。true: 同じグループのジョブが新しく走ったとき、古い実行中のジョブをキャンセルする。
+
+env:
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  TF_CLI_ARGS_init: "-input=false"
+  TF_CLI_ARGS_apply: "-auto-approve"
+  AWS_REGION: ap-northeast-1
+  TF_WORKING_DIR: "."
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # --- 前回のロック取得 --- 
+      - name: Download previous terraform lock
+        run: |
+          set +e  # エラーで止めない
+          echo "Attempting to download terraform lock..."
+          gh run download --name terraform-lock --dir .terraform-lock --repo teamg-hackathon-2025/VoucherZ || echo "No previous lock found, continue."
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      # --- ロック確認 ---
+      - name: Check Terraform lock
+        run: |
+          if [ -f .terraform-lock/main ]; then
+            echo "Terraform lock exists. Another apply/destroy is in progress."
+            exit 1
+          fi
+      
+      # --- ロック作成 ---
+      - name: Create Lock
+        run: mkdir -p .terraform-lock && touch .terraform-lock/main
+      
+      # --- ロックファイルアップロード ---
+      - name: Upload Lock artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-lock
+          path: .terraform-lock/main
+          retention-days: 15
+    
+      # --- OIDC ---
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}   # 例: arn:aws:iam::123456789012:role/gh-oidc-terraform
+          aws-region: ${{ env.AWS_REGION }}
+
+
+      # --- ECR Docker Build & Push ---
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          region: ${{ env.AWS_REGION }}
+
+      - name: Build and Push voucherz-app image
+        run: |
+          docker build -t voucherz-app -f Dockerfile.app .
+          docker tag voucherz-app:latest 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-app:latest
+          docker push 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-app:latest
+
+      - name: Build and Push voucherz-web image
+        run: |
+          docker build -t voucherz-web -f Dockerfile.web .
+          docker tag voucherz-web:latest 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-web:latest
+          docker push 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-web:latest
+
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Import
+        run: terraform import aws_service_discovery_private_dns_namespace.namespace ns-2vzbb2e54ypnaxjf:vpc-05ffd3536a22a6d48
+
+
+      - name: Terraform Validate
+        run: terraform validate
+
+          #      - name: Terraform Plan (for record)
+          #        run: terraform plan
+
+          #      - name: Upload plan artifact
+          #        uses: actions/upload-artifact@v4
+          #        with:
+          #          name: tfplan-${{ github.sha }}
+          #          path: ${{ env.TF_WORKING_DIR }}/tfplan
+          #          if-no-files-found: warn
+          #          retention-days: 7
+
+      - name: Terraform Apply (auto-approve)
+        run: terraform apply -auto-approve
+
+
+      - name: Upload tfstate
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-tfstate
+          path: terraform.tfstate
+          retention-days: 15
