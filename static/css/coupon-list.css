@@ -112,7 +112,7 @@
   justify-content: center; /* 追加：中央揃え */
 }
 .coupon-list-button-secondary {
-  background: red;
+  background: #B00000;
   color: var(--color-layout-text-primary);
   border: none;
   border-radius: 8px;
