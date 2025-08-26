@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     CouponCodeCustomerView,
+    CouponDeleteView,
     CouponCreateView,
     CouponCreateConfirmView,
     CouponDetailView,
@@ -15,6 +16,7 @@ app_name = "coupon"
 
 urlpatterns = [
     path('', CouponListView.as_view(), name='coupon_list'),
+    path('delete/<int:coupon_id>/', CouponDeleteView.as_view(), name='coupon_delete'),
     path('view/<uuid:coupon_code_uuid>/', CouponCodeCustomerView.as_view(), name='coupon_customer_view'),
     path('create/', CouponCreateView.as_view(), name='coupon_create'),
     path('create/confirm/', CouponCreateConfirmView.as_view(), name='coupon_create_confirm'),

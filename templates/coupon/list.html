@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link href="{% static 'css/coupon-list.css' %}" rel="stylesheet" />
+<link href="{% static 'css/coupon-list-delete.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
@@ -24,7 +25,12 @@
     {% for coupon in coupon_list %}
       <div class="coupon-card">
         <div class="coupon-title">
-          <p>{{ coupon.title }}</p>
+          <h3 class="title">{{ coupon.title }}</h3>
+          {% if coupon.can_delete %}
+          <button class="delete-button" type="button" data-delete-url="{% url 'coupon:coupon_delete' coupon.id %}">
+            <img class="delete-image" src="{% static 'img/delete.png' %}" alt="削除">
+          </button>
+          {% endif %}
         </div>
         <div class="coupon-info">
           <p>対象商品：{{ coupon.target_product }}</p>
@@ -57,4 +63,11 @@
     {% endfor %}
   </div>
 </div>
+{% include 'coupon/list-delete.html' %}
+{% endblock %}
+{% block script %}
+<script
+  src="{% static 'js/coupon-delete.js' %}"
+  type="module"
+></script>
 {% endblock %}

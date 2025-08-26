@@ -34,11 +34,12 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
         クーポン詳細ページ。
 
         - coupon_idに紐づいているデータがない場合404に返す
-        - 権限がない場合クーポン一覧ページにリダイレクトする
-        - クーポンの有効期限が切れている場合（今日より前）クーポン一覧ページにリダイレクトする
-        - 発行数の上限に達した場合クーポン一覧ページにリダイレクトする
+        - 権限がない場合ホーム画面にリダイレクトする
+        - 削除済みの場合ホーム画面にリダイレクトする
+        - クーポンの有効期限が切れている場合（今日より前）ホーム画面にリダイレクトする
+        - 発行数の上限に達した場合ホーム画面にリダイレクトする
 
-        上記に該当しない場合は、クーポン詳細ページを表示する。
+        上記に該当しない場合は、ホーム画面にリダイレクトする
         """
         coupon_id = self.kwargs.get("coupon_id")
         try:
@@ -49,7 +50,16 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
             if store_user_id != request.user.id:
                 raise PermissionDenied()
 
-            # 有効期限切れまたは発行数上限に達している場合は一覧へリダイレクト
+            # 削除済みの場合はホーム画面へリダイレクト
+            coupon_for_deleted_at = Coupon.get_for_delete_check(coupon_id)
+            if coupon_for_deleted_at is None:
+                raise Http404()
+
+            deleted_at = coupon_for_deleted_at.deleted_at
+            if deleted_at is not None:
+                return redirect(reverse("coupon:coupon_list"))
+
+            # 有効期限切れの場合はホーム画面へリダイレクト
             coupon_for_expiration_date = Coupon.get_for_expiration_check(coupon_id)
             if coupon_for_expiration_date is None:
                 raise Http404()
@@ -59,6 +69,7 @@ class CouponDetailView(LoginRequiredMixin, DetailView):
             if expiration_date is not None and expiration_date < today:
                 return redirect(reverse("coupon:coupon_list"))
 
+            # 発行数上限に達している場合はホーム画面へリダイレクト
             coupon_for_issuance_check = Coupon.get_for_issuance_check(coupon_id)
             if coupon_for_issuance_check is None:
                 raise Http404()

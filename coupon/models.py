@@ -3,6 +3,7 @@ import string
 import random
 import uuid
 from django.db.models import F
+from django.utils import timezone
 
 from django.db import models, DatabaseError, IntegrityError, transaction
 
@@ -76,6 +77,35 @@ class Coupon(models.Model):
             raise
 
     @classmethod
+    def logical_delete(cls, coupon_id):
+        """
+        クーポンを論理削除する
+        Args:
+            coupon_id(int): クーポンID
+        Returns:
+            Coupon: 正常に作成された場合、作成した Coupon インスタンス
+            raise: 作成に失敗した場合（DBエラー、例外発生など）
+        """
+        try:
+            with transaction.atomic():
+                deleted = (
+                    cls.objects
+                    .filter(id=coupon_id, deleted_at__isnull=True)
+                    .update(deleted_at=timezone.now())
+                )
+            return deleted
+        except DatabaseError as e:
+            logger.error(
+                f"[Coupon][delete] DatabaseError: Error: {e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Coupon][delete] Unexpected error: Error: {e}"
+            )
+            raise
+
+    @classmethod
     def get_store_user_id(cls, coupon_id):
         """
         指定されたクーポンIDに紐づく店舗ユーザーのIDを取得する
@@ -108,6 +138,43 @@ class Coupon(models.Model):
         except Exception as e:
             logger.exception(
                 f"[Coupon][StoreUserIdFetch] Unexpected error: coupon_id={coupon_id}, error={e}"
+            )
+            raise
+
+    @classmethod
+    def get_for_delete_check(cls, coupon_id):
+        """
+        指定されたクーポンIDに対応するクーポン情報（削除日時のみフィールド取得）
+        Args:
+            coupon_id (int): 取得対象のクーポンID
+        Returns:
+            coupon: 存在する場合、Couponインスタンス
+                （deleted_atのみ）。
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作中にエラーが発生した場合
+            Exception: その他の予期しないエラーが発生した場合
+        """
+        try:
+            coupon_for_delete = (
+                cls.objects
+                .only("deleted_at")
+                .get(id=coupon_id)
+            )
+            return coupon_for_delete
+        except cls.DoesNotExist:
+            logger.warning(
+                f"[Coupon][DeleteCheck] Not found: coupon_id={coupon_id}"
+            )
+            return None
+        except DatabaseError as e:
+            logger.error(
+                f"[Coupon][DeleteCheck] Database error: coupon_id={coupon_id}, error={e}"
+            )
+            raise
+        except Exception as e:
+            logger.exception(
+                f"[Coupon][DeleteCheck] Unexpected error: coupon_id={coupon_id}, error={e}"
             )
             raise
 
@@ -193,7 +260,7 @@ class Coupon(models.Model):
             coupon_id (int): 取得対象のクーポンID
         Returns:
             coupon: 存在する場合、Couponインスタンス（store情報付き）。
-            None: 存在しない、複数件見つかった、またはDBエラーの場合
+            None: 存在しない場合
         Raises:
             DatabaseError: データベース操作でエラーが発生した場合
             Exception: 上記以外の予期しないエラーが発生した場合
@@ -223,10 +290,21 @@ class Coupon(models.Model):
 
     @classmethod
     def get_coupon_list(cls, store_id):
+        """
+        指定されたクーポンIDに対応する削除されていないクーポン情報（店舗名付き）を取得する
+        Args:
+            coupon_id (int): 取得対象のクーポンID
+        Returns:
+            coupon: 存在する場合、Couponインスタンス。
+            None: 存在しない場合
+        Raises:
+            DatabaseError: データベース操作でエラーが発生した場合
+            Exception: 上記以外の予期しないエラーが発生した場合
+        """
         try:
             coupon = (
                 cls.objects
-                .filter(store=store_id)
+                .filter(store=store_id, deleted_at__isnull=True)
             )
             return coupon
         except cls.DoesNotExist:
