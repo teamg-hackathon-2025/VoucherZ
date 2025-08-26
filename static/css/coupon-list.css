@@ -75,13 +75,13 @@
 }
 .coupon-list .delete-button {
   display: block;
-  flex: 0 0 40px;
-  padding: 5px;
-  height: 40px;
+  flex: 0 0 44px;
+  padding: 0px 5px 10px;
 }
 .coupon-list .delete-image {
   object-fit: cover;
-  width: 30px;
+  vertical-align: bottom;
+  width: 34px;
 }
 .coupon-list .coupon-info {
   font-size: 1rem;
