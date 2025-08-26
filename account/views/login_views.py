@@ -31,3 +31,10 @@ class LoginView(LoginView):
             logger.exception("Unexpected error occurred during login process.")
             messages.error(request, '不明なエラーが発生しました。時間をおいてから再度お試しください。')
             return redirect(reverse_lazy('account:login'))
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        user = self.request.user
+        if hasattr(user, 'store'):
+            self.request.session['store_id'] = user.store.id
+        return response
