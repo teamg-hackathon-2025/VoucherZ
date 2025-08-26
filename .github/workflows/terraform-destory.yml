@@ -1,0 +1,84 @@
+
+name: Terraform Destroy (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: terraform-destroy
+  cancel-in-progress: false
+
+env:
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  AWS_REGION: ap-northeast-1
+  TF_WORKING_DIR: "."
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # --- 前回のロック取得 --- 
+      - name: Download previous terraform lock
+        run: |
+          set +e  # エラーで止めない
+          echo "Attempting to download terraform lock..."
+          gh run download --name terraform-lock --dir .terraform-lock --repo teamg-hackathon-2025/VoucherZ || echo "No previous lock found, continue."
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+
+
+
+      # --- ロック確認 ---
+      - name: Check Terraform lock
+        run: |
+          if [ ! -f .terraform-lock/main ]; then
+            echo "No terraform lock found. Nothing to destroy."
+            exit 1
+          fi
+
+      # --- OIDC & Terraform セットアップ ---
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.5
+
+       # state を復元
+      - name: Download tfstate
+        uses: actions/download-artifact@v4
+        with:
+          name: terraform-tfstate
+          path: .         
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Rm State
+        run: terraform state rm aws_service_discovery_private_dns_namespace.namespace
+
+      - name: Terraform Destroy (auto-approve)
+        run: terraform destroy -auto-approve
+
+      # --- Remove lock file locally ---
+      - name: Remove Terraform lock
+        run: |
+          rm -f .terraform-lock/main
+
