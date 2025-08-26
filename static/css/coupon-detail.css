@@ -48,7 +48,7 @@
 .coupon-detail .block-coupon .box .qr-code-img {
   object-fit: cover;
   width: 100%;
-  max-width: 180px;
+  max-width: 240px;
   vertical-align: bottom;
 }
 
