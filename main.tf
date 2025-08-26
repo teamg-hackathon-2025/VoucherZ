@@ -239,7 +239,7 @@ resource "aws_ecs_service" "django" {
   name            = "voucherz-test-django-service"
   cluster         = data.aws_ecs_cluster.this.id
   task_definition = data.aws_ecs_task_definition.django.arn
-  desired_count   = 2
+  desired_count   = 1
   launch_type     = "FARGATE"
 
   network_configuration {
@@ -261,7 +261,7 @@ resource "aws_ecs_service" "nginx" {
   name            = "voucherz-test-nginx-service"
   cluster         = data.aws_ecs_cluster.this.id
   task_definition = data.aws_ecs_task_definition.nginx.arn
-  desired_count   = 2
+  desired_count   = 1
   launch_type     = "FARGATE"
 
   network_configuration {
