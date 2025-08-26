@@ -52,7 +52,7 @@ class CouponForm(forms.ModelForm):
             }),
             "expiration_date": forms.DateInput(attrs={
                 "id": "expirationDate",
-                "class": "input",
+                "class": "input-date",
                 "type": "date"
             }),
             "message": forms.Textarea(attrs={

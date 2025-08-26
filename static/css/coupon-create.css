@@ -37,11 +37,28 @@
   border: 1px solid #222222;
   border-radius: 10px;
   padding: 6px 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .coupon-create .block-create .input::placeholder {
   color: var(--color-main-text-primary);
   letter-spacing: 0.05em;
+}
+
+.coupon-create .block-create .input-date {
+  border: 1px solid #222222;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.coupon-create .block-create .input-date::-webkit-datetime-edit,
+.coupon-create .block-create .input-date::-webkit-date-and-time-value {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .coupon-create .block-create .form-field .label,
