@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Runs test
-        run: ech "aaa"
+      #- name: Runs test
+      #  run: ech "aaa"
       - name: Notify Mattermost
         if: always()   # 成否に関わらず実行
         uses: mattermost/action-mattermost-notify@master
