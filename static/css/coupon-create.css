@@ -38,7 +38,7 @@
   border-radius: 10px;
   padding: 6px 15px;
   width: 100%;
-  box-sizing: border-box;
+  min-width: 0;
 }
 
 .coupon-create .block-create .input::placeholder {
@@ -50,28 +50,17 @@
   border: 1px solid #222222;
   border-radius: 10px;
   width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date {
-  padding-left: 22px;
-  padding-right: 22px;
-}
-
-.coupon-create .block-create .input-date::-webkit-datetime-edit {
-  box-sizing: border-box;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  max-width: 100%;
+  padding: 6px 15px;
+  min-width: 0;
 }
 
 .coupon-create .block-create .input-date::-webkit-date-and-time-value {
   text-align: left;
 }
 
-::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-datetime-edit {
-  padding-top: 13px;
-  padding-bottom: 13px;
+::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-date-and-time-value {
+  height: 51px;
 }
 
 .coupon-create .block-create .form-field .label,
