@@ -49,28 +49,30 @@
 .coupon-create .block-create .input-date {
   border: 1px solid #222222;
   border-radius: 10px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  width: 100%;
   padding-left: 15px;
   padding-right: 15px;
-  width: 100%;
+}
+
+::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.coupon-create .block-create .input-date::-webkit-datetime-edit {
   box-sizing: border-box;
-}
-
-.coupon-create .block-create .input-date::-webkit-datetime-edit,
-.coupon-create .block-create .input-date::-webkit-datetime-edit-fields-wrapper,
-.coupon-create .block-create .input-date::-webkit-datetime-edit-year-field,
-.coupon-create .block-create .input-date::-webkit-datetime-edit-month-field,
-.coupon-create .block-create .input-date::-webkit-datetime-edit-day-field {
-  padding: 0;
-  margin: 0;
-}
-
-/* .coupon-create .block-create .input-date::-webkit-datetime-edit,
-.coupon-create .block-create .input-date::-webkit-date-and-time-value {
   padding-top: 6px;
   padding-bottom: 6px;
-} */
+}
+
+.coupon-create .block-create .input-date::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-datetime-edit {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
 
 .coupon-create .block-create .form-field .label,
 .coupon-create .block-create .form-item .label {
