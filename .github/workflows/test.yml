@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Notify Mattermost
         if: always()   # 成否に関わらず実行
-        uses: mattermost/action-mattermost-notify@v2
+        uses: mattermost/action-mattermost-notify@v2.0.0
         with:
           webhook_url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
           text: |
