@@ -96,4 +96,16 @@ jobs:
           | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
         env:
           GH_TOKEN: ${{ github.token }}
-         
+        
+      - name: Notify Mattermost
+        if: always()   # 成否に関わらず実行
+        uses: mattermost/action-mattermost-notify@master
+        with:
+          MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
+          TEXT: |
+            ${{ job.status == 'success' && '**本番環境が正常にdestoryされました！**🚀 ' || '**本番環境のdestoryに失敗しました。**' }}
+            - Workflow: **${{ github.workflow }}**
+            - Branch: `${{ github.ref_name }}`
+            - Actor: ${{ github.actor }}
+            - Status: **${{ job.status }}**
+            - [Run Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
