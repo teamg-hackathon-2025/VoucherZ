@@ -48,10 +48,14 @@
 .coupon-create .block-create .input-date {
   border: 1px solid #222222;
   border-radius: 10px;
-  padding: 6px 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   width: 100%;
-  display: inline-flex;
-  align-items: center;
+}
+
+.coupon-create .block-create .input-date::-webkit-datetime-edit {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .coupon-create .block-create .input-date::-webkit-date-and-time-value {
