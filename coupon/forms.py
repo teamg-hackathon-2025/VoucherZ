@@ -12,7 +12,7 @@ class CouponForm(forms.ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 "id": "noMaxIssuance",
-                "class": "input"
+                "class": "input-checkbox"
             }
         )
     )
@@ -21,7 +21,7 @@ class CouponForm(forms.ModelForm):
         widget=forms.CheckboxInput(
             attrs={
                 "id": "noExpirationDate",
-                "class": "input"
+                "class": "input-checkbox"
             }
         )
     )
