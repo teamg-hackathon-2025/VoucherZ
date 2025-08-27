@@ -24,7 +24,7 @@ from .views import health_check
 env = environ.Env()
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('account/', include('account.urls', namespace='account')),
     path('coupon/', include('coupon.urls', namespace='coupon')),
     path('', TopPageView.as_view(), name='index'),
