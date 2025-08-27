@@ -49,15 +49,21 @@
   border-radius: 10px;
   padding-left: 15px;
   padding-right: 15px;
+  width: 100%;
 }
 
-::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-date-and-time-value {
+.coupon-create .block-create .input-date::-webkit-datetime-edit {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-datetime-edit {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.coupon-create .block-create .input-date::-webkit-date-and-time-value {
   text-align: left;
-}
-
-::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-date-and-time-value {
-  padding-top: 15px;
-  padding-bottom: 15px;
 }
 
 .coupon-create .block-create .form-field .label,
