@@ -37,7 +37,6 @@
   border: 1px solid #222222;
   border-radius: 10px;
   padding: 6px 15px;
-  display: block;
 }
 
 .coupon-create .block-create .input::placeholder {
