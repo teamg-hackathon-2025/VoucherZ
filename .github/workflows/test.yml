@@ -16,7 +16,7 @@ jobs:
         with:
           MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
           TEXT: |
-            ${{ job.status == 'success' && '- URL: [https://voucherz.jp](https://voucherz.jp)　にアクセス可能です🚀 ' || '本番環境の構築に失敗しました。' }}
+            ${{ job.status == 'success' && '**[https://voucherz.jp](https://voucherz.jp)　にアクセス可能です**🚀 ' || '**本番環境の構築に失敗しました。**' }}
             - Workflow: **${{ github.workflow }}**
             - Branch: `${{ github.ref_name }}`
             - Actor: ${{ github.actor }}
