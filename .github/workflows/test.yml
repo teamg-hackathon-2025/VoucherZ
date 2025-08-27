@@ -14,8 +14,9 @@ jobs:
           MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
           TEXT: |
             🚀 GitHub Actions workflow run finished!
-            - Repository: **${{ github.repository }}**
+            - Workflow: **${{ github.workflow }}**
             - Branch: `${{ github.ref_name }}`
             - Actor: ${{ github.actor }}
             - Status: **${{ job.status }}**
+            - ${{ job.status == 'success' && 'URL: [https://voucherz.jp](https://voucherz.jp)　にアクセス可能です。' || '' }}
             - [Run Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
