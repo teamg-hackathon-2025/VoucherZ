@@ -19,5 +19,5 @@ jobs:
             - Branch: `${{ github.ref_name }}`
             - Actor: ${{ github.actor }}
             - Status: **${{ job.status }}**
-            本番環境がdestoryされました。
+            - 本番環境がdestoryされました。
             - [Run Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
