@@ -11,8 +11,8 @@ jobs:
         if: always()   # 成否に関わらず実行
         uses: mattermost/action-mattermost-notify@master
         with:
-          webhook_url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
-          text: |
+          MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
+          TEXT: |
             🚀 GitHub Actions workflow run finished!
             - Repository: **${{ github.repository }}**
             - Branch: `${{ github.ref_name }}`
