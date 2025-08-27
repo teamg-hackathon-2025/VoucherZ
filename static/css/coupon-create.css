@@ -47,23 +47,24 @@
 .coupon-create .block-create .input-date {
   border: 1px solid #222222;
   border-radius: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 6px 15px;
   width: 100%;
 }
 
-.coupon-create .block-create .input-date::-webkit-datetime-edit {
+/* .coupon-create .block-create .input-date::-webkit-datetime-edit {
   padding-top: 5px;
   padding-bottom: 5px;
-}
+} */
 
-::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-datetime-edit {
+/* ::-webkit-full-page-media, :future, :root .coupon-create .block-create .input-date::-webkit-datetime-edit {
   padding-left: 15px;
   padding-right: 15px;
-}
+} */
 
 .coupon-create .block-create .input-date::-webkit-date-and-time-value {
   text-align: left;
+  vertical-align: baseline;
+  color: var(--color-main-text-primary);
 }
 
 .coupon-create .block-create .form-field .label,
