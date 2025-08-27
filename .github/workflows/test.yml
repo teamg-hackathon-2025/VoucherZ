@@ -7,9 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Run tests
-        run: ech "ここにテスト実行コマンド"
-        
+
       - name: Notify Mattermost
         if: always()   # 成否に関わらず実行
         uses: mattermost/action-mattermost-notify@master
