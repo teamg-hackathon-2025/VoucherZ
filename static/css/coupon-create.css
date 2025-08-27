@@ -61,7 +61,6 @@
 .coupon-create .block-create .input-date::-webkit-datetime-edit {
   padding-top: 6px;
   padding-bottom: 6px;
-  box-sizing: border-box;
 }
 
 .coupon-create .block-create .input-date::-webkit-date-and-time-value {
