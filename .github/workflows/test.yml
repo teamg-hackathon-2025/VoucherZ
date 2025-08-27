@@ -1,0 +1,21 @@
+name: test
+
+on:
+  workflow_dispatch: # 手動実行も可能にする
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Mattermost
+        if: always()   # 成否に関わらず実行
+        uses: mattermost/action-mattermost-notify@v2
+        with:
+          webhook_url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
+          text: |
+            🚀 GitHub Actions workflow run finished!
+            - Repository: **${{ github.repository }}**
+            - Branch: `${{ github.ref_name }}`
+            - Actor: ${{ github.actor }}
+            - Status: **${{ job.status }}**
+            - [Run Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
