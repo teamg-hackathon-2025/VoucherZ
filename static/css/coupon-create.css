@@ -55,6 +55,7 @@
 
 .coupon-create .block-create .input-date::-webkit-date-and-time-value {
   text-align: left;
+  color: var(--color-main-text-primary);
 }
 
 .coupon-create .block-create .form-field .label,
