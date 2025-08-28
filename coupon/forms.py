@@ -50,10 +50,9 @@ class CouponForm(forms.ModelForm):
                 "id": "maxIssuance",
                 "class": "input",
             }),
-            "expiration_date": forms.DateInput(attrs={
+            "expiration_date": forms.TextInput(attrs={
                 "id": "expirationDate",
-                "class": "input-date",
-                "type": "date"
+                "class": "input-date js-flatpickr",
             }),
             "message": forms.Textarea(attrs={
                 "id": "message",
@@ -68,7 +67,7 @@ class CouponForm(forms.ModelForm):
         self.fields["title"].error_messages["required"] = "タイトルを入力してください。"
         self.fields["target_product"].error_messages["required"] = "対象商品を入力してください。"
         self.fields["discount"].error_messages["required"] = "割引内容を入力してください。"
-        self.fields["expiration_date"].widget.attrs["min"] = timezone.localdate().strftime("%Y-%m-%d")
+        self.fields["expiration_date"].widget.attrs["data-min"] = timezone.localdate().strftime("%Y-%m-%d")
 
     def clean_title(self):
         """
