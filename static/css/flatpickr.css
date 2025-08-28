@@ -23,7 +23,6 @@
 .flatpickr-months .flatpickr-prev-month,
 .flatpickr-months .flatpickr-next-month,
 .flatpickr-current-month {
-  top: 10px;
   height: auto;
 }
 
@@ -39,7 +38,7 @@
 }
 
 .flatpickr-months .flatpickr-month {
-  height: 3rem;
+  height: 2.75rem;
 }
 
 .flatpickr-weekdays {
