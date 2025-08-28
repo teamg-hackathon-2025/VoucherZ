@@ -44,14 +44,6 @@
   letter-spacing: 0.05em;
 }
 
-.coupon-create .block-create .input-date {
-  border: 1px solid #222222;
-  border-radius: 10px;
-  padding: 6px 15px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 .coupon-create .block-create .form-field .label,
 .coupon-create .block-create .form-item .label {
   display: block;
@@ -60,8 +52,7 @@
 }
 
 .coupon-create .block-create .form-field .input,
-.coupon-create .block-create .form-item .input,
-.coupon-create .block-create .form-item .input-date {
+.coupon-create .block-create .form-item .input {
   display: block;
   width: 100%;
   margin-top: 5px;
