@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
       onReady(selectedDates, dateStr, instance) {
         const footer = document.createElement('div');
         footer.className = 'flatpickr-footer';
-        // クリアボタン
+        // 削除ボタン
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'flatpickr-clear';
-        btn.textContent = 'クリア';
+        btn.textContent = '削除';
         btn.addEventListener('click', () => {
           instance.clear();
           instance.close();
