@@ -28,7 +28,7 @@
           <h3 class="title">{{ coupon.title }}</h3>
           {% if coupon.can_delete %}
           <button class="delete-button" type="button" data-delete-url="{% url 'coupon:coupon_delete' coupon.id %}">
-            <img class="delete-image" src="{% static 'img/delete.png' %}" alt="削除">
+            <img class="delete-image" src="{% static 'img/delete.svg' %}" alt="削除">
           </button>
           {% endif %}
         </div>
