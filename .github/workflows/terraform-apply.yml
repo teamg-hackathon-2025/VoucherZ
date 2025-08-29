@@ -2,8 +2,8 @@
 name: Terraform Apply (on main)
 
 on:
-  push:
-    branches: [ "main" ] # mainブランチにpushされたときに実行
+  #push:
+    #    branches: [ "main" ] # mainブランチにpushされたときに実行
   workflow_dispatch: # 手動実行も可能にする
 
 permissions:
@@ -33,6 +33,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+   
+      # --- OIDC ---
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}   # 例: arn:aws:iam::123456789012:role/gh-oidc-terraform
+          aws-region: ${{ env.AWS_REGION }}
+
+
+      # --- ECR Docker Build & Push ---
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          region: ${{ env.AWS_REGION }}
+
+      - name: Build and Push voucherz-app image
+        run: |
+          docker build -t voucherz-app -f Dockerfile.app .
+          docker tag voucherz-app:latest 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-app:latest
+          docker push 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-app:latest
+
+      - name: Build and Push voucherz-web image
+        run: |
+          docker build -t voucherz-web -f Dockerfile.web .
+          docker tag voucherz-web:latest 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-web:latest
+          docker push 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-web:latest
+
       # --- 前回のロック取得 --- 
       - name: Download previous terraform lock
         run: |
@@ -61,34 +88,7 @@ jobs:
           name: terraform-lock
           path: .terraform-lock/main
           retention-days: 15
-    
-      # --- OIDC ---
-      - name: Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}   # 例: arn:aws:iam::123456789012:role/gh-oidc-terraform
-          aws-region: ${{ env.AWS_REGION }}
-
-
-      # --- ECR Docker Build & Push ---
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          region: ${{ env.AWS_REGION }}
-
-      - name: Build and Push voucherz-app image
-        run: |
-          docker build -t voucherz-app -f Dockerfile.app .
-          docker tag voucherz-app:latest 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-app:latest
-          docker push 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-app:latest
-
-      - name: Build and Push voucherz-web image
-        run: |
-          docker build -t voucherz-web -f Dockerfile.web .
-          docker tag voucherz-web:latest 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-web:latest
-          docker push 715841364530.dkr.ecr.ap-northeast-1.amazonaws.com/voucherz-web:latest
-
-
+ 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:

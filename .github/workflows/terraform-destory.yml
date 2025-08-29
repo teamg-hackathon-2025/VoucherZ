@@ -7,6 +7,7 @@ on:
 permissions:
   contents: read
   id-token: write
+  actions: write
 
 concurrency:
   group: terraform-destroy
@@ -63,10 +64,11 @@ jobs:
 
        # state を復元
       - name: Download tfstate
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-tfstate
-          path: .         
+        run: |
+          gh run download --name terraform-tfstate --dir . --repo teamg-hackathon-2025/VoucherZ
+        env:
+          GH_TOKEN: ${{ github.token }}
+ 
 
       - name: Terraform Init
         run: terraform init
@@ -80,5 +82,18 @@ jobs:
       # --- Remove lock file locally ---
       - name: Remove Terraform lock
         run: |
-          rm -f .terraform-lock/main
-
+          gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
+          | jq -r '.artifacts[] | select(.name=="terraform-lock") | .id' \
+          | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          
+      # --- Remove lock file locally ---
+      - name: Remove Terraform state
+        run: |
+          gh api repos/teamg-hackathon-2025/VoucherZ/actions/artifacts \
+          | jq -r '.artifacts[] | select(.name=="terraform-tfstate") | .id' \
+          | xargs -I {} gh api --method DELETE repos/teamg-hackathon-2025/VoucherZ/actions/artifacts/{}
+        env:
+          GH_TOKEN: ${{ github.token }}
+         
