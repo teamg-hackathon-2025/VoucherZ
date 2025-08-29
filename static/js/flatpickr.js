@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
       minDate: el.dataset.min || 'today',
       locale: flatpickr.l10ns.ja,
       disableMobile: true,
+      altInput: true,
+      altFormat: 'Y/m/d',
       onInput(selectedDates, dateStr, instance) {
         if (instance.input.value.trim() === '') instance.clear();
       },
