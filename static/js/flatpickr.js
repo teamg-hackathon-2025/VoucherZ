@@ -14,15 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const footer = document.createElement('div');
         footer.className = 'flatpickr-footer';
         // 削除ボタン
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'flatpickr-clear';
-        btn.textContent = '削除';
-        btn.addEventListener('click', () => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'flatpickr-clear';
+        button.textContent = '日付削除';
+        button.addEventListener('click', () => {
           instance.clear();
           instance.close();
         });
-        footer.appendChild(btn);
+        footer.appendChild(button);
         instance.calendarContainer.appendChild(footer);
       }
     });

@@ -95,4 +95,5 @@ flatpickr-day.startRange:focus,
 .flatpickr-clear {
   padding: 10px;
   color: var(--color-main-text-primary);
+  letter-spacing: 0.05em;
 }
